@@ -1,4 +1,6 @@
-.home{
-    @apply text-4xl bg-green-400;
-    color:red;
+.heading1{
+    @apply text-4xl text-center font-bold;
+}
+.heading2{
+    @apply text-2xl text-center font-bold;
 }
