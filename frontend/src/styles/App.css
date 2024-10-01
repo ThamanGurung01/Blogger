@@ -1,0 +1,4 @@
+.home{
+    @apply text-4xl bg-green-400;
+    color:red;
+}
