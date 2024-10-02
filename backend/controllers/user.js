@@ -1,20 +1,29 @@
-function handleGetAllUsers(req,res){
+const User=require("../models/user");
 
-    return res.json({status:"success all users"});
+async function handleGetAllUsers(req,res){
+const allUsers=await User.find({});
+    return res.json(allUsers);
 }
-function handleGetUser(req,res){
+async function handleGetUser(req,res){
 
     return res.json({status:"success user by id"});
 }
-function handleCreateUser(req,res){
-
-    return res.json({status:"success create"});
+async function handleCreateUser(req,res){
+  try{
+    const {fullName,email,password,gender}=req.body;
+    await User.create({
+        fullName,email,password,gender,
+    })
+    return res.status(201).json({status:"success created"});
+  }catch (err){
+    return res.status(500).json({error:"Server Error"+err})
+  }
 }
-function handleUpdateUser(req,res){
+async function handleUpdateUser(req,res){
 
     return res.json({status:"success update"});
 }
-function handleDeleteUser(req,res){
+async function handleDeleteUser(req,res){
 
     return res.json({status:"success delete"});
 }

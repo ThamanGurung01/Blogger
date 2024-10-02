@@ -13,19 +13,19 @@ const mongoDbURL=process.env.MongoDb_URL;
 
 //db connection
 try{
-   const conn=connection(mongoDbURL);
-   conn.then(()=>{
+connection(mongoDbURL).then(()=>{
     console.log("MONGODB CONNECTED SUCCESSFULLY");
-   })
-   console.log(conn);
+}).catch((err)=>{
+    console.log(err);
+});
 }catch(err){
     console.log(err);
 }
 
 //middlewares
 app.use(cors());
-app.use(express.urlencoded({extended:false}));
 app.use(express.json());
+app.use(express.urlencoded({extended:false}));
 
 //routes
 app.get("/",(req,res)=>{

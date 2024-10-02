@@ -7,5 +7,5 @@ const {handleGetAllUsers,handleGetUser,handleCreateUser,handleUpdateUser,handleD
 //route
 router.route("/").get(handleGetAllUsers).post(handleCreateUser);
 router.route("/:id").get(handleGetUser).patch(handleUpdateUser).delete(handleDeleteUser);
-
+router.get("/login",(req,res)=>{})
 module.exports=router;
