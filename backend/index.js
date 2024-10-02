@@ -4,6 +4,9 @@ const express=require("express");
 const app=express();
 const cors=require("cors");
 
+//import custom module
+const userRoute=require("./routes/user");
+
 //env
 const PORT=process.env.PORT;
 
@@ -15,7 +18,9 @@ app.use(express.json());
 //routes
 app.get("/",(req,res)=>{
     return res.json({page:"homepage"});
-})
+});
+
+app.use("/user",userRoute);
 
 
 
