@@ -22,10 +22,12 @@ async function handleCreateUser(req,res){
     const {fullName,email,password,gender}=req.body;
     if(!fullName||!email||!password||!gender) return res.status(400).json({error:"Input all fields"});
     const existingUser=await User.findOne({email});
-    if(existingUser) return res.status(409).json({eror:"Email already Exists"})
-    await User.create({
-        fullName,email,password,gender,profileImageURL:`/images/${req.file.filename}`,
-    });
+    if(existingUser) return res.status(409).json({eror:"Email already Exists"});
+const newUser={
+  fullName,email,password,gender,
+}
+if(req.file) newUser.profileImageURL=`/images/${req.file.filename}`;
+    await User.create(newUser);
     return res.status(201).json({status:"success created"});
   }catch (err){
     console.log("Error creating user:",err);

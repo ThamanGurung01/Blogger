@@ -18,7 +18,7 @@ const Form = ({formType}) => {
     }
 
 //form
-    const {register,handleSubmit,formState:{errors,isSubmitting}}=useForm();
+    const {register,handleSubmit,reset,formState:{errors,isSubmitting}}=useForm();
     const onSubmit=async(data)=>{
 try{
     const profilePicture = document.getElementById("profile").files[0];
@@ -29,17 +29,16 @@ try{
     formData.append("gender",data.gender);
     if (profilePicture) {
     formData.append("profilePicture",profilePicture);
-     }else{
-       const response=await fetch(fallBackImage);
-       const blob=response.blob();
-       const defaultImage = new File([blob], "avatar.png", { type: "image/png" });
-                formData.append("profilePicture", defaultImage);
      }
      await axios.post(backendUrl+"user",formData,{
         headers:{
             "Content-Type":"multipart/form-data",
         }
-     }).then((res)=>{console.log("Successfully Inserted:",res)});
+     }).then((res)=>{
+        console.log("Successfully Inserted:",res);
+        reset();
+        setImageUrl(fallBackImage);
+    });
 }catch(Err){
     console.log("error in signing up:",Err);
 }
@@ -78,8 +77,8 @@ try{
                 }
             })} type="password" placeholder="Password" /> <br />
             {errors.password&&<div>{errors.password.message}</div>}
-            <input {...register("gender",{
-                required:"Select one",
+            <label>Gender:</label><input {...register("gender",{
+                required:"Choose your gender",
             })} id="male" type="radio" name="gender" value={"male"}/><label htmlFor="male">Male</label>
             <input {...register("gender")} id="female" type="radio" name="gender" value={"female"}/><label htmlFor="female">Female</label><br />
             {errors.gender&&<div>{errors.gender.message}</div>}
