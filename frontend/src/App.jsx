@@ -1,12 +1,14 @@
 import './styles/App.css'
 import Navbar from './components/Navbar'
-import Posts from './pages/Posts'
+import Signup from './pages/Signup'
+// import Posts from './pages/Posts'
 function App() {
 
   return (
     <div className=''>
      <Navbar/>
-     <Posts/>
+     {/* <Posts/> */}
+     <Signup/>
     </div>
   )
 }
