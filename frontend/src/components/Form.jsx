@@ -52,7 +52,7 @@ try{
                     message:"Name must be at least 5 characters",
                 },
                 pattern:{
-                    value:/^[A-Za-z]+$/,
+                    value:/^[A-Za-z]+(?: [A-Za-z]+)?$/,
                     message:"Invalid Name",
                 }
             })} type="text" placeholder="Name" /><br/>
