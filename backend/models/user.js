@@ -29,12 +29,9 @@ const userSchema=new mongoose.Schema({
 },{timestamps:true});
 
 userSchema.pre("save",async function(next){
-    // console.log("Pre-save hook triggered");
-    // console.log("User data before hashing:", this);
 if(!this.isModified("password")) return next();
 try{
-const saltRounds=10;
-const salt=await bcrypt.genSalt(saltRounds);
+const salt=await bcrypt.genSalt(10);
 this.password=await bcrypt.hash(this.password,salt);
 return next();
 }catch(err){
