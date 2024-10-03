@@ -1,12 +1,11 @@
 import {useForm} from "react-hook-form";
 import PropTypes from "prop-types";
 import { useState } from "react";
-import fallBackImage from "../assets/uploadPhoto.png"
+import fallBackImage from "../assets/avatar.png"
 import axios from "axios";
 
 const Form = ({formType}) => {
-    const defaultImageUrl=import.meta.env.VITE_DefaultImageUrl;
-    const [imageUrl,setImageUrl]=useState(defaultImageUrl||fallBackImage);
+    const [imageUrl,setImageUrl]=useState(fallBackImage);
     const backendUrl=import.meta.env.VITE_BackendUrl;
     const handleFileClick=()=>{
         document.getElementById("profile").click();
@@ -30,6 +29,11 @@ try{
     formData.append("gender",data.gender);
     if (profilePicture) {
     formData.append("profilePicture",profilePicture);
+     }else{
+       const response=await fetch(fallBackImage);
+       const blob=response.blob();
+       const defaultImage = new File([blob], "avatar.png", { type: "image/png" });
+                formData.append("profilePicture", defaultImage);
      }
      await axios.post(backendUrl+"user",formData,{
         headers:{

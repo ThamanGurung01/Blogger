@@ -8,7 +8,7 @@ const {handleGetAllUsers,handleGetUser,handleCreateUser,handleUpdateUser,handleD
 //multer
 const storage=multer.diskStorage({
 destination:function (req,file,cb){
-    cb(null,path.resolve("./public/blogImage/"));
+    cb(null,path.resolve("./public/images/"));
 },
 filename:function (req,file,cb){
     const fileName=`${Date.now()}-${file.originalname}`;
