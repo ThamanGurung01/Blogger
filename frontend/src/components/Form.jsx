@@ -1,10 +1,13 @@
 import {useForm} from "react-hook-form";
 import PropTypes from "prop-types";
 import { useState } from "react";
+import fallBackImage from "../assets/uploadPhoto.png"
+import axios from "axios";
 
 const Form = ({formType}) => {
-    const [imageUrl,setImageUrl]=useState("http://localhost:8000/images/avatar.png");
-
+    const defaultImageUrl=import.meta.env.VITE_DefaultImageUrl;
+    const [imageUrl,setImageUrl]=useState(defaultImageUrl||fallBackImage);
+    const backendUrl=import.meta.env.VITE_BackendUrl;
     const handleFileClick=()=>{
         document.getElementById("profile").click();
     }
@@ -18,20 +21,30 @@ const Form = ({formType}) => {
 //form
     const {register,handleSubmit,formState:{errors,isSubmitting}}=useForm();
     const onSubmit=async(data)=>{
-        const profilePicture = document.getElementById("profile").files[0];
-        if (profilePicture) {
-            data={...data,profilePicture:profilePicture};
+try{
+    const profilePicture = document.getElementById("profile").files[0];
+    const formData=new FormData();
+    formData.append("fullName",data.fullName);
+    formData.append("email",data.email);
+    formData.append("password",data.password);
+    formData.append("gender",data.gender);
+    if (profilePicture) {
+    formData.append("profilePicture",profilePicture);
+     }
+     await axios.post(backendUrl+"user",formData,{
+        headers:{
+            "Content-Type":"multipart/form-data",
         }
-        await new Promise((resolve)=>{
-            setTimeout(resolve,1000)
-        });
-        console.log(data);
+     }).then((res)=>{console.log("Successfully Inserted:",res)});
+}catch(Err){
+    console.log("error in signing up:",Err);
+}
     }
   return (
     <div>
         <form action="" onSubmit={handleSubmit(onSubmit)} >
             <label htmlFor="profile">Profile Picture:</label><br /><input {...register("profilePicture")} type="file" id="profile" style={{display:"none"}} onChange={(e)=>handleFileChange(e)} />
-            <img src={imageUrl} alt="profileView" onClick={handleFileClick}/>
+            <img src={imageUrl} width={"200px"} alt="profileView" onClick={handleFileClick}/>
             {formType==="signup"?( <><input {...register("fullName",{
                 required:"Name is required",
                 minLength:{
