@@ -2,11 +2,11 @@ import {useForm} from "react-hook-form";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import fallBackImage from "../assets/avatar.png"
-import axios from "axios";
+import { signup } from "../services/Api/signup";
+import { login } from "../services/Api/login";
 
 const Form = ({formType}) => {
     const [imageUrl,setImageUrl]=useState(fallBackImage);
-    const backendUrl=import.meta.env.VITE_BackendUrl;
     const handleFileClick=()=>{
         document.getElementById("profile").click();
     }
@@ -22,24 +22,14 @@ const Form = ({formType}) => {
     const onSubmit=async(data)=>{
 try{
     if(formType=="signup")
-    {const profilePicture = document.getElementById("profile").files[0];
-    const formData=new FormData();
-    formData.append("fullName",data.fullName);
-    formData.append("email",data.email);
-    formData.append("password",data.password);
-    formData.append("gender",data.gender);
-    if (profilePicture) {
-    formData.append("profilePicture",profilePicture);
-     }
-     await axios.post(backendUrl+"user",formData,{
-        headers:{
-            "Content-Type":"multipart/form-data",
-        }
-     }).then(()=>{
+    {
+        signup(data).then(()=>{
         reset();
         setImageUrl(fallBackImage);
-    });}else if(formType=="login"){
-        console.log("login");
+    });
+}else if(formType=="login"){
+    login(data).then(()=>{
+        reset();});
     }
 }catch(Err){
     console.log("error in signing up:",Err);
@@ -48,7 +38,7 @@ try{
   return (
     <div>
         <form action="" onSubmit={handleSubmit(onSubmit)} >
-            {formType==="signup"?( <><label htmlFor="profile">Profile Picture:</label><br /><input {...register("profilePicture")} type="file" id="profile" style={{display:"none"}} onChange={(e)=>handleFileChange(e)} />
+            {formType==="signup"?( <><label htmlFor="profile">Profile Picture:</label><br /><input type="file" id="profile" style={{display:"none"}} onChange={(e)=>handleFileChange(e)} />
             <img src={imageUrl} width={"200px"} alt="profileView" onClick={handleFileClick}/><input {...register("fullName",{
                 required:"Name is required",
                 minLength:{

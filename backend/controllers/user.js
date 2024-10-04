@@ -51,7 +51,7 @@ try{
   if(!user) return res.status(401).json("Incorrect Email or Password!");
   const isPasswordValid=await checkPassword(user.password,password);
   if(!isPasswordValid) return res.status(401).json("Incorrect Password!");
-  return res.status(200).json({status:"Logged In"});
+  return res.status(200).json(user);
 }catch(err){
   console.log(err.message);
   return res.status(500).json({error:"Server Error"});
