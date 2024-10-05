@@ -2,11 +2,10 @@ import axios from "axios";
 import { formDataCreate } from "../../utils/formDataCreate";
 
 const backendUrl=import.meta.env.VITE_BackendUrl;
-export const signup=async(data)=>{
+export const postReq=async(data,postFor,picture=null)=>{
 try{
-    const profilePicture = document.getElementById("profile").files[0];
-    const formData=formDataCreate(data,profilePicture);
-     const signupRequest=await axios.post(backendUrl+"user",formData,{
+    const formData=formDataCreate(data,picture);
+     const signupRequest=await axios.post(backendUrl+postFor,formData,{
     headers:{
         "Content-Type":"multipart/form-data",
     }

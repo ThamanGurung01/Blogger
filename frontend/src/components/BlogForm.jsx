@@ -4,10 +4,11 @@ import fallBackImage from "../assets/uploadPhoto.png";
 import { useForm } from 'react-hook-form';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { postReq } from '../services/Api/postReq';
 
 const BlogForm = ({formType}) => {
   const [imageUrl,setImageUrl]=useState(fallBackImage);
-  const [value, setValue] = useState('');
+  const [content, setContent] = useState('');
 
   const handleFileClick=()=>{
       document.getElementById("cover").click();
@@ -23,18 +24,17 @@ const BlogForm = ({formType}) => {
   const {register,handleSubmit,reset,formState:{errors,isSubmitting}}=useForm();
   const onSubmit=async(data)=>{
 try{
-  console.log(data);
-  reset();
+  data={...data,description:content}
+  const Picture = document.getElementById("cover").files[0];
   if(formType=="add")
   {
-  //     signup(data).then(()=>{
-  //     reset();
-  //     setImageUrl(fallBackImage);
-  // });
+    postReq(data,"blog",Picture);
 }else if(formType=="update"){
   // login(data).then(()=>{
   //     reset();});
   }
+  setContent("");
+  reset();
 }catch(Err){
   console.log("error in signing up:",Err);
 }
@@ -54,9 +54,7 @@ try{
         })} type="text" placeholder="Title" /><br/>
         {errors.title&&<div>{errors.title.message}</div>}
        {/* quill */}
-       <ReactQuill theme="snow" value={value} onChange={setValue} />
-
-
+       <ReactQuill theme="snow" value={content} onChange={setContent} />
         <button disabled={isSubmitting} type="submit">{isSubmitting?"Submitting...":formType==="add"?"Upload":"Update"}</button>
     </form>
     {/* <div dangerouslySetInnerHTML={{ __html: value }} /> */}

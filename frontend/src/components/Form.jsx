@@ -2,7 +2,7 @@ import {useForm} from "react-hook-form";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import fallBackImage from "../assets/avatar.png";
-import { signup } from "../services/Api/signup";
+import { postReq } from "../services/Api/postReq";
 import { login } from "../services/Api/login";
 
 const Form = ({formType}) => {
@@ -23,14 +23,13 @@ const Form = ({formType}) => {
 try{
     if(formType=="signup")
     {
-        signup(data).then(()=>{
-        reset();
-        setImageUrl(fallBackImage);
-    });
+    const Picture = document.getElementById("profile").files[0];
+    postReq(data,"user",Picture)
 }else if(formType=="login"){
-    login(data).then(()=>{
-        reset();});
+    login(data);
     }
+    reset();
+    setImageUrl(fallBackImage);
 }catch(Err){
     console.log("error in signing up:",Err);
 }
