@@ -1,7 +1,7 @@
 import {useForm} from "react-hook-form";
 import PropTypes from "prop-types";
 import { useState } from "react";
-import fallBackImage from "../assets/avatar.png"
+import fallBackImage from "../assets/avatar.png";
 import { signup } from "../services/Api/signup";
 import { login } from "../services/Api/login";
 
