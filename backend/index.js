@@ -33,7 +33,6 @@ app.use(express.static(path.resolve("./public")));
 app.get("/",(req,res)=>{
     return res.json({page:"homepage"});
 });
-
 app.use("/user",userRoute);
 app.use("/blog",blogRoute);
 

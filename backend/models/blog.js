@@ -10,7 +10,7 @@ description:{
 },
 coverImage:{
     type:String,
-    default:"/defaultImage/uploadBlogPhoto.png",
+    default:"defaultImage/uploadBlogPhoto.png",
 },
 createdBy:{
     type:mongoose.Schema.Types.ObjectId,

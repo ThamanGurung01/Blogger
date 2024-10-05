@@ -19,5 +19,5 @@ const upload=multer({storage});
 
 //route
 router.route("/").get(getAllBlog).post(upload.single("Picture"),blogCreation);
-router.route("/:id").get(getBlog).patch(blogUpdation).delete(blogDeletion);
+router.route("/:id").get(getBlog).patch(upload.single("Picture"),blogUpdation).delete(blogDeletion);
 module.exports=router;
