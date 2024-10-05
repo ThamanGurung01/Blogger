@@ -6,6 +6,7 @@ const cors=require("cors");
 const path=require("path");
 //import custom module
 const userRoute=require("./routes/user");
+const blogRoute=require("./routes/blog");
 const connection=require("./config/db");
 //env
 const PORT=process.env.PORT||8001;
@@ -34,6 +35,7 @@ app.get("/",(req,res)=>{
 });
 
 app.use("/user",userRoute);
+app.use("/blog",blogRoute);
 
 
 
