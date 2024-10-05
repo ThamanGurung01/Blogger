@@ -10,7 +10,7 @@ description:{
 },
 coverImage:{
     type:String,
-    required:true,
+    default:"/defaultImage/uploadBlogPhoto.png",
 },
 createdBy:{
     type:mongoose.Schema.Types.ObjectId,
@@ -18,5 +18,5 @@ createdBy:{
 }
 },{timestamps:true});
 
-const Blog=mongoose.model("user",blogSchema);
+const Blog=mongoose.model("blog",blogSchema);
 module.exports=Blog;

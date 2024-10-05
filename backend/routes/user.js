@@ -18,7 +18,7 @@ filename:function (req,file,cb){
 const upload=multer({storage});
 
 //route
-router.route("/").get(handleGetAllUsers).post(upload.single("profilePicture"),handleCreateUser);
+router.route("/").get(handleGetAllUsers).post(upload.single("Picture"),handleCreateUser);
 router.route("/:id").get(handleGetUser).patch(handleUpdateUser).delete(handleDeleteUser);
 router.post("/login",handleLogin)
 module.exports=router;

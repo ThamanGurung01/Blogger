@@ -35,6 +35,7 @@ try{
   }
   setContent("");
   reset();
+  setImageUrl(fallBackImage);
 }catch(Err){
   console.log("error in signing up:",Err);
 }

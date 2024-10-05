@@ -18,6 +18,6 @@ filename:function (req,file,cb){
 const upload=multer({storage});
 
 //route
-router.route("/").get(getAllBlog).post(upload.single("profilePicture"),blogCreation);
+router.route("/").get(getAllBlog).post(upload.single("Picture"),blogCreation);
 router.route("/:id").get(getBlog).patch(blogUpdation).delete(blogDeletion);
 module.exports=router;
