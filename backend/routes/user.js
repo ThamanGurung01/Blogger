@@ -19,6 +19,6 @@ const upload=multer({storage});
 
 //route
 router.route("/").get(handleGetAllUsers).post(upload.single("Picture"),handleCreateUser);
-router.route("/:id").get(handleGetUser).patch(handleUpdateUser).delete(handleDeleteUser);
+router.route("/:id").get(handleGetUser).patch(upload.single("Picture"),handleUpdateUser).delete(handleDeleteUser);
 router.post("/login",handleLogin)
 module.exports=router;

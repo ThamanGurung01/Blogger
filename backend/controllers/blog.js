@@ -1,6 +1,5 @@
-const { Types } = require("mongoose");
 const Blog=require("../models/blog")
-const tempUser="66fec7daf0a025a6006ef903";
+const tempUser="6702036c2b7457cc26a335f3";
 const deleteOldImage = require("../services/deleteOldImage");
 const mongoose=require("mongoose");
 
@@ -51,18 +50,16 @@ async function blogUpdation(req,res){
         const blogData=await Blog.findById(id);
         if(!blogData) return res.status(400).json({error:"No blog data found"});
         const oldImage=blogData.coverImage;
-        deleteOldImage(oldImage);
     const newBlog={
         title,description
     }
     if(req.file) {
-        newBlog.coverImage=`blogImages/${req.file.filename}`}else{
-newBlog.coverImage=`defaultImage/uploadBlogPhoto.png`
-    };
+        deleteOldImage(oldImage);
+        newBlog.coverImage=`blogImages/${req.file.filename}`}
         await Blog.updateOne({_id:id},newBlog);
         return res.status(201).json({status:"successfully updated"});
       }catch (err){
-        console.log("Error updating user:",err);
+        console.log("Error updating blog:",err);
         return res.status(500).json({error:"Server Error Occured"})
       }
 }
