@@ -14,6 +14,17 @@ const BlogForm = ({formType,blogId}) => {
   const [imageUrl,setImageUrl]=useState(fallBackImage||blogData.coverImage);
   const [content, setContent] = useState("");
   const [response,setResponse]=useState();
+  
+  const modules = {
+    toolbar: [
+      [{ 'header': [2, 3, false] }],
+      ['bold', 'italic', 'underline'],
+      ['link'],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+      ['clean'],
+    ],
+  };
+
 const backendUrl=import.meta.env.VITE_BackendUrl;
 
   async function fetchBlogData(){
@@ -91,11 +102,10 @@ try{
         })} type="text" placeholder="Title" /><br/>
         {errors.title&&<div>{errors.title.message}</div>}
        {/* quill */}
-       <ReactQuill theme="snow" value={content} onChange={setContent} />
+       <ReactQuill theme="snow" value={content} onChange={setContent} modules={modules} />
         <button disabled={isSubmitting} type="submit">{isSubmitting?"Submitting...":formType==="add"?"Upload":"Update"}</button><br />
         {response&&<span>{response?.status ?? response?.error ?? ""}</span>}
     </form>
-    {/* <div dangerouslySetInnerHTML={{ __html: value }} /> */}
 </div>
   )
 }

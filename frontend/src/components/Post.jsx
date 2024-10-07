@@ -1,17 +1,34 @@
-// import React from 'react'
-import PropTypes from "prop-types";
-const Post = ({post}) => {
+import React from 'react'
+import { getAllReq } from '../services/Api/getAllReq';
+// import  DOMPurify from "dompurify";
+import "../styles/Quill.css";
+import {Link} from "react-router-dom";
+const Post = () => {
+  const backendUrl=import.meta.env.VITE_BackendUrl;
+const [blogs,setBlogs]=React.useState([{}]);
+  const fetchBlogData=async()=>{
+    const data=await getAllReq("blog");
+    console.log(data[0]._id);
+    setBlogs(data);
+  }
+  React.useEffect(()=>{
+    fetchBlogData();
+  },[])
   return (
     <div>
-        <div>{post.something}</div>
-        <h1>Post</h1>
+        {blogs.map((blog,index)=>(
+         <Link key={index} to={"/posts/"+blog._id}>
+          <div>
+            {blog.coverImage&&<img src={backendUrl+blog.coverImage} width={"200px"} alt="Blog CoverImage" />}
+            <h1>{blog?.title}</h1>
+            {/* <div>
+            <div className='quillContainer' dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog?.description) }} />
+            </div> */}
+          </div>
+          </Link>
+          )
+         )}
     </div>
   )
-}
-
-Post.propTypes={
-post:PropTypes.shape({
-    something:PropTypes.string,
-}),
 }
 export default Post;

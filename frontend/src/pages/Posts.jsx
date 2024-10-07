@@ -6,7 +6,7 @@ const Posts = () => {
   return (
     <div className="container-post">
         <h1 className="heading2">Posts</h1>
-        <Post post={{something:"something"}}/>
+        <Post/>
     </div>
   )
 }

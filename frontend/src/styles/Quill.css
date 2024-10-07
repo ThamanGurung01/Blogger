@@ -1,0 +1,20 @@
+    .quillContainer h2 {
+    @apply text-2xl font-bold my-2;
+  }
+  
+  .quillContainer h3 {
+    @apply text-xl font-semibold my-2;
+  }
+  
+  .quillContainer ol {
+    @apply list-decimal list-inside pl-5;
+  }
+  
+  .quillContainer ul {
+    @apply list-disc list-inside pl-5;
+  }
+  
+  .quillContainer li {
+    @apply my-1;
+  }
+  
