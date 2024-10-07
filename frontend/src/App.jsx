@@ -1,6 +1,6 @@
 import './styles/App.css'
 import Navbar from './components/Navbar'
-import ViewPost from './pages/ViewPost'
+// import ViewPost from './pages/ViewPost'
 // import AddBlog from './pages/AddBlog'
 // import UpdateBlog from './pages/UpdateBlog'
 // import Signup from './pages/Signup'
@@ -16,7 +16,7 @@ function App() {
      {/* <Login/> */}
      {/* <AddBlog/> */}
      {/* <UpdateBlog/> */}
-     <ViewPost/>
+     {/* <ViewPost/> */}
     </div>
   )
 }
