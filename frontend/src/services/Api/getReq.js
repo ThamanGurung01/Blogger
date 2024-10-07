@@ -1,5 +1,5 @@
 import axios from "axios";
-const backendUrl=import.meta.env.VITE_BackendUrl;
+export const backendUrl=import.meta.env.VITE_BackendUrl;
 
 export const getReq=async(what,id)=>{
     try{
