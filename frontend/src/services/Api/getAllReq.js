@@ -6,10 +6,10 @@ export const getAllReq=async(what,id=null)=>{
         let compUrl=backendUrl+what;
         let allData={};
         if (id&&what==="blog") {
-            compUrl+="/user/"+id;
+            compUrl+="/userBlog/"+id;
         allData=await axios.get(compUrl);
         } else {
-        if(!what) return {error:"No required parameter passed"};
+            if(!what) return {error:"No required parameter passed"};
         allData=await axios.get(compUrl);
         if(!allData.data.length) return {error:"No Data"};
         }

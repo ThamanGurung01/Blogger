@@ -8,6 +8,7 @@ const ViewPost = () => {
   const backendUrl=import.meta.env.VITE_BackendUrl;
   const {id}=useParams();
 // const id="67035a40578fc188b921db1f";
+const userId="6702036c2b7457cc26a335f3";
   if(!id) console.log("error no id view Post");
   const [blog,setBlog]=React.useState([{}]);
     const fetchBlogData=async()=>{
@@ -26,7 +27,7 @@ const ViewPost = () => {
             <div>
             <div className='quillContainer' dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog?.description) }} />
             </div>
-            <Link to="/updateBlog">Update</Link>
+            {blog.createdBy===userId?<Link to="/updateBlog">Update</Link>:""}
         </div>
     </div>
   )

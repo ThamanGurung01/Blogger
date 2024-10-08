@@ -3,7 +3,7 @@ const router=express.Router();
 const multer=require("multer");
 const path=require("path");
 //import controllers
-const {getAllBlog,getBlog,blogCreation,blogUpdation,blogDeletion} =require("../controllers/blog")
+const {getAllBlog,getAllUserBlog,getBlog,blogCreation,blogUpdation,blogDeletion} =require("../controllers/blog")
 
 //multer
 const storage=multer.diskStorage({
@@ -20,4 +20,5 @@ const upload=multer({storage});
 //route
 router.route("/").get(getAllBlog).post(upload.single("Picture"),blogCreation);
 router.route("/:id").get(getBlog).patch(upload.single("Picture"),blogUpdation).delete(blogDeletion);
+router.route("/userBlog/:id").get(getAllUserBlog);
 module.exports=router;

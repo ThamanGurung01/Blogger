@@ -14,6 +14,18 @@ async function getAllBlog(req,res){
         return res.status(500).json({error:"Server Error Occured"});
       }
 }
+async function getAllUserBlog(req,res){
+  try{
+    const id=req.params.id;
+    if(!id) return res.status(400).json({error:"No userId"})
+     const blogs= await Blog.find({createdBy:id});
+     if(!blogs) return res.status(400).json({error:"blog data"});
+      return res.status(200).json(blogs);
+    }catch (err){
+      console.log("Error getting all users:",err);
+      return res.status(500).json({error:"Server Error Occured"});
+    }
+}
 async function getBlog(req,res){
     try{
         const blogId=req.params.id;
@@ -79,4 +91,4 @@ async function blogDeletion(req,res){
         return res.status(500).json({error:"Server error occured while fetching blog"});
       }
 }
-module.exports={getAllBlog,getBlog,blogCreation,blogUpdation,blogDeletion};
+module.exports={getAllBlog,getBlog,blogCreation,blogUpdation,blogDeletion,getAllUserBlog};
