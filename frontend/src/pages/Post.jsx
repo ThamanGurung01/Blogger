@@ -26,7 +26,7 @@ const id="6702036c2b7457cc26a335f3";
   return (
     <div className="container-post">
       <h1 className="heading2">Posts</h1>
-        {blogs.map((blog,index)=>(
+        {blogs?.map((blog,index)=>(
          <Link key={index} to={"/viewBlog/"+blog._id}>
           <div>
             {blog.coverImage&&<img src={backendUrl+blog.coverImage} width={"200px"} alt="Blog CoverImage" />}

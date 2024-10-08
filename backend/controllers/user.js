@@ -95,7 +95,7 @@ try{
   const isPasswordValid=await checkPassword(user.password,password);
   if(!isPasswordValid) return res.status(401).json("Incorrect Password!");
   const token= jwtSign(user);
-  res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'None' });
+  res.cookie('token', token, {httpOnly: true,secure: false,sameSite: 'Lax',});
   return res.status(200).json({status:"Successfully LoggedIn"});
 }catch(err){
   console.log(err.message);
