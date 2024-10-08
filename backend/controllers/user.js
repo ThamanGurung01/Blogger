@@ -1,6 +1,7 @@
 const Blog = require("../models/blog");
 const User=require("../models/user");
 const deleteOldImage = require("../services/deleteOldImage");
+const { jwtSign } = require("../services/jwt");
 const checkPassword =require("../services/password");
 const mongoose=require("mongoose");
 
@@ -93,7 +94,9 @@ try{
   if(!user) return res.status(401).json("Incorrect Email or Password!");
   const isPasswordValid=await checkPassword(user.password,password);
   if(!isPasswordValid) return res.status(401).json("Incorrect Password!");
-  return res.status(200).json(user);
+  const token= jwtSign(user);
+  res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'None' });
+  return res.status(200).json({status:"Successfully LoggedIn"});
 }catch(err){
   console.log(err.message);
   return res.status(500).json({error:"Server Error"});

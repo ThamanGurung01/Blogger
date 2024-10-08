@@ -4,6 +4,7 @@ const express=require("express");
 const app=express();
 const cors=require("cors");
 const path=require("path");
+const cookie=require("cookie-parser");
 //import custom module
 const userRoute=require("./routes/user");
 const blogRoute=require("./routes/blog");
@@ -23,9 +24,15 @@ const mongoDbURL=process.env.MongoDb_URL||"mongodb://127.0.0.1:27017/blogger";
             process.exit(1);
         }
 })();
+const FrontendUrl=process.env.FrontendUrl;
+const corsOptions = {
+    origin: FrontendUrl,
+    credentials: true,
+  };
 
 //middlewares
-app.use(cors());
+app.use(cookie());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(express.static(path.resolve("./public")));
