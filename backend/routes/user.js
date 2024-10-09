@@ -3,7 +3,7 @@ const router=express.Router();
 const multer=require("multer");
 const path=require("path");
 //import controllers
-const {handleGetAllUsers,handleGetUser,handleCreateUser,handleUpdateUser,handleDeleteUser,handleLogin} =require("../controllers/user")
+const {handleGetAllUsers,handleGetUser,handleCreateUser,handleUpdateUser,handleDeleteUser} =require("../controllers/user")
 
 //multer
 const storage=multer.diskStorage({
@@ -20,5 +20,4 @@ const upload=multer({storage});
 //route
 router.route("/").get(handleGetAllUsers).post(upload.single("Picture"),handleCreateUser);
 router.route("/:id").get(handleGetUser).patch(upload.single("Picture"),handleUpdateUser).delete(handleDeleteUser);
-router.post("/login",handleLogin)
 module.exports=router;

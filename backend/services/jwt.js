@@ -10,6 +10,7 @@ const jwtSign=({fullName,email,gender,profileImageURL})=>{
     return token;
 }
 const jwtVerify=(token)=>{
+    if(!token) return {error:"eror token needed"};
     const userData= jwt.verify(token,secretKey);
     return userData;
 }

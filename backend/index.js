@@ -9,6 +9,8 @@ const cookie=require("cookie-parser");
 const userRoute=require("./routes/user");
 const blogRoute=require("./routes/blog");
 const connection=require("./config/db");
+const { handleLogin } = require("./controllers/user");
+const authentication =require("./middlewares/authentication");
 //env
 const PORT=process.env.PORT||8001;
 const mongoDbURL=process.env.MongoDb_URL||"mongodb://127.0.0.1:27017/blogger";
@@ -40,8 +42,9 @@ app.use(express.static(path.resolve("./public")));
 app.get("/",(req,res)=>{
     return res.json({page:"homepage"});
 });
-app.use("/user",userRoute);
+app.use("/user",authentication,userRoute);
 app.use("/blog",blogRoute);
+app.post("/login",handleLogin);
 
 
 

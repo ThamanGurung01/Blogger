@@ -3,7 +3,7 @@ import axios from "axios";
 const backendUrl=import.meta.env.VITE_BackendUrl;
 export const login=async(data)=>{
 try{
-     const loginRequest=await axios.post(backendUrl+"user/login",data,{
+     const loginRequest=await axios.post(backendUrl+"login",data,{
           withCredentials: true,
         });
 return loginRequest;
