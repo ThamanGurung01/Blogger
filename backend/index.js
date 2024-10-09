@@ -45,7 +45,12 @@ app.get("/",(req,res)=>{
 app.use("/user",authentication,userRoute);
 app.use("/blog",blogRoute);
 app.post("/login",handleLogin);
-
+app.get("/authentication",authentication,(req,res)=>{
+    const data=req.user;
+    if(!data) return res.status(402).json({error:"Login needed"});
+    console.log(data);
+return res.data;
+})
 
 
 //server
