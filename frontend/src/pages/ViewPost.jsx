@@ -27,7 +27,7 @@ const userId="6702036c2b7457cc26a335f3";
             <div>
             <div className='quillContainer' dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog?.description) }} />
             </div>
-            {blog.createdBy===userId?<Link to="/updateBlog">Update</Link>:""}
+            {blog.createdBy===userId?<Link to={"/updateBlog/"+blog._id}>Update</Link>:""}
         </div>
     </div>
   )

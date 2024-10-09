@@ -9,7 +9,8 @@ try{
     req.user=userData;
     next();
 }catch(err){
-    console.log("Authentication error:",err);
+    if(err.name="JsonWebTokenError") return res.status(401).json({error:"Invalid token"});
+    console.log("Server Error Occured in authentication",err);
 next(err);
 }
 }
