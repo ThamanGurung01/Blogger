@@ -11,19 +11,21 @@ import Login from "./pages/Login"
 import Profile from './pages/Profile'
 import AboutUs from './pages/AboutUs'
 import { Navigate } from "react-router-dom";
-import { useEffect, useState } from 'react'
+import { useEffect, useState,useContext } from 'react'
 import { getCookie } from './utils/cookie'
+import { authContext } from './context/authContext'
+
 function App() {
-const [loggedIn,setLoggedIn]=useState(true);
+const {loggedIn,isLoggedIn}=useContext(authContext);
+const [isCookieLoggedIn,setCookie]=useState("false");
 useEffect(()=>{
-  const isCookieLoggedIn=getCookie("isLoggedIn");
+  setCookie(getCookie("isLoggedIn"));
 if(isCookieLoggedIn==="true"){
-  setLoggedIn(true);
-console.log(loggedIn);
+  isLoggedIn(true);
 }else{
-  setLoggedIn(false);
+  isLoggedIn(false);
 }
-},[])
+},[isCookieLoggedIn,loggedIn]);
   return (
     <div className=''>
      <Navbar loggedIn={loggedIn}/>

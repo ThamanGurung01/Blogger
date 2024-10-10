@@ -6,11 +6,7 @@ import { setCookie } from "../utils/cookie";
 
 const AuthenticationContext = ({children}) => {
   const [user,setUser]=useState({});
-  // const [loggedIn,isLoggedIn]=useState(false);
-
-  const cookieCheck=()=>{
-      console.log(document.cookie);
-  }
+  const [loggedIn,isLoggedIn]=useState(false);
   const getUserData=async()=>{
     const user=await authCheck();
     if(!user){
@@ -21,11 +17,10 @@ const AuthenticationContext = ({children}) => {
   }
   }
   useEffect(()=>{
-    cookieCheck();
     getUserData();
   },[])
   return (
-    <authContext.Provider value={{user}}>
+    <authContext.Provider value={{user,loggedIn,isLoggedIn}}>
       {children}
     </authContext.Provider>
   )

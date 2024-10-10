@@ -1,22 +1,31 @@
 // import React from 'react'
 import "../styles/Navbar.css"
 import { Link ,useNavigate} from "react-router-dom"
-// import { useContext } from 'react'
-// import { authContext } from '../context/authContext'
+import { authContext } from '../context/authContext'
 import PropTypes from "prop-types"
-import { deleteCookie } from "../utils/cookie"
+import { deleteCookie, getCookie, setCookie } from "../utils/cookie"
 import {logout} from "../services/Api/logout"
-const Navbar = ({loggedIn}) => {
-  // const {loggedIn}=useContext(authContext);
+import { useContext, useEffect } from "react"
+const Navbar = () => {
+
+  const {loggedIn,isLoggedIn}=useContext(authContext);
   const navigate=useNavigate();
   const handleLogOut=async()=>{
+    try{  
     deleteCookie("isLoggedIn");
     await logout().then(()=>{
       navigate("/");
-    }).catch((err)=>{
-      console.log("Logout:",err);
+      isLoggedIn(false);
+      setCookie("false");
     })
-  }
+  }catch(err){
+    console.log("Logout:",err);
+  }}
+  useEffect(()=>{
+    const cookie=getCookie("isLoggedIn");
+    if(cookie==="true") isLoggedIn(true);
+  },[loggedIn])
+
   return (
     <div className="navbar">
          <Link to="/"><h1 className='heading1'>Blogger</h1></Link>

@@ -7,7 +7,6 @@ export const getAllReq=async(what,id=null)=>{
         let allData={};
         if (id&&what==="blog") {
             compUrl+="/userBlog/"+id;
-            console.log(compUrl);
         allData=await axios.get(compUrl,{
             withCredentials:true,
         });

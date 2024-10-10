@@ -1,12 +1,19 @@
 import {useForm} from "react-hook-form";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState,useContext } from "react";
+import { authContext } from '../context/authContext'
+
 import fallBackImage from "../assets/avatar.png";
 import { postReq } from "../services/Api/postReq";
 import { login } from "../services/Api/login";
+import {useNavigate} from "react-router-dom";
+import { setCookie } from "../utils/cookie";
 
 const Form = ({formType}) => {
+    const {isLoggedIn}=useContext(authContext);
+    const navigate=useNavigate();
     const [imageUrl,setImageUrl]=useState(fallBackImage);
+    const [response,setResponse]=useState(null);
     const handleFileClick=()=>{
         document.getElementById("profile").click();
     }
@@ -24,9 +31,9 @@ try{
     if(formType=="signup")
     {
     const Picture = document.getElementById("profile").files[0];
-    postReq(data,"user",Picture)
+    await postReq(data,"user",Picture).then((e)=>setResponse(e.data.status)).catch((err)=>console.log(err));
 }else if(formType=="login"){
-    login(data);
+    await login(data).then((e)=>setResponse(e.data.status)).catch((err)=>console.log(err));
     }
     reset();
     setImageUrl(fallBackImage);
@@ -34,6 +41,15 @@ try{
     console.log("error in signing up:",Err);
 }
     }
+    useEffect(()=>{
+        if(response) {
+            navigate("/");
+            setCookie("true");
+            isLoggedIn(true);
+        }
+    },[response])
+
+
   return (
     <div>
         <form action="" onSubmit={handleSubmit(onSubmit)} >
