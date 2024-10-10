@@ -47,9 +47,17 @@ app.use("/blog",blogRoute);
 app.post("/login",handleLogin);
 app.get("/authentication",authentication,(req,res)=>{
     const data=req.user;
-    if(!data) return res.status(402).json({error:"Login needed"});
-    console.log(data);
-return res.data;
+    if(!data) return res.status(401).json({error:"Login needed"});
+return res.json(data);
+})
+app.get("/logout",(req, res) => {
+try{
+    res.clearCookie('token', {httpOnly: true,secure: false,sameSite: 'Lax'});
+    console.log(res.cookie);
+    return res.status(200).json({status:"Successfully loggedOut"});
+}catch(err){
+    return res.send(err);
+}
 })
 
 

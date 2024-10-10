@@ -6,12 +6,17 @@ export const authCheck=async()=>{
          const data=await axios.get(backendUrl+"authentication",{
             withCredentials:true,
          });
-        console.log(data);
         return data;
-    }catch(err){
-        if(err.response.data.error){
-    console.log(err.response.data.error);
-    return {};
-    }
+    }catch(error){
+        if (error.name === "AxiosError") {
+            console.log("AxiosError:", error.message);
+            console.log("Error Code:", error.code);
+            console.log("Request Config:", error.config);
+          } else {
+            console.log("Some other error:", error);
+          }
+
+    return null;
+
     }
 }

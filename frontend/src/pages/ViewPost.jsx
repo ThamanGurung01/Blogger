@@ -1,16 +1,16 @@
 import "../styles/ViewPost.css"
-import React from 'react'
+import React, { useContext } from 'react'
 import {getReq} from '../services/Api/getReq';
 import  DOMPurify from "dompurify";
 import "../styles/Quill.css";
 import {Link,useParams} from "react-router-dom";
+import { authContext } from "../context/authContext";
 const ViewPost = () => {
   const backendUrl=import.meta.env.VITE_BackendUrl;
   const {id}=useParams();
-// const id="67035a40578fc188b921db1f";
-const userId="6702036c2b7457cc26a335f3";
   if(!id) console.log("error no id view Post");
   const [blog,setBlog]=React.useState([{}]);
+  const {loggedIn}=useContext(authContext);
     const fetchBlogData=async()=>{
       const data=await getReq("blog",id);
       setBlog(data.data);
@@ -27,7 +27,7 @@ const userId="6702036c2b7457cc26a335f3";
             <div>
             <div className='quillContainer' dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog?.description) }} />
             </div>
-            {blog.createdBy===userId?<Link to={"/updateBlog/"+blog._id}>Update</Link>:""}
+            {loggedIn&&<Link to={"/updateBlog/"+blog._id}>Update</Link>}
         </div>
     </div>
   )
