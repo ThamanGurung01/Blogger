@@ -6,7 +6,7 @@ const mongoose=require("mongoose");
 
 async function getAllBlog(req,res){
     try{
-       const blogs= await Blog.find({});
+       const blogs= await Blog.find({}).populate("createdBy");
        if(!blogs) return res.status(400).json({error:"blog data"});
         return res.status(200).json(blogs);
       }catch (err){
@@ -18,7 +18,7 @@ async function getAllUserBlog(req,res){
   try{
     const id=req.params.id;
     if(!id) return res.status(400).json({error:"No userId"})
-     const blogs= await Blog.find({createdBy:id});
+     const blogs= await Blog.find({createdBy:id}).populate("createdBy");
      if(!blogs) return res.status(400).json({error:"blog data"});
       return res.status(200).json(blogs);
     }catch (err){
