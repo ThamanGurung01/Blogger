@@ -31,8 +31,8 @@ if(isCookieLoggedIn==="true"){
      <Navbar loggedIn={loggedIn}/>
       <Routes>
       <Route path='*' element={<Post postType="blogs"/>}/>
-      <Route path='/login' element={<Login/>}/>
-      <Route path='/signup' element={<Signup/>}/>
+      <Route path='/login' element={!loggedIn?<Login/>:<Navigate to="/"/>}/>
+      <Route path='/signup' element={!loggedIn?<Signup/>:<Navigate to="/"/>}/>
       <Route path='/addBlog' element={loggedIn?<AddBlog/>:<Navigate to="/login"/>}/>
       <Route path='/viewBlog/:id' element={<ViewPost/>}/>
       <Route path='/updateBlog/:id' element={loggedIn?<UpdateBlog/>:<Navigate to="/login"/>}/>
