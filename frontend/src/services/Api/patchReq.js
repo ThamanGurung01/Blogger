@@ -8,7 +8,8 @@ try{
      const updateRequest=await axios.patch(backendUrl+postFor+"/"+id,formData,{
     headers:{
         "Content-Type":"multipart/form-data",
-    }
+    },
+    withCredentials:true
  });
 return updateRequest;
 }catch(err){

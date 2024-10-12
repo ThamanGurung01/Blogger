@@ -2,6 +2,8 @@ const express=require("express");
 const router=express.Router();
 const multer=require("multer");
 const path=require("path");
+const authentication=require("../middlewares/authentication");
+
 //import controllers
 const {handleGetAllUsers,handleGetUser,handleCreateUser,handleUpdateUser,handleDeleteUser} =require("../controllers/user")
 
@@ -18,6 +20,6 @@ filename:function (req,file,cb){
 const upload=multer({storage});
 
 //route
-router.route("/").get(handleGetAllUsers).post(upload.single("Picture"),handleCreateUser);
-router.route("/:id").get(handleGetUser).patch(upload.single("Picture"),handleUpdateUser).delete(handleDeleteUser);
+router.route("/").get(authentication,handleGetAllUsers).post(upload.single("Picture"),handleCreateUser);
+router.route("/:id").get(authentication,handleGetUser).patch(authentication,upload.single("Picture"),handleUpdateUser).delete(authentication,handleDeleteUser);
 module.exports=router;

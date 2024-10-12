@@ -7,7 +7,7 @@ const mongoose=require("mongoose");
 
 async function handleGetAllUsers(req,res){
 try{
-  const allUsers=await User.find({});
+  const allUsers=await User.find({}).sort({ createdAt: -1 });
   if(!allUsers.length) return res.status(404).json({error:"No users found"});
     return res.status(200).json(allUsers);
 }catch(err){
@@ -21,7 +21,7 @@ async function handleGetUser(req,res){
   try{
     const userId=req.params.id;
     if(!userId||!mongoose.isValidObjectId(userId)) return res.status(400).json({error:"No id given or invalid id"});
-    const user=await User.findById(userId);
+    const user=await User.findById(userId).sort({ createdAt: -1 });
     if(!user) return res.status(404).json({error:"No users found"});
       return res.status(200).json(user);
   }catch(err){
@@ -32,14 +32,17 @@ async function handleGetUser(req,res){
 
 async function handleCreateUser(req,res){
   try{
+    console.log("inside req");
     const {fullName,email,password,gender}=req.body;
     const existingUser=await User.findOne({email});
+    console.log("existing User")
     if(existingUser) return res.status(409).json({eror:"Email already Exists"});
 const newUser={
   fullName,email,password,gender,
 }
 if(req.file) newUser.profileImageURL=`images/${req.file.filename}`;
-    await User.create(newUser);
+    const data=await User.create(newUser);
+    console.log(data);
     return res.status(201).json({status:"success created"});
   }catch (err){
     console.log("Error creating user:",err);

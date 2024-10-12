@@ -35,8 +35,6 @@ try{
     setContent(data.data.description);
     reset({ title: data.data.title });
     setImageUrl(backendUrl+data.data.coverImage || fallBackImage);
-  }else{
-    console.log("no blog id ");
   }
 }catch(Err){
   console.log(Err);

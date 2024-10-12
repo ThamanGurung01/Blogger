@@ -31,9 +31,12 @@ try{
     if(formType=="signup")
     {
     const Picture = document.getElementById("profile").files[0];
-    await postReq(data,"user",Picture).then((e)=>setResponse(e.data.status)).catch((err)=>console.log(err));
+    const reqResponse=await postReq(data,"user",Picture);
+    console.log(reqResponse);
 }else if(formType=="login"){
-    await login(data).then((e)=>setResponse(e.data.status)).catch((err)=>console.log(err));
+    const reqResponse=await login(data).then((e)=>setResponse(e.data.status));
+    console.log(reqResponse);
+
     }
     reset();
     setImageUrl(fallBackImage);

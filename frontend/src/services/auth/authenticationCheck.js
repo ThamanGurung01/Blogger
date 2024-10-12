@@ -3,7 +3,8 @@ export const backendUrl=import.meta.env.VITE_BackendUrl;
 
 export const authCheck=async()=>{
     try{
-         const data=await axios.get(backendUrl+"authentication",{
+      const compUrl=backendUrl+"authentication";
+         const data=await axios.get(compUrl,{
             withCredentials:true,
          });
         return data;
