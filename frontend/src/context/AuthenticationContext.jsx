@@ -5,7 +5,7 @@ import { authContext } from "./authContext";
 import { setCookie } from "../utils/cookie";
 
 const AuthenticationContext = ({children}) => {
-  const [user,setUser]=useState({});
+  const [user,setUser]=useState();
   const [loggedIn,isLoggedIn]=useState(false);
   const getUserData=async()=>{
     const user=await authCheck();
@@ -18,9 +18,9 @@ const AuthenticationContext = ({children}) => {
   }
   useEffect(()=>{
     getUserData();
-  },[])
+  },[]);
   return (
-    <authContext.Provider value={{user,loggedIn,isLoggedIn}}>
+    <authContext.Provider value={{user,loggedIn,isLoggedIn,setUser}}>
       {children}
     </authContext.Provider>
   )

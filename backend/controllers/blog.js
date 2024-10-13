@@ -1,5 +1,4 @@
 const Blog=require("../models/blog")
-const tempUser="6702036c2b7457cc26a335f3";
 const deleteOldImage = require("../services/deleteOldImage");
 const mongoose=require("mongoose");
 
@@ -43,9 +42,11 @@ async function getBlog(req,res){
 async function blogCreation(req,res){
     try{
         const {title,description}=req.body;
+        const data=req.user;
+        if(!data) return res.status(404).json({status:"error in authenticated user data"});
         if(!title||!description) return res.status(400).json({error:"Input all fields"});
     const newBlog={
-        title,description,createdBy:tempUser
+        title,description,createdBy:data._id,
     }
     if(req.file) newBlog.coverImage=`blogImages/${req.file.filename}`;
         await Blog.create(newBlog);

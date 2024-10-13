@@ -1,10 +1,10 @@
 require("dotenv").config();
 const jwt=require("jsonwebtoken");
     const secretKey=process.env.JsonSecretKey;
-const jwtSign=({fullName,email,gender,profileImageURL})=>{
+const jwtSign=({_id,fullName,email,gender,profileImageURL})=>{
     if( !fullName||!email||!gender||!profileImageURL) return {error:"No data"};
     const payload={
-        fullName,email,gender,profileImageURL
+        _id,fullName,email,gender,profileImageURL
     }
     const token=jwt.sign(payload,secretKey);
     return token;

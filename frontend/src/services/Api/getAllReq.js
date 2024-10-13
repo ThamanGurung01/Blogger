@@ -6,9 +6,7 @@ export const getAllReq=async(what,id=null)=>{
         let compUrl=backendUrl+what;
         let allData={};
         if (id&&what==="blog") {
-            console.log("inside my blog");
             compUrl+="/userBlog/"+id;
-        console.log(compUrl);
         allData=await axios.get(compUrl,{
             withCredentials:true,
         });

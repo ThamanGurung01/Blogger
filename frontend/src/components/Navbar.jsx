@@ -8,15 +8,16 @@ import {logout} from "../services/Api/logout"
 import { useContext, useEffect } from "react"
 const Navbar = () => {
 
-  const {loggedIn,isLoggedIn}=useContext(authContext);
+  const {loggedIn,isLoggedIn,setUser}=useContext(authContext);
   const navigate=useNavigate();
   const handleLogOut=async()=>{
     try{  
     deleteCookie("isLoggedIn");
     await logout().then(()=>{
-      navigate("/");
       isLoggedIn(false);
       setCookie("false");
+      setUser(null);
+      navigate("/");
     })
   }catch(err){
     console.log("Logout:",err);
@@ -24,7 +25,7 @@ const Navbar = () => {
   useEffect(()=>{
     const cookie=getCookie("isLoggedIn");
     if(cookie==="true") isLoggedIn(true);
-  },[loggedIn])
+  },[loggedIn,isLoggedIn])
 
   return (
     <div className="navbar">

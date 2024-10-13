@@ -32,17 +32,14 @@ async function handleGetUser(req,res){
 
 async function handleCreateUser(req,res){
   try{
-    console.log("inside req");
     const {fullName,email,password,gender}=req.body;
     const existingUser=await User.findOne({email});
-    console.log("existing User")
     if(existingUser) return res.status(409).json({eror:"Email already Exists"});
 const newUser={
   fullName,email,password,gender,
 }
 if(req.file) newUser.profileImageURL=`images/${req.file.filename}`;
     const data=await User.create(newUser);
-    console.log(data);
     return res.status(201).json({status:"success created"});
   }catch (err){
     console.log("Error creating user:",err);

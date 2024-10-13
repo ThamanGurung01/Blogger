@@ -10,7 +10,7 @@ import {useNavigate} from "react-router-dom";
 import { setCookie } from "../utils/cookie";
 
 const Form = ({formType}) => {
-    const {isLoggedIn}=useContext(authContext);
+    const {isLoggedIn,user}=useContext(authContext);
     const navigate=useNavigate();
     const [imageUrl,setImageUrl]=useState(fallBackImage);
     const [response,setResponse]=useState(null);
@@ -34,10 +34,9 @@ try{
     const reqResponse=await postReq(data,"user",Picture);
     console.log(reqResponse);
 }else if(formType=="login"){
-    const reqResponse=await login(data).then((e)=>setResponse(e.data.status));
-    console.log(reqResponse);
-
+    await login(data).then((e)=>setResponse(e.data.status));
     }
+    console.log(user);
     reset();
     setImageUrl(fallBackImage);
 }catch(Err){
@@ -46,9 +45,9 @@ try{
     }
     useEffect(()=>{
         if(response) {
-            navigate("/");
             setCookie("true");
             isLoggedIn(true);
+            navigate("/");
         }
     },[response])
 
