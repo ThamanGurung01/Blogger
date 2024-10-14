@@ -5,29 +5,40 @@ import { getAllReq } from '../services/Api/getAllReq';
 import "../styles/Quill.css";
 import {Link} from "react-router-dom";
 import { authContext } from '../context/authContext';
+import { authCheck } from "../services/auth/authenticationCheck";
 const Post = ({postType}) => {
   const backendUrl=import.meta.env.VITE_BackendUrl;
 const [blogs,setBlogs]=React.useState([{}]);
-const {loggedIn,user}=useContext(authContext);
+const [user,setUser]=React.useState(null);
+const {loggedIn}=useContext(authContext);
 const id=user?._id;
   const fetchBlogData=async()=>{
-    let data={};
     if(id&&postType==="userBlog"){
-      console.log("userblog");
-      console.log(user);
-      data=await getAllReq("blog",id);
-    setBlogs(data);
-  }else {
-    data=await getAllReq("blog");
-      console.log("blog");
-      console.log(user);
+      await getAllReq("blog",id).then((data)=>{
+      setBlogs(data);
+      });
+  }else if(postType==="blogs") {
+    await getAllReq("blog").then((data)=>{
+      setBlogs(data);
+    });
   }
-  setBlogs(data);
 }
-  React.useEffect(()=>{
-    fetchBlogData();
-  },[id,user,postType,loggedIn]);
 
+const getUserData=async()=>{
+    const user=await authCheck();
+    if(user&&user.length!=0){
+      setUser(user.data);
+    }
+  }
+  React.useEffect(()=>{
+    if(loggedIn){
+      getUserData();
+    }
+    fetchBlogData();
+    if(!user||user.length==0){
+      setBlogs([{}]);
+    }
+  },[postType]);
   return (
     <div className="container-post">
       <h1 className="heading2">Posts</h1>

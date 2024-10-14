@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { authCheck } from "../services/auth/authenticationCheck";
 import { authContext } from "./authContext";
-import { setCookie } from "../utils/cookie";
+import { getCookie, setCookie } from "../utils/cookie";
 
 const AuthenticationContext = ({children}) => {
   const [user,setUser]=useState();
@@ -18,7 +18,9 @@ const AuthenticationContext = ({children}) => {
   }
   useEffect(()=>{
     getUserData();
-  },[]);
+    const cookie=getCookie("isLoggedIn");
+    if(cookie==="true"){isLoggedIn(true)}else{isLoggedIn(false)};
+  },[loggedIn]);
   return (
     <authContext.Provider value={{user,loggedIn,isLoggedIn,setUser}}>
       {children}
