@@ -7,8 +7,10 @@ import { getCookie, setCookie } from "../utils/cookie";
 const AuthenticationContext = ({children}) => {
   const [user,setUser]=useState();
   const [loggedIn,isLoggedIn]=useState(false);
+  const [loading,isLoading]=useState(true);
   const getUserData=async()=>{
     const user=await authCheck();
+    isLoading(false);
     if(!user){
       setCookie("false");
     }else{
@@ -22,7 +24,7 @@ const AuthenticationContext = ({children}) => {
     if(cookie==="true"){isLoggedIn(true)}else{isLoggedIn(false)};
   },[loggedIn]);
   return (
-    <authContext.Provider value={{user,loggedIn,isLoggedIn,setUser}}>
+    <authContext.Provider value={{user,loggedIn,loading,isLoggedIn,setUser}}>
       {children}
     </authContext.Provider>
   )

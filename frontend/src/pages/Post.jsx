@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types';
 import { getAllReq } from '../services/Api/getAllReq';
 // import  DOMPurify from "dompurify";
@@ -8,13 +8,14 @@ import { authContext } from '../context/authContext';
 import { authCheck } from "../services/auth/authenticationCheck";
 const Post = ({postType}) => {
   const backendUrl=import.meta.env.VITE_BackendUrl;
-const [blogs,setBlogs]=React.useState([{}]);
+const [blogs,setBlogs]=React.useState(null);
 const [user,setUser]=React.useState(null);
 const {loggedIn}=useContext(authContext);
-const id=user?._id;
+const [userId,setUserId]=useState(null);
   const fetchBlogData=async()=>{
-    if(id&&postType==="userBlog"){
-      await getAllReq("blog",id).then((data)=>{
+    setBlogs(null);
+    if(userId&&postType==="userBlog"){
+      await getAllReq("blog",userId).then((data)=>{
       setBlogs(data);
       });
   }else if(postType==="blogs") {
@@ -28,17 +29,18 @@ const getUserData=async()=>{
     const user=await authCheck();
     if(user&&user.length!=0){
       setUser(user.data);
+      setUserId(user.data._id);
     }
   }
-  React.useEffect(()=>{
-    if(loggedIn){
+    React.useEffect(() => {
+    if (loggedIn && !user) {
       getUserData();
     }
-    fetchBlogData();
-    if(!user||user.length==0){
-      setBlogs([{}]);
-    }
-  },[postType]);
+  }, [loggedIn, user]);
+
+  React.useEffect(() => {
+    fetchBlogData(); 
+  }, [postType, userId]);
   return (
     <div className="container-post">
       <h1 className="heading2">Posts</h1>

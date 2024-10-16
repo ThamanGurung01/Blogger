@@ -15,7 +15,6 @@ const Profile = () => {
     if(!users){
       getUserData();
     }
-    console.log(users);
   },[users])
   return (
     <div>
