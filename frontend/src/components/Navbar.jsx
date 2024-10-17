@@ -8,7 +8,7 @@ import {logout} from "../services/Api/logout"
 import { useContext, useEffect } from "react"
 const Navbar = () => {
 
-  const {loggedIn,isLoggedIn,setUser}=useContext(authContext);
+  const {loggedIn,isLoggedIn,setUser,loading}=useContext(authContext);
   const navigate=useNavigate();
   const handleLogOut=async()=>{
     try{  
@@ -24,8 +24,8 @@ const Navbar = () => {
   }}
   useEffect(()=>{
     const cookie=getCookie("isLoggedIn");
-    if(cookie==="true") isLoggedIn(true);
-  },[loggedIn,isLoggedIn])
+    if(cookie==="true") {isLoggedIn(true)}else{isLoggedIn(false)};
+  },[loggedIn,isLoggedIn,loading])
 
   return (
     <div className="navbar">
