@@ -26,6 +26,18 @@ const userSchema=new mongoose.Schema({
         type:String,
         default:"USER",
     },
+    //statistics
+    posts:{
+        type:Number,
+        default:0,
+    },
+    comments:{
+        type:Number,
+        default:0,
+    },
+    clicks:{
+        type:String,
+    }
 },{timestamps:true});
 
 userSchema.pre("save",async function(next){
