@@ -4,7 +4,7 @@ const deleteOldImage = require("../services/deleteOldImage");
 const { jwtSign } = require("../services/jwt");
 const checkPassword =require("../services/password");
 const mongoose=require("mongoose");
-
+const Comment=require("../models/comment");
 async function handleGetAllUsers(req,res){
 try{
   const allUsers=await User.find({}).sort({ createdAt: -1 });
@@ -103,4 +103,26 @@ try{
 }
 }
 
-module.exports={handleGetAllUsers,handleGetUser,handleCreateUser,handleUpdateUser,handleDeleteUser,handleLogin};
+async function getTotalBlog(req,res){
+try{
+  const user=req.user;
+  const userId=user._id;
+  if(!userId){
+    return res.status(404).json({error:"No userId or not authenticated"});
+  }
+  const totalBlog=await Blog.countDocuments({createdBy:userId});
+  console.log(totalBlog);
+  return res.status(200).json({totalBlog:totalBlog});
+}catch(err){
+  console.log("total blog error:",err);
+}
+}
+async function getTotalBlogClick(req,res){
+  
+}
+async function getTotalBlogComment(req,res){
+  
+}
+
+
+module.exports={handleGetAllUsers,handleGetUser,handleCreateUser,handleUpdateUser,handleDeleteUser,handleLogin,getTotalBlog,getTotalBlogClick,getTotalBlogComment};

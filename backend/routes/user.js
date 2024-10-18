@@ -5,7 +5,7 @@ const path=require("path");
 const authentication=require("../middlewares/authentication");
 
 //import controllers
-const {handleGetAllUsers,handleGetUser,handleCreateUser,handleUpdateUser,handleDeleteUser} =require("../controllers/user")
+const {handleGetAllUsers,handleGetUser,handleCreateUser,handleUpdateUser,handleDeleteUser,getTotalBlog} =require("../controllers/user")
 
 //multer
 const storage=multer.diskStorage({
@@ -22,4 +22,6 @@ const upload=multer({storage});
 //route
 router.route("/").get(authentication,handleGetAllUsers).post(upload.single("Picture"),handleCreateUser);
 router.route("/:id").get(authentication,handleGetUser).patch(authentication,upload.single("Picture"),handleUpdateUser).delete(authentication,handleDeleteUser);
+
+//stastics router
 module.exports=router;

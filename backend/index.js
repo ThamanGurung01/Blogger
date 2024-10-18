@@ -11,6 +11,7 @@ const blogRoute=require("./routes/blog");
 const connection=require("./config/db");
 const { handleLogin } = require("./controllers/user");
 const authentication =require("./middlewares/authentication");
+const {getTotalBlog,getTotalBlogClick,getTotalBlogComment}=require("./controllers/user")
 //env
 const PORT=process.env.PORT||8001;
 const mongoDbURL=process.env.MongoDb_URL||"mongodb://127.0.0.1:27017/blogger";
@@ -44,6 +45,13 @@ app.get("/",(req,res)=>{
 });
 app.use("/user",userRoute);
 app.use("/blog",blogRoute);
+//total blog
+app.get("/totalBlog",authentication,getTotalBlog);
+app.get("/totalClick",getTotalBlogClick);
+app.get("/totalComments",getTotalBlogComment);
+
+
+
 app.post("/login",handleLogin);
 app.get("/authentication",authentication,(req,res)=>{
     const data=req.user;
