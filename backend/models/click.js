@@ -10,5 +10,5 @@ const clickSchema=new mongoose.Schema({
 },
 },{timestamps:true});
 
-const Comment=mongoose.model("comment",clickSchema);
-module.exports=Comment;
+const Click=mongoose.model("click",clickSchema);
+module.exports=Click;

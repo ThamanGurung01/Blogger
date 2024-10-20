@@ -5,6 +5,7 @@ const { jwtSign } = require("../services/jwt");
 const checkPassword =require("../services/password");
 const mongoose=require("mongoose");
 const Comment=require("../models/comment");
+const Click=require("../models/click");
 async function handleGetAllUsers(req,res){
 try{
   const allUsers=await User.find({}).sort({ createdAt: -1 });
@@ -34,7 +35,7 @@ async function handleCreateUser(req,res){
   try{
     const {fullName,email,password,gender}=req.body;
     const existingUser=await User.findOne({email});
-    if(existingUser) return res.status(409).json({eror:"Email already Exists"});
+    if(existingUser) return res.status(409).json({error:"Email already Exists"});
 const newUser={
   fullName,email,password,gender,
 }
@@ -123,6 +124,42 @@ async function getTotalBlogClick(req,res){
 async function getTotalBlogComment(req,res){
   
 }
+async function blogClick(req,res){
+  try{
+    const blogId=req.params.id;
+    if(!blogId) return res.status(404).json({status:"blog Id required"});
+      const {_id}=req.user;
+      if(!_id) return res.status(404).json({status:"error in authenticated user data"});
+      const existingUser=await Click.findOne({_id});
+      if(existingUser) return res.status(409).json({error:"Already clicked"});
+      await Click.create({
+        blog:blogId,
+        clickedBy:_id,
+      });
+      return res.status(201).json({status:"success clicked"});
+    }catch (err){
+      console.log("Error clicking server error:",err);
+      return res.status(500).json({error:"Server Error Occured"})
+    }
+}
+async function blogCommentCreation(req,res){
+  try{
+    const blogId=req.params.id;
+    if(!blogId) return res.status(404).json({error:"blog Id required"});
+      const {_id}=req.user;
+      if(!_id) return res.status(404).json({error:"error in authenticated user data"});
+      const {description}=req.body;
+      if(!description) return res.status(400).json({error:"Input all fields for comment"})
+      await Comment.create({
+        description,
+        blog:blogId,
+        commentedBy:_id,
+      });
+      return res.status(201).json({status:"success commented"});
+    }catch (err){
+      console.log("Error commenting: server error:",err);
+      return res.status(500).json({error:"Server Error Occured"})
+    }
+}
 
-
-module.exports={handleGetAllUsers,handleGetUser,handleCreateUser,handleUpdateUser,handleDeleteUser,handleLogin,getTotalBlog,getTotalBlogClick,getTotalBlogComment};
+module.exports={handleGetAllUsers,handleGetUser,handleCreateUser,handleUpdateUser,handleDeleteUser,handleLogin,getTotalBlog,getTotalBlogClick,getTotalBlogComment,blogCommentCreation,blogClick};
