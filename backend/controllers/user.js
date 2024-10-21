@@ -119,7 +119,17 @@ try{
 }
 }
 async function getTotalBlogClick(req,res){
-  
+  try{
+      const {_id}=req.user;
+      if(!_id) return res.status(404).json({status:"error in authenticated user data"});
+      const existsBlog=await Blog.find({createdBy:_id});
+      if(existsBlog.length===0) return res.status(200).json({count:"0"});
+      console.log(existsBlog);
+      return res.status(201).json({status:"success clicked"});
+    }catch (err){
+      console.log("Error clicking server error:",err);
+      return res.status(500).json({error:"Server Error Occured"})
+    }
 }
 async function getTotalBlogComment(req,res){
   
@@ -130,7 +140,9 @@ async function blogClick(req,res){
     if(!blogId) return res.status(404).json({status:"blog Id required"});
       const {_id}=req.user;
       if(!_id) return res.status(404).json({status:"error in authenticated user data"});
-      const existingUser=await Click.findOne({_id});
+      const blog=await Click.find({blogId});
+      let existingUser=false;
+      blog.map((element)=>existingUser=element.clickedBy!==_id);
       if(existingUser) return res.status(409).json({error:"Already clicked"});
       await Click.create({
         blog:blogId,
