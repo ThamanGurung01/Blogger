@@ -137,11 +137,15 @@ async function getTotalBlogClick(req,res){
 }
 async function getTotalBlogComment(req,res){
   try{
-    const blogId=req.params.id;
-    if(!blogId) return res.status(404).json({error:"blog Id required"});
-      const totalComment=await Comment.countDocuments({
-        blog:blogId,
+    const {_id}=req.user;
+    if(!_id) return res.status(404).json({status:"error in authenticated user data"});
+    const Blogs=await Blog.find({createdBy:_id});
+    let totalComment=0;
+    for(const blog of Blogs){
+      totalComment+=await Comment.countDocuments({
+        blog:blog._id,
       });
+    }
       return res.status(200).json({count:totalComment});
     }catch (err){
       console.log("Error getting total commenting: server error:",err);
@@ -152,6 +156,7 @@ async function blogClick(req,res){
   try{
     const blogId=req.params.id;
     if(!blogId) return res.status(400).json({status:"blog Id required"});
+    console.log(req.user)
       const {_id}=req.user;
       if(!_id) return res.status(401).json({status:"error in authenticated user data"});
       const existingUser=await Click.findOne({
@@ -163,6 +168,7 @@ async function blogClick(req,res){
         blog:blogId,
         clickedBy:_id,
       });
+      console.log("success");
       return res.status(201).json({status:"success clicked"});
     }catch (err){
       console.error("Error clicking server error:",err);

@@ -6,11 +6,13 @@ import "../styles/Quill.css";
 import {Link,useParams} from "react-router-dom";
 import { authContext } from "../context/authContext";
 import { authCheck } from "../services/auth/authenticationCheck";
+import { blogClick } from "../services/Api/blogClick";
+
 const ViewPost = () => {
   const backendUrl=import.meta.env.VITE_BackendUrl;
   const {id}=useParams();
   if(!id) console.log("error no id view Post");
-  const [blog,setBlog]=React.useState([{}]);
+  const [blog,setBlog]=React.useState({});
   const [userId,setUserId]=React.useState(null);
   const [isUsersBlog,setIsUsersBlog]=useState(false);
   const {loggedIn}=useContext(authContext);
@@ -26,9 +28,11 @@ const ViewPost = () => {
       }
     }
     React.useEffect(()=>{
-      fetchBlogData();
-
-    },[]);
+if(id){
+  fetchBlogData();
+  blogClick(id);
+}
+    },[id]);
     React.useEffect(()=>{
       if(!userId){
         getUserData();
@@ -36,7 +40,7 @@ const ViewPost = () => {
         if(blog.createdBy===userId){
         setIsUsersBlog(true);
       }
-    },[blog,isUsersBlog,userId]);
+    },[blog,userId]);
   return (
     <div className="container-post">
         <h1 className="heading2">Posts</h1>
