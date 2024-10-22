@@ -124,25 +124,40 @@ async function getTotalBlogClick(req,res){
       if(!_id) return res.status(404).json({status:"error in authenticated user data"});
       const existsBlog=await Blog.find({createdBy:_id});
       if(existsBlog.length===0) return res.status(200).json({count:"0"});
-      console.log(existsBlog);
-      return res.status(201).json({status:"success clicked"});
+      let totalClick=0;
+      for (const blog of existsBlog) {
+        const clickCount = await Click.countDocuments({ blog: blog._id });
+        totalClick += clickCount;
+      }
+      return res.status(201).json({count:totalClick});
     }catch (err){
       console.log("Error clicking server error:",err);
       return res.status(500).json({error:"Server Error Occured"})
     }
 }
 async function getTotalBlogComment(req,res){
-  
+  try{
+    const blogId=req.params.id;
+    if(!blogId) return res.status(404).json({error:"blog Id required"});
+      const totalComment=await Comment.countDocuments({
+        blog:blogId,
+      });
+      return res.status(200).json({count:totalComment});
+    }catch (err){
+      console.log("Error getting total commenting: server error:",err);
+      return res.status(500).json({error:"Server Error Occured"})
+    }
 }
 async function blogClick(req,res){
   try{
     const blogId=req.params.id;
-    if(!blogId) return res.status(404).json({status:"blog Id required"});
+    if(!blogId) return res.status(400).json({status:"blog Id required"});
       const {_id}=req.user;
-      if(!_id) return res.status(404).json({status:"error in authenticated user data"});
-      const blog=await Click.find({blogId});
-      let existingUser=false;
-      blog.map((element)=>existingUser=element.clickedBy!==_id);
+      if(!_id) return res.status(401).json({status:"error in authenticated user data"});
+      const existingUser=await Click.findOne({
+        blog:blogId,
+        clickedBy:_id,
+      });
       if(existingUser) return res.status(409).json({error:"Already clicked"});
       await Click.create({
         blog:blogId,
@@ -150,16 +165,16 @@ async function blogClick(req,res){
       });
       return res.status(201).json({status:"success clicked"});
     }catch (err){
-      console.log("Error clicking server error:",err);
+      console.error("Error clicking server error:",err);
       return res.status(500).json({error:"Server Error Occured"})
     }
 }
 async function blogCommentCreation(req,res){
   try{
     const blogId=req.params.id;
-    if(!blogId) return res.status(404).json({error:"blog Id required"});
+    if(!blogId) return res.status(400).json({error:"blog Id required"});
       const {_id}=req.user;
-      if(!_id) return res.status(404).json({error:"error in authenticated user data"});
+      if(!_id) return res.status(401).json({error:"error in authenticated user data"});
       const {description}=req.body;
       if(!description) return res.status(400).json({error:"Input all fields for comment"})
       await Comment.create({
@@ -173,5 +188,19 @@ async function blogCommentCreation(req,res){
       return res.status(500).json({error:"Server Error Occured"})
     }
 }
+async function getComments(req,res){
+  try{
+    const blogId=req.params.id;
+    if(!blogId) return res.status(400).json({error:"blog Id required"});
+      const comments=await Comment.find({
+        blog:blogId,
+      });
+      if(!comments.length) return res.status(200).json({error:"No Comments found"});
+      return res.status(200).json(comments);
+    }catch (err){
+      console.error("Error commenting: server error:",err);
+      return res.status(500).json({error:"Server Error Occured"})
+    }
+}
 
-module.exports={handleGetAllUsers,handleGetUser,handleCreateUser,handleUpdateUser,handleDeleteUser,handleLogin,getTotalBlog,getTotalBlogClick,getTotalBlogComment,blogCommentCreation,blogClick};
+module.exports={handleGetAllUsers,handleGetUser,handleCreateUser,handleUpdateUser,handleDeleteUser,handleLogin,getTotalBlog,getTotalBlogClick,getTotalBlogComment,blogCommentCreation,blogClick,getComments};
