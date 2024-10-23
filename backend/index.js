@@ -46,8 +46,8 @@ app.get("/",(req,res)=>{
 app.use("/user",userRoute);
 app.use("/blog",blogRoute);
 //total blog
-app.get("/totalBlog",authentication,getTotalBlog);
-app.get("/totalClick",authentication,getTotalBlogClick);
+app.get("/totalBlogs",authentication,getTotalBlog);
+app.get("/totalClicks",authentication,getTotalBlogClick);
 app.get("/totalComments",authentication,getTotalBlogComment);
 
 
