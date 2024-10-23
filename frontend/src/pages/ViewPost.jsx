@@ -18,7 +18,7 @@ const ViewPost = () => {
   const [isUsersBlog,setIsUsersBlog]=useState(false);
   const {loggedIn}=useContext(authContext);
   const [description,setDescription]=useState(null);
-  const [comment,setComment]=useState(null);
+  const [comments,setComments]=useState([]);
   const [response,setResponse]=useState(null);
   const handleDescription=(e)=>{
     setDescription(e.target.value);
@@ -26,18 +26,21 @@ const ViewPost = () => {
   const submitComment=async(e)=>{
     e.preventDefault();
 console.log(description);
-if(description&&id){
+if(description&&description.length>5&&id){
   const response=await blogComment(id,description);
-  response.data.status?setResponse(response.data.status):setResponse(response.data.error)
+  setResponse(response.data);
+  const updatedComments = await blogComment(id);
+  setComments(updatedComments.data);
 }else{
-  setResponse("Comment must be greater than 5 letters");
+  setResponse({error:"Comment must be greater than 5 letters"});
 }
   }
     const fetchBlogData=async()=>{
       const data=await getReq("blog",id);
   const comment=await blogComment(id);
   setBlog(data.data);
-  setComment(comment);
+  console.log(comment.data.error)
+  setComments(comment.data);
     }
     const getUserData=async()=>{
       const user=await authCheck();
@@ -75,14 +78,21 @@ if(id){
                 <form onSubmit={(e)=>submitComment(e)}>
                 <label htmlFor="description">Comment</label><br />
               <textarea className="border-2" name="description" id="description" onChange={(e)=>handleDescription(e)} ></textarea><br />
-              <button type="submit">comment</button>
+              <button className="border-2" type="submit">comment</button>
                 </form>
               </div>
               <div className="comment-show">
-              <p>{comment}</p>
+                <h1>----Comments----</h1>
+              {comments.length > 0 ? (
+              comments.map((comment, index) => (
+                <p key={index}>{comment.text}</p>
+              ))
+            ) : (
+              <p>No comments yet.</p>
+            )}
               </div>
             </div>
-            <p>{response}</p>
+            {response && <p>{response.status ? response.status : response.error}</p>}
         </div>
     </div>
   )
