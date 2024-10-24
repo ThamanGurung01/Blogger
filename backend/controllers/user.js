@@ -112,7 +112,6 @@ try{
     return res.status(404).json({error:"No userId or not authenticated"});
   }
   const totalBlog=await Blog.countDocuments({createdBy:userId});
-  console.log(totalBlog);
   return res.status(200).json(totalBlog);
 }catch(err){
   console.log("total blog error:",err);
@@ -156,7 +155,6 @@ async function blogClick(req,res){
   try{
     const blogId=req.params.id;
     if(!blogId) return res.status(400).json({status:"blog Id required"});
-    console.log(req.user)
       const {_id}=req.user;
       if(!_id) return res.status(401).json({status:"error in authenticated user data"});
       const existingUser=await Click.findOne({
@@ -168,7 +166,6 @@ async function blogClick(req,res){
         blog:blogId,
         clickedBy:_id,
       });
-      console.log("success");
       return res.status(201).json({status:"success clicked"});
     }catch (err){
       console.error("Error clicking server error:",err);
@@ -200,7 +197,7 @@ async function getComments(req,res){
     if(!blogId) return res.status(400).json({error:"blog Id required"});
       const comments=await Comment.find({
         blog:blogId,
-      });
+      }).populate("commentedBy");
       if(!comments.length) return res.status(200).json({error:"No Comments found"});
       return res.status(200).json(comments);
     }catch (err){

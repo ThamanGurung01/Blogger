@@ -25,21 +25,20 @@ const ViewPost = () => {
   }
   const submitComment=async(e)=>{
     e.preventDefault();
-console.log(description);
-if(description&&description.length>5&&id){
+if(description&&id){
   const response=await blogComment(id,description);
   setResponse(response.data);
   const updatedComments = await blogComment(id);
   setComments(updatedComments.data);
 }else{
-  setResponse({error:"Comment must be greater than 5 letters"});
+  setResponse({error:"Comment required"});
 }
   }
     const fetchBlogData=async()=>{
       const data=await getReq("blog",id);
   const comment=await blogComment(id);
   setBlog(data.data);
-  console.log(comment.data.error)
+  console.log(comment.data);
   setComments(comment.data);
     }
     const getUserData=async()=>{
@@ -77,7 +76,7 @@ if(id){
               <div className="form">
                 <form onSubmit={(e)=>submitComment(e)}>
                 <label htmlFor="description">Comment</label><br />
-              <textarea className="border-2" name="description" id="description" onChange={(e)=>handleDescription(e)} ></textarea><br />
+              <input type="text" className="border-2" name="description" id="description" onChange={(e)=>handleDescription(e)} /><br />
               <button className="border-2" type="submit">comment</button>
                 </form>
               </div>
@@ -85,7 +84,10 @@ if(id){
                 <h1>----Comments----</h1>
               {comments.length > 0 ? (
               comments.map((comment, index) => (
-                <p key={index}>{comment.text}</p>
+<div key={index}>
+<p>{comment.description}</p>
+<img src={backendUrl+comment?.commentedBy?.profileImageURL} className="inline" width={"30px"} alt="profile picture"/> <p className="inline" >{comment?.commentedBy?.fullName}</p>
+</div>
               ))
             ) : (
               <p>No comments yet.</p>

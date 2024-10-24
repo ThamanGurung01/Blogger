@@ -7,7 +7,7 @@ if(!data){
  const comments=await axios.get(compUrl,{withCredentials:true});
  return comments;
 }else{
-    const response=await axios.post(compUrl,data,{withCredentials:true});
+    const response=await axios.post(compUrl,{description:data},{withCredentials:true});
     return response;
 }
 }catch(Err){
