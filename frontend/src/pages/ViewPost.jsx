@@ -20,25 +20,30 @@ const ViewPost = () => {
   const [description,setDescription]=useState(null);
   const [comments,setComments]=useState([]);
   const [response,setResponse]=useState(null);
+  const [submitted,setSubmitted]=useState(false);
   const handleDescription=(e)=>{
     setDescription(e.target.value);
   }
   const submitComment=async(e)=>{
     e.preventDefault();
+    setSubmitted(true);
 if(description&&id){
   const response=await blogComment(id,description);
   setResponse(response.data);
+  setDescription(null);
+  setSubmitted(false);
+  setTimeout(()=>{setResponse(null)},2000);
   const updatedComments = await blogComment(id);
   setComments(updatedComments.data);
 }else{
   setResponse({error:"Comment required"});
 }
+
   }
     const fetchBlogData=async()=>{
       const data=await getReq("blog",id);
   const comment=await blogComment(id);
   setBlog(data.data);
-  console.log(comment.data);
   setComments(comment.data);
     }
     const getUserData=async()=>{
@@ -73,13 +78,13 @@ if(id){
             </div>
             {loggedIn&&isUsersBlog&&<Link to={"/updateBlog/"+blog._id}>Update</Link>} <br />
             <div className="comment">
-              <div className="form">
+              {loggedIn&&<div className="form">
                 <form onSubmit={(e)=>submitComment(e)}>
                 <label htmlFor="description">Comment</label><br />
               <input type="text" className="border-2" name="description" id="description" onChange={(e)=>handleDescription(e)} /><br />
-              <button className="border-2" type="submit">comment</button>
+              <button className="border-2" type="submit" disabled={submitted}>comment</button>
                 </form>
-              </div>
+              </div>}
               <div className="comment-show">
                 <h1>----Comments----</h1>
               {comments.length > 0 ? (
