@@ -11,8 +11,6 @@ export const authCheck=async()=>{
     }catch(error){
         if (error.name === "AxiosError") {
             console.log("AxiosError:", error.message);
-            console.log("Error Code:", error.code);
-            console.log("Request Config:", error.config);
           } else {
             console.log("Some other error:", error);
           }
