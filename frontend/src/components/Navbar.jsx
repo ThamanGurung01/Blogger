@@ -33,10 +33,8 @@ const Navbar = () => {
          <ul>
           <li><Link to="/">Blogs</Link></li>
           {loggedIn&&<><li><Link to="/myPosts">My Posts</Link></li><li><Link to="/profile">Profile</Link></li></>}
-          
-          <li><Link to="/aboutUs">About Us</Link></li>
-          {!loggedIn&&<><li><Link to="/signup">SignUp</Link></li>
-          <li><Link to="/login">Login</Link></li></>}
+          {!loggedIn&&<>
+          <li><Link to="/login">Login / Register</Link></li></>}
           {loggedIn&&<li><button onClick={handleLogOut}>SignOut</button></li>}
           </ul>
     </div>
