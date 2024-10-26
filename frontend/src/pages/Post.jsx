@@ -50,8 +50,9 @@ const getUserData=async()=>{
             {postType!=="userBlog"&&blog?.createdBy?.profileImageURL&&<Link to="profile"><img src={backendUrl+blog?.createdBy?.profileImageURL} className="inline" width={"30px"} alt="profile picture"/> <p className="inline" >{blog?.createdBy?.fullName}</p></Link>}
          <Link to={"/viewBlog/"+blog._id}>
           <h1>{blog?.title}</h1>
-            {blog.coverImage&&<img src={backendUrl+blog.coverImage} width={"200px"} alt="Blog CoverImage" />}
+            {blog.coverImage&&<img src={backendUrl+blog.coverImage} className='inline' width={"200px"} alt="Blog CoverImage" />}
             </Link>
+            <br /><br />
           </div>
           )
          )}

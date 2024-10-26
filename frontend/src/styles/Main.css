@@ -4,4 +4,11 @@
 html{
     @apply font-sans;
 }
+img {
+    user-select: none;    
+    -webkit-user-drag: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    pointer-events: none;
+  }
   
