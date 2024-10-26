@@ -155,16 +155,16 @@ async function blogClick(req,res){
   try{
     const blogId=req.params.id;
     if(!blogId) return res.status(400).json({status:"blog Id required"});
-      const {_id}=req.user;
-      if(!_id) return res.status(401).json({status:"error in authenticated user data"});
+      const userId=req.user?._id;
+      if(!userId) return res.status(401).json({status:"error in authenticated user data"});
       const existingUser=await Click.findOne({
         blog:blogId,
-        clickedBy:_id,
+        clickedBy:userId,
       });
       if(existingUser) return res.status(409).json({error:"Already clicked"});
       await Click.create({
         blog:blogId,
-        clickedBy:_id,
+        clickedBy:userId,
       });
       return res.status(201).json({status:"success clicked"});
     }catch (err){
