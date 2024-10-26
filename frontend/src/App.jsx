@@ -9,7 +9,6 @@ import Signup from './pages/Signup'
 import Post from './pages/Post'
 import Login from "./pages/Login"
 import Profile from './pages/Profile'
-import AboutUs from './pages/AboutUs'
 import { Navigate } from "react-router-dom";
 import { useEffect, useState,useContext } from 'react'
 import { getCookie } from './utils/cookie'
@@ -38,7 +37,6 @@ if(isCookieLoggedIn==="true"){
       <Route path='/updateBlog/:id' element={loggedIn?<UpdateBlog/>:<Navigate to="/login"/>}/>
       <Route path='/myPosts' element={loggedIn?<Post postType="userBlog"/>:<Navigate to="/login"/>}/>
       <Route path='/profile' element={loggedIn?<Profile/>:<Navigate to="/login"/>}/>
-      <Route path='/aboutUs' element={<AboutUs/>}/>
       </Routes>
     </div>
   )
