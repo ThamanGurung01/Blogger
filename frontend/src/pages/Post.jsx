@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import { getAllReq } from '../services/Api/getAllReq';
 // import  DOMPurify from "dompurify";
 import "../styles/Quill.css";
+import "../styles/Post.css";
 import {Link} from "react-router-dom";
 import { authContext } from '../context/authContext';
 import { authCheck } from "../services/auth/authenticationCheck";
+
 const Post = ({postType}) => {
   const backendUrl=import.meta.env.VITE_BackendUrl;
 const [blogs,setBlogs]=React.useState(null);

@@ -1,3 +1,15 @@
 .navbar{
-@apply bg-gray-100 p-2;
+@apply bg-gray-100 w-full min-h-screen;
+}
+.top-navbar{
+    @apply flex justify-between
+}
+.heading1{
+    @apply p-4  inline-block
+}
+.hamburger-exit{
+    @apply p-5 text-red-500 text-2xl font-extrabold inline-block cursor-pointer;
+}
+.list-container{
+    @apply mt-6 pt-5 min-h-72 text-2xl font-semibold flex flex-col items-center justify-between;
 }

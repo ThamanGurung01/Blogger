@@ -29,8 +29,11 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
+         <div className="top-navbar">
          <Link to="/"><h1 className='heading1'>Blogger</h1></Link>
-         <ul>
+         <span className="hamburger-exit">X</span>
+         </div>
+         <ul className="list-container">
           <li><Link to="/">Blogs</Link></li>
           {loggedIn&&<><li><Link to="/myPosts">My Posts</Link></li><li><Link to="/profile">Profile</Link></li></>}
           {!loggedIn&&<>
