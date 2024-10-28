@@ -7,9 +7,12 @@ import { deleteCookie, getCookie, setCookie } from "../utils/cookie"
 import {logout} from "../services/Api/logout"
 import { useContext, useEffect } from "react"
 const Navbar = () => {
-
-  const {loggedIn,isLoggedIn,setUser,loading}=useContext(authContext);
+  const {loggedIn,isLoggedIn,setUser,loading,isHamBurger,setIsHamBurger}=useContext(authContext);
   const navigate=useNavigate();
+
+  const toggleHamburger=()=>{
+    setIsHamBurger(c=>!c);
+  }
   const handleLogOut=async()=>{
     try{  
     deleteCookie("isLoggedIn");
@@ -28,16 +31,16 @@ const Navbar = () => {
   },[loggedIn,isLoggedIn,loading])
 
   return (
-    <div className="navbar">
+    <div className={`navbar ${isHamBurger?"min-h-screen":""}`}>
          <div className="top-navbar">
-         <Link to="/"><h1 className='heading1'>Blogger</h1></Link>
-         <span className="hamburger-exit">X</span>
+         <Link to="/" onClick={()=>{isHamBurger?setIsHamBurger(false):""}}><h1 className='heading1'>Blogger</h1></Link>
+         <span className="hamburger-exit" onClick={toggleHamburger}>{isHamBurger?"X":"M"}</span>
          </div>
-         <ul className="list-container">
-          <li><Link to="/">Blogs</Link></li>
-          {loggedIn&&<><li><Link to="/myPosts">My Posts</Link></li><li><Link to="/profile">Profile</Link></li></>}
+         <ul className={`list-container ${isHamBurger?"":"hidden"} ${loggedIn?"":"min-h-36"}`}>
+          <li><Link to="/" onClick={toggleHamburger}>Blogs</Link></li>
+          {loggedIn&&<><li><Link to="/myPosts" onClick={toggleHamburger}>My Posts</Link></li><li><Link to="/profile" onClick={toggleHamburger}>Profile</Link></li></>}
           {!loggedIn&&<>
-          <li><Link to="/login">Login / Register</Link></li></>}
+          <li><Link to="/login" onClick={toggleHamburger}>Login / Register</Link></li></>}
           {loggedIn&&<li><button onClick={handleLogOut}>SignOut</button></li>}
           </ul>
     </div>

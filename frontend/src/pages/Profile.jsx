@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { authCheck } from "../services/auth/authenticationCheck";
 import { getTotal } from "../services/Api/getTotal";
+import { authContext } from "../context/authContext";
 
 
 const Profile = () => {
@@ -9,6 +10,7 @@ const Profile = () => {
   const [totalBlogs,setTotalBlogs]=useState(0);
   const [totalClicks,setTotalClicks]=useState(0);
   const [totalComments,setTotalComments]=useState(0);
+  const {isHamBurger}=useContext(authContext);
 
 
   const getUserData=async()=>{
@@ -34,7 +36,7 @@ setTotalComments(totalComments.data);
     if(users) fetchTotal();
   },[users])
   return (
-    <div>
+    <div className={`${isHamBurger?"hidden sm:block":""}`}>
       {users&&
       <div>
 <img src={backendUrl+users.profileImageURL} alt="profile"/>
