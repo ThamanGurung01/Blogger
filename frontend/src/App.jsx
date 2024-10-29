@@ -13,6 +13,7 @@ import { Navigate } from "react-router-dom";
 import { useEffect, useState,useContext } from 'react'
 import { getCookie } from './utils/cookie'
 import { authContext } from './context/authContext'
+import UpdateProfile from './pages/UpdateProfile'
 
 function App() {
 const {loggedIn,isLoggedIn}=useContext(authContext);
@@ -37,6 +38,7 @@ if(isCookieLoggedIn==="true"){
       <Route path='/updateBlog/:id' element={loggedIn?<UpdateBlog/>:<Navigate to="/login"/>}/>
       <Route path='/myPosts' element={loggedIn?<Post postType="userBlog"/>:<Navigate to="/login"/>}/>
       <Route path='/profile' element={loggedIn?<Profile/>:<Navigate to="/login"/>}/>
+      <Route path='/updateProfile/:id' element={loggedIn?<UpdateProfile/>:<Navigate to="/login"/>}/>
       </Routes>
     </div>
   )

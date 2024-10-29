@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { authCheck } from "../services/auth/authenticationCheck";
 import { getTotal } from "../services/Api/getTotal";
 import { authContext } from "../context/authContext";
+import { Link } from "react-router-dom";
 
 
 const Profile = () => {
@@ -41,7 +42,8 @@ setTotalComments(totalComments.data);
       <div>
 <img src={backendUrl+users.profileImageURL} alt="profile"/>
 <span>Name: {users.fullName}</span> <br />
-<span>Email: {users.email}</span>
+<span>Email: {users.email}</span><br />
+      <Link className="border-2" to={"/updateProfile/"+users?._id}>update</Link>
       </div>}
       <h1>Statistics</h1>
       <div>

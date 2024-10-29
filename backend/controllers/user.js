@@ -55,15 +55,18 @@ async function handleUpdateUser(req,res){
     const {fullName,password,gender}=req.body;
     if(!fullName||!password||!gender) return res.status(400).json({error:"Input all fields"});
     const userData=await User.findById(id);
+    console.log(userData);
     if(!userData) return res.status(400).json({error:"No user data found"});
     const oldImage=userData.profileImageURL;
     const newUser={
       fullName,password,gender,
     }
+    console.log("newUser "+newUser+" id: "+id);
 if(req.file) {
     deleteOldImage(oldImage);
     newUser.profileImageURL=`images/${req.file.filename}`;}
-    await User.updateOne({_id:id},newUser);
+    const response=await User.updateOne({_id:id},newUser);
+    console.log("response: "+response)
     return res.status(201).json({status:"successfully updated user"});
   }catch (err){
     console.log("Error updating user:",err);
