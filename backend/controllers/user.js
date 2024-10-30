@@ -6,6 +6,7 @@ const checkPassword =require("../services/password");
 const mongoose=require("mongoose");
 const Comment=require("../models/comment");
 const Click=require("../models/click");
+const updatePassword = require("../services/updatePassword");
 async function handleGetAllUsers(req,res){
 try{
   const allUsers=await User.find({}).sort({ createdAt: -1 });
@@ -55,19 +56,21 @@ async function handleUpdateUser(req,res){
     const {fullName,password,gender}=req.body;
     if(!fullName||!password||!gender) return res.status(400).json({error:"Input all fields"});
     const userData=await User.findById(id);
-    console.log(userData);
     if(!userData) return res.status(400).json({error:"No user data found"});
     const oldImage=userData.profileImageURL;
     const newUser={
-      fullName,password,gender,
+      fullName,gender,
     }
-    console.log("newUser "+newUser+" id: "+id);
+    console.log(newUser.fullName+" "+newUser.password+" "+newUser.gender);
 if(req.file) {
     deleteOldImage(oldImage);
     newUser.profileImageURL=`images/${req.file.filename}`;}
-    const response=await User.updateOne({_id:id},newUser);
-    console.log("response: "+response)
-    return res.status(201).json({status:"successfully updated user"});
+    const updatePass=await updatePassword(id,password);
+    const updatedUser = await User.findByIdAndUpdate(id, newUser, { new: true });
+if (!updatedUser) {
+  return res.status(400).json({ error: "User update failed" });
+}
+    return res.status(201).json({status:"successfully updated user "+updatedUser});
   }catch (err){
     console.log("Error updating user:",err);
     return res.status(500).json({error:"Server Error Occured"})

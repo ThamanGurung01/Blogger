@@ -47,19 +47,26 @@ try{
         console.log(reqResponse);
 }
 }else if(formType=="login"){
-    await login(data).then((e)=>setResponse(e.data.status));
+    await login(data).catch((err)=>console.log(err));
 }
+setResponse("Successfull");
+setTimeout(()=>{
+    setResponse(null);
+},2000)
     reset();
     setImageUrl(fallBackImage);
+    await fetchUserData();
 }catch(Err){
     console.log("error in signing up:",Err);
 }
     }
     const fetchUserData=async()=>{
         const userData=await authCheck();
-        const imageUrl=backendUrl+userData.data.profileImageURL;
-        setUserData(userData.data);
-        setImageUrl(imageUrl);
+if(userData){
+    const imageUrl=backendUrl+userData.data.profileImageURL;
+    setUserData(userData.data);
+    setImageUrl(imageUrl);
+}
     }
     useEffect(()=>{
         if(formType==="updateProfile"){
