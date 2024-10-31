@@ -9,6 +9,6 @@ img {
     -webkit-user-drag: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    pointer-events: none;
+    cursor:pointer;
   }
   

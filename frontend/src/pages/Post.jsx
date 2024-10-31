@@ -10,7 +10,7 @@ import { authCheck } from "../services/auth/authenticationCheck";
 
 const Post = ({postType}) => {
   const backendUrl=import.meta.env.VITE_BackendUrl;
-const [blogs,setBlogs]=React.useState(null);
+const [blogs,setBlogs]=React.useState([]);
 const [user,setUser]=React.useState(null);
 const {loggedIn,loading,isHamBurger}=useContext(authContext);
 const [userId,setUserId]=useState(null);
@@ -47,7 +47,7 @@ const getUserData=async()=>{
     <div className={`container-post ${isHamBurger?"hidden sm:block":""}`}>
       <h1 className="heading2">{postType==="userBlog"?"My Posts":"Posts"}</h1>
       {loggedIn&&<Link to="/addBlog">Upload</Link>}
-        {blogs?.map((blog,index)=>(
+        {blogs && blogs.length > 0 ?blogs?.map((blog,index)=>(
           <div key={index}>
             {postType!=="userBlog"&&blog?.createdBy?.profileImageURL&&<Link to="profile"><img src={backendUrl+blog?.createdBy?.profileImageURL} className="inline" width={"30px"} alt="profile picture"/> <p className="inline" >{blog?.createdBy?.fullName}</p></Link>}
          <Link to={"/viewBlog/"+blog._id}>
@@ -57,7 +57,7 @@ const getUserData=async()=>{
             <br /><br />
           </div>
           )
-         )}
+         ): <p>No blogs</p> }
     </div>
   )
 }

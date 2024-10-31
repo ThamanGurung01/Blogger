@@ -36,6 +36,12 @@ const Form = ({formType}) => {
     );
     const onSubmit=async(data)=>{
 try{
+    const inName=document.getElementById("name");
+    const inEmail=document.getElementById("email");
+    const inPassword=document.getElementById("password");
+    inName?.blur();
+    inEmail?.blur();
+    inPassword?.blur();
     if(formType=="signup"||formType=="updateProfile")
     {
     const Picture = document.getElementById("profile").files[0];
@@ -47,12 +53,9 @@ try{
         console.log(reqResponse);
 }
 }else if(formType=="login"){
-    await login(data).catch((err)=>console.log(err));
+   const response= await login(data);
+setResponse(response);
 }
-setResponse("Successfull");
-setTimeout(()=>{
-    setResponse(null);
-},2000)
     reset();
     setImageUrl(fallBackImage);
     await fetchUserData();
@@ -80,6 +83,7 @@ if(userData){
     }, [userData, reset]);
     useEffect(()=>{
         if(response) {
+            console.log(response);
             setCookie("true");
             isLoggedIn(true);
             navigate("/");
@@ -101,7 +105,7 @@ if(userData){
                     value:/^[A-Za-z]+(?: [A-Za-z]+)?$/,
                     message:"Invalid Name",
                 }
-            })} type="text" placeholder="Name" /><br/>
+            })} type="text" placeholder="Name" id="name" /><br/>
             {errors.fullName&&<div>{errors.fullName.message}</div>}
             </> ):""}
           {formType==="updateProfile"?"": <><input {...register("email",{
@@ -110,7 +114,7 @@ if(userData){
                     value:/^[A-Za-z]+[1-9]*@gmail\.com$/,
                     message:"Invalid Email",
                 }
-            })} type="text" placeholder="Email" /> <br /></>}
+            })} type="text" placeholder="Email" id="email" /> <br /></>}
             {errors.email&&<div>{errors.email.message}</div>}
             <input {...register("password",{
                 required:"Password is required",
@@ -118,7 +122,7 @@ if(userData){
                     value:5,
                     message:"Password must be at least 5 characters"
                 }
-            })} type="password" placeholder="Password" /> <br />
+            })} type="password" placeholder="Password" id="password" /> <br />
             {errors.password&&<div>{errors.password.message}</div>}
             {formType=="login"?"":(<><label>Gender:</label><input {...register("gender",{
                 required:"Choose your gender",
