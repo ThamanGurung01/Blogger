@@ -59,17 +59,18 @@ async function handleUpdateUser(req,res){
     if(!userData) return res.status(400).json({error:"No user data found"});
     const oldImage=userData.profileImageURL;
     const newUser={
-      fullName,gender,
+      fullName,gender
     }
-    console.log(newUser.fullName+" "+newUser.password+" "+newUser.gender);
 if(req.file) {
     deleteOldImage(oldImage);
     newUser.profileImageURL=`images/${req.file.filename}`;}
-    const updatePass=await updatePassword(id,password);
+    await updatePassword(id,password);
     const updatedUser = await User.findByIdAndUpdate(id, newUser, { new: true });
 if (!updatedUser) {
   return res.status(400).json({ error: "User update failed" });
 }
+const token=jwtSign(updatedUser);
+res.cookie('token', token, {httpOnly: true,secure: false,sameSite: 'Lax',});
     return res.status(201).json({status:"successfully updated user "+updatedUser});
   }catch (err){
     console.log("Error updating user:",err);
