@@ -1,3 +1,27 @@
 .container-post{
-    @apply mt-5;
+    @apply mt-5 flex flex-col items-center;
+}
+.coverImage{
+    @apply w-72 h-72 object-cover rounded-b-md;
+}
+.profileImage{
+    @apply w-8 h-8 rounded-full my-2;
+}
+.posterName{
+    @apply font-semibold ml-2;
+}
+.creator{
+    @apply pl-2
+}
+.blogTitle{
+    @apply my-1 px-2 text-lg;
+}
+.post{
+    @apply bg-white my-2 rounded-md;
+}
+.upload{
+    @apply flex justify-end w-full my-2;
+}
+.upload-link{
+    @apply mr-10 bg-black text-white rounded-md py-0.5 px-1
 }

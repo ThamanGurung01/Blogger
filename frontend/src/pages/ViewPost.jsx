@@ -17,7 +17,7 @@ const ViewPost = () => {
   const [userId,setUserId]=React.useState(null);
   const [isUsersBlog,setIsUsersBlog]=useState(false);
   const {loggedIn}=useContext(authContext);
-  const [description,setDescription]=useState(null);
+  const [description,setDescription]=useState("");
   const [comments,setComments]=useState([]);
   const [response,setResponse]=useState(null);
   const [submitted,setSubmitted]=useState(false);
@@ -26,17 +26,21 @@ const ViewPost = () => {
   }
   const submitComment=async(e)=>{
     e.preventDefault();
-    setSubmitted(true);
+  console.log("otud");
+  setSubmitted(true);
 if(description&&id){
+  console.log("hello");
   const response=await blogComment(id,description);
   setResponse(response.data);
-  setDescription(null);
+  setDescription("");
   setSubmitted(false);
   setTimeout(()=>{setResponse(null)},2000);
   const updatedComments = await blogComment(id);
   setComments(updatedComments.data);
 }else{
   setResponse({error:"Comment required"});
+  setSubmitted(false);
+  setTimeout(()=>{setResponse(null)},2000);
 }
 
   }
@@ -81,7 +85,7 @@ if(id){
               {loggedIn&&<div className="form">
                 <form onSubmit={(e)=>submitComment(e)}>
                 <label htmlFor="description">Comment</label><br />
-              <input type="text" className="border-2" name="description" id="description" onChange={(e)=>handleDescription(e)} /><br />
+              <input type="text" className="border-2" name="description" id="description" onChange={handleDescription} value={description}/><br />
               <button className="border-2" type="submit" disabled={submitted}>comment</button>
                 </form>
               </div>}

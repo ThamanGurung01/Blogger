@@ -46,15 +46,14 @@ const getUserData=async()=>{
   return (
     <div className={`container-post ${isHamBurger?"hidden sm:block":""}`}>
       <h1 className="heading2">{postType==="userBlog"?"My Posts":"Posts"}</h1>
-      {loggedIn&&<Link to="/addBlog">Upload</Link>}
+      <div className='upload'>{loggedIn&&<Link className='upload-link' to="/addBlog">Upload</Link>}</div>
         {blogs && blogs.length > 0 ?blogs?.map((blog,index)=>(
-          <div key={index}>
-            {postType!=="userBlog"&&blog?.createdBy?.profileImageURL&&<Link to="profile"><img src={backendUrl+blog?.createdBy?.profileImageURL} className="inline" width={"30px"} alt="profile picture"/> <p className="inline" >{blog?.createdBy?.fullName}</p></Link>}
+          <div key={index} className='post'>
+            {postType!=="userBlog"&&blog?.createdBy?.profileImageURL&&<Link to="profile" className='creator'><img src={backendUrl+blog?.createdBy?.profileImageURL} className="inline profileImage" width={"30px"} alt="profile picture"/> <p className="inline posterName" >{blog?.createdBy?.fullName}</p></Link>}
          <Link to={"/viewBlog/"+blog._id}>
-          <h1>{blog?.title}</h1>
-            {blog.coverImage&&<img src={backendUrl+blog.coverImage} className='inline' width={"200px"} alt="Blog CoverImage" />}
+          <h1 className='blogTitle'>{blog?.title}</h1>
+            {blog.coverImage&&<img src={backendUrl+blog.coverImage} className='inline coverImage' alt="Blog CoverImage" />}
             </Link>
-            <br /><br />
           </div>
           )
          ): <p>No blogs</p> }
