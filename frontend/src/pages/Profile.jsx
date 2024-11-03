@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState} from "react";
 import { authCheck } from "../services/auth/authenticationCheck";
 import { getTotal } from "../services/Api/getTotal";
 import { authContext } from "../context/authContext";
 import { Link } from "react-router-dom";
-
-
-const Profile = () => {
+import PropTypes from "prop-types";
+import {getUserData} from "../services/Api/getUserData";
+const Profile = ({profileType}) => {
   const backendUrl=import.meta.env.VITE_BackendUrl;
   const [users,setUser]=useState(null);
   const [totalBlogs,setTotalBlogs]=useState(0);
@@ -13,16 +13,24 @@ const Profile = () => {
   const [totalComments,setTotalComments]=useState(0);
   const {isHamBurger}=useContext(authContext);
 
-
-  const getUserData=async()=>{
+const getUserByType=async(profileType,id=null)=>{
+  if(profileType=="userProfile"){
     const user=await authCheck();
+return user;
+}else if(profileType=="otherProfile"&&id){
+  const user=await getUserData("otherProfile",id);
+  return user;
+}
+}
+  const getUserDatas=async()=>{
+    const user=profileType=="userProfile"?await getUserByType("userProfile"):await getUserByType("otherProfile");
     if(user&&user.length!=0){
       setUser(user.data);
     }
   }
   useEffect(()=>{
     if(!users){
-      getUserData();
+      getUserDatas();
     }
   },[users])
   const fetchTotal=async()=>{
@@ -54,5 +62,7 @@ setTotalComments(totalComments.data);
     </div>
   )
 }
-
+Profile.propTypes={
+  profileType:PropTypes.string,
+}
 export default Profile

@@ -37,7 +37,7 @@ if(isCookieLoggedIn==="true"){
       <Route path='/viewBlog/:id' element={<ViewPost/>}/>
       <Route path='/updateBlog/:id' element={loggedIn?<UpdateBlog/>:<Navigate to="/login"/>}/>
       <Route path='/myPosts' element={loggedIn?<Post postType="userBlog"/>:<Navigate to="/login"/>}/>
-      <Route path='/profile' element={loggedIn?<Profile/>:<Navigate to="/login"/>}/>
+      <Route path='/profile' element={loggedIn?<Profile postType="userProfile"/>:<Navigate to="/login"/>}/>
       <Route path='/updateProfile/:id' element={loggedIn?<UpdateProfile/>:<Navigate to="/login"/>}/>
       </Routes>
     </div>
