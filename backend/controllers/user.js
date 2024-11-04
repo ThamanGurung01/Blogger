@@ -113,10 +113,9 @@ try{
 
 async function getTotalBlog(req,res){
 try{
-  const user=req.user;
-  const userId=user._id;
-  if(!userId){
-    return res.status(404).json({error:"No userId or not authenticated"});
+  const userId = req?.user?._id || req?.params?.id;
+  if(!userId){ 
+    return res.status(401).json({error:"No userId or not authenticated"});
   }
   const totalBlog=await Blog.countDocuments({createdBy:userId});
   return res.status(200).json(totalBlog);
@@ -126,9 +125,9 @@ try{
 }
 async function getTotalBlogClick(req,res){
   try{
-      const {_id}=req.user;
-      if(!_id) return res.status(404).json({status:"error in authenticated user data"});
-      const existsBlog=await Blog.find({createdBy:_id});
+    const userId = req?.user?._id || req?.params?.id;
+      if(!userId) return res.status(404).json({status:"error in authenticated user data"});
+      const existsBlog=await Blog.find({createdBy:userId});
       if(existsBlog.length===0) return res.status(200).json(0);
       let totalClick=0;
       for (const blog of existsBlog) {
@@ -143,9 +142,9 @@ async function getTotalBlogClick(req,res){
 }
 async function getTotalBlogComment(req,res){
   try{
-    const {_id}=req.user;
-    if(!_id) return res.status(404).json({status:"error in authenticated user data"});
-    const Blogs=await Blog.find({createdBy:_id});
+    const userId = req?.user?._id || req?.params?.id;
+    if(!userId) return res.status(404).json({status:"error in authenticated user data"});
+    const Blogs=await Blog.find({createdBy:userId});
     let totalComment=0;
     for(const blog of Blogs){
       totalComment+=await Comment.countDocuments({

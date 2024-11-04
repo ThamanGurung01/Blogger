@@ -49,7 +49,9 @@ app.use("/blog",blogRoute);
 app.get("/totalBlogs",authentication,getTotalBlog);
 app.get("/totalClicks",authentication,getTotalBlogClick);
 app.get("/totalComments",authentication,getTotalBlogComment);
-
+app.get("/totalBlogs/:id",getTotalBlog);
+app.get("/totalClicks/:id",getTotalBlogClick);
+app.get("/totalComments/:id",getTotalBlogComment);
 
 
 app.post("/login",handleLogin);

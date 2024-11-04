@@ -1,8 +1,9 @@
 import axios from "axios";
-export const getTotal=async(what)=>{
+export const getTotal=async(what,id=null)=>{
 try{
     const backendUrl=import.meta.env.VITE_BackendUrl;
-    const compUrl=backendUrl+what;
+    if(!what) return;
+    const compUrl=id?backendUrl+what+"/"+id:backendUrl+what;
     const response=await axios.get(compUrl,{withCredentials:true});
     return response;
 }catch(Err){
