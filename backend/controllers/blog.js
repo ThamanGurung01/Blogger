@@ -31,7 +31,7 @@ async function getBlog(req,res){
     try{
         const blogId=req.params.id;
         if(!blogId||!mongoose.isValidObjectId(blogId)) return res.status(400).json({error:"No id given or invalid id"});
-       const blog= await Blog.findById(blogId);
+       const blog= await Blog.findById(blogId).populate("createdBy");
        if(!blog) return res.status(404).json({error:"No Blog found by Id: "+blogId});
           return res.status(200).json(blog);
       }catch(err){

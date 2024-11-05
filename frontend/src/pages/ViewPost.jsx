@@ -29,7 +29,6 @@ const ViewPost = () => {
   console.log("otud");
   setSubmitted(true);
 if(description&&id){
-  console.log("hello");
   const response=await blogComment(id,description);
   setResponse(response.data);
   setDescription("");
@@ -67,7 +66,7 @@ if(id){
       if(!userId){
         getUserData();
       }  
-        if(blog.createdBy===userId){
+        if(blog?.createdBy?._id===userId){
         setIsUsersBlog(true);
       }
     },[blog,userId]);
@@ -79,8 +78,9 @@ if(id){
             <h1>{blog?.title}</h1>
             <div>
             <div className='quillContainer' dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog?.description) }} />
+            <Link to={blog?.createdBy?._id===userId?"/profile":"/profile/"+blog?.createdBy?._id} className='creator'><img src={backendUrl+blog?.createdBy?.profileImageURL} className="inline profileImage" width={"30px"} alt="profile picture"/> <p className="inline posterName" >{blog?.createdBy?.fullName}</p></Link>
             </div>
-            {loggedIn&&isUsersBlog&&<Link to={"/updateBlog/"+blog._id}>Update</Link>} <br />
+            {loggedIn&&isUsersBlog&&<Link to={"/updateBlog/"+blog._id}>Update</Link>}
             <div className="comment">
               {loggedIn&&<div className="form">
                 <form onSubmit={(e)=>submitComment(e)}>
