@@ -2,7 +2,7 @@
     @apply mt-5 flex flex-col items-center;
 }
 .coverImage{
-    @apply w-72 h-72 object-cover rounded-b-md;
+    @apply w-72 h-72 object-cover;
 }
 .profileImage{
     @apply w-8 h-8 rounded-full my-2;
@@ -15,6 +15,9 @@
 }
 .blogTitle{
     @apply my-1 px-2 text-lg;
+}
+.blogDescription{
+    @apply py-1 px-2;
 }
 .post{
     @apply bg-white my-2 rounded-md;

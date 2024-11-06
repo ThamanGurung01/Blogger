@@ -4,3 +4,9 @@
 .heading2{
     @apply text-2xl text-center font-bold;
 }
+.btn{
+    @apply border-2;
+}
+.center{
+    @apply w-full flex justify-center;
+}

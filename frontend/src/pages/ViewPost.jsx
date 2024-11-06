@@ -1,8 +1,8 @@
-import "../styles/ViewPost.css"
 import React, { useContext, useState } from 'react'
 import {getReq} from '../services/Api/getReq';
 import  DOMPurify from "dompurify";
 import "../styles/Quill.css";
+import "../styles/ViewPost.css";
 import {Link,useParams} from "react-router-dom";
 import { authContext } from "../context/authContext";
 import { authCheck } from "../services/auth/authenticationCheck";
@@ -74,28 +74,34 @@ if(id){
     <div className="container-post">
         <h1 className="heading2">Posts</h1>
         <div>
-            {blog?.coverImage&&<img src={backendUrl+blog?.coverImage} width={"200px"} alt="Blog CoverImage" />}
-            <h1>{blog?.title}</h1>
-            <div>
-            <div className='quillContainer' dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog?.description) }} />
-            <Link to={blog?.createdBy?._id===userId?"/profile":"/profile/"+blog?.createdBy?._id} className='creator'><img src={backendUrl+blog?.createdBy?.profileImageURL} className="inline profileImage" width={"30px"} alt="profile picture"/> <p className="inline posterName" >{blog?.createdBy?.fullName}</p></Link>
+            <div className='post'>
+            <Link to={blog?.createdBy?._id===userId?"/profile":"/profile/"+blog?.createdBy?._id} className='creator'>{blog?.createdBy?.profileImageURL&&<img src={backendUrl+blog?.createdBy?.profileImageURL} className="inline profileImage" alt="profile picture"/>} <p className="inline posterName" >{blog?.createdBy?.fullName}</p></Link>
+            <h1 className='blogTitle'>{blog?.title}</h1>
+            {blog?.coverImage&&<img src={backendUrl+blog?.coverImage} className='coverImage' alt="Blog coverImage" />}
+            <div className='quillContainer blogDescription' dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog?.description) }} />
+            <div className='center postUpdate'>            
+  {loggedIn&&isUsersBlog&&<Link to={"/updateBlog/"+blog._id} className='btn'>Update</Link>}
+  </div>
             </div>
-            {loggedIn&&isUsersBlog&&<Link to={"/updateBlog/"+blog._id}>Update</Link>}
             <div className="comment">
-              {loggedIn&&<div className="form">
-                <form onSubmit={(e)=>submitComment(e)}>
-                <label htmlFor="description">Comment</label><br />
-              <input type="text" className="border-2" name="description" id="description" onChange={handleDescription} value={description}/><br />
-              <button className="border-2" type="submit" disabled={submitted}>comment</button>
+              {loggedIn&&
+              <div className="form">
+              <form className='comment-form' onSubmit={(e)=>submitComment(e)}>
+                <div className='center'><label htmlFor="description" className='comment-title'>Comment</label></div>
+              <div className='input-btn'>
+              <input type="text" className="comment-input" name="description" id="description" onChange={handleDescription} value={description}/><br />
+              <button className="btn" type="submit" disabled={submitted}>comment</button>
+              </div>
                 </form>
-              </div>}
-              <div className="comment-show">
-                <h1>----Comments----</h1>
+              </div>
+              }
+              <div className="comment-show post">
+                <h1 className='comment-title'>----Comments----</h1>
               {comments.length > 0 ? (
               comments.map((comment, index) => (
-<div key={index}>
-<p>{comment.description}</p>
-<img src={backendUrl+comment?.commentedBy?.profileImageURL} className="inline" width={"30px"} alt="profile picture"/> <p className="inline" >{comment?.commentedBy?.fullName}</p>
+<div key={index} className='comments'>
+<Link to={comment?.commentedBy?._id===userId?"/profile":"/profile/"+comment?.commentedBy?._id} className='creator'><img src={backendUrl+comment?.commentedBy?.profileImageURL} className="inline profileImage" alt="profile picture"/> <p className="inline posterName" >{comment?.commentedBy?.fullName}</p></Link>
+<p className='comment-description'>{comment.description}</p>
 </div>
               ))
             ) : (

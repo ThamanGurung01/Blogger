@@ -1,0 +1,24 @@
+.comment-title{
+    @apply text-center my-2;
+}
+.input-btn{
+    @apply flex justify-between ;
+}
+.postUpdate{
+    @apply pt-2 pb-4;
+}
+.form{
+    @apply w-full bg-white px-2 pb-6 rounded-lg mt-2;
+}
+.comment-input{
+    @apply bg-gray-200
+}
+.comment-show{
+    @apply px-5;
+}
+.comments{
+    @apply bg-gray-100 mb-2 rounded-lg;
+}
+.comment-description{
+    @apply pt-1 pb-3 px-2 ml-1;
+}
