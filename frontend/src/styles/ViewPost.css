@@ -1,8 +1,8 @@
 .comment-title{
-    @apply text-center my-2;
+    @apply text-center py-3;
 }
 .input-btn{
-    @apply flex justify-between ;
+    @apply flex justify-between px-3;
 }
 .postUpdate{
     @apply pt-2 pb-4;
@@ -11,10 +11,10 @@
     @apply w-full bg-white px-2 pb-6 rounded-lg mt-2;
 }
 .comment-input{
-    @apply bg-gray-200
+    @apply bg-gray-200 w-40;
 }
 .comment-show{
-    @apply px-5;
+    @apply px-5 pb-3;
 }
 .comments{
     @apply bg-gray-100 mb-2 rounded-lg;
