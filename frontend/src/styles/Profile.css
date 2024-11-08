@@ -1,0 +1,27 @@
+.profileHeading{
+    @apply my-1 pt-1 font-semibold text-xl text-center;
+}
+.profile{
+    @apply flex flex-col items-center;
+}
+.userImage{
+    @apply w-60 h-52 object-cover border-4 mx-auto;
+}
+.userDetail{
+    @apply flex flex-col gap-2 w-72 bg-white pb-2 mt-4 rounded-lg;
+}
+.update-container{
+    @apply w-full px-2 py-1 flex flex-col items-center;
+}
+.update-btn{
+    @apply text-center w-20;
+}
+.userStatistic{
+    @apply flex flex-col w-72 pl-2 bg-white pb-4 mt-4 rounded-lg;
+}
+.userName,.userEmail{
+    @apply pl-6 mb-1;
+}
+.statistics{
+    @apply pl-5;
+}

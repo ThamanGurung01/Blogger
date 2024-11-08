@@ -5,6 +5,7 @@ import { authContext } from "../context/authContext";
 import { Link, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import {getUserData} from "../services/Api/getUserData";
+import "../styles/Profile.css"
 const Profile = ({profileType}) => {
   const backendUrl=import.meta.env.VITE_BackendUrl;
   const [users,setUser]=useState(null);
@@ -56,19 +57,20 @@ setTotalComments(totalComments.data);
     };
   },[users,id,profileType])
   return (
-    <div className={`${isHamBurger?"hidden sm:block":""}`}>
+    <div className={`profile ${isHamBurger?"hidden sm:block":""}`}>
       {users&&
-      <div>
-<img src={backendUrl+users.profileImageURL} alt="profile"/>
-<span>Name: {users.fullName}</span> <br />
-<span>Email: {users.email}</span><br />
-      {profileType==="userProfile"?<Link className="border-2" to={"/updateProfile/"+users?._id}>update</Link>:""}
+      <div className="userDetail">
+      <h1 className="profileHeading">Profile</h1>
+      <img src={backendUrl+users.profileImageURL} alt="profile" className="userImage"/>
+<span className="userName">Name: {users.fullName}</span>
+<span className="userEmail">Email: {users.email}</span>
+<div className="update-container">{profileType==="userProfile"?<Link className="border-2 update-btn" to={"/updateProfile/"+users?._id}>update</Link>:""}</div>
       </div>}
-      <h1>Statistics</h1>
-      <div>
-        <p>Posts: {totalBlogs}</p>
-        <p>Clicks: {totalClicks}</p>
-        <p>Comments: {totalComments}</p>
+      <div className="userStatistic">
+      <h1 className="profileHeading">Statistics</h1>
+        <p className="statistics">Posts: {totalBlogs}</p>
+        <p className="statistics">Clicks: {totalClicks}</p>
+        <p className="statistics">Comments: {totalComments}</p>
         </div>
     </div>
   )
