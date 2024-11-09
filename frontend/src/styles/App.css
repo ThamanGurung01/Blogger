@@ -4,8 +4,11 @@
 .heading2{
     @apply text-2xl text-center font-bold;
 }
+.post{
+    @apply bg-white my-2 rounded-md;
+}
 .btn{
-    @apply bg-black text-white rounded-md py-0.5 px-1.5;
+    @apply bg-black text-white rounded-md py-0.5 px-1.5 font-semibold text-lg;
 }
 .center{
     @apply w-full flex justify-center;

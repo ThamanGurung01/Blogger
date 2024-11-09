@@ -93,9 +93,10 @@ if(userData){
 
   return (
     <div>
-        <form action="" onSubmit={handleSubmit(onSubmit)} >
-            {formType==="signup"||formType==="updateProfile"?( <><label htmlFor="profile">Profile Picture:</label><br /><input type="file" id="profile" style={{display:"none"}} onChange={(e)=>handleFileChange(e)} />
-            <img src={imageUrl} width={"200px"} alt="profileView" onClick={handleFileClick}/><input {...register("fullName",{
+        <form action="" onSubmit={handleSubmit(onSubmit)} className="form-loginSignup" >
+<div className="input-container">
+{formType==="signup"||formType==="updateProfile"?( <><h1 className="form-heading">SignUp</h1><label htmlFor="profile" className="profileLabel">Profile Picture:</label><input type="file" id="profile" style={{display:"none"}} onChange={(e)=>handleFileChange(e)} />
+            <img src={imageUrl} className="signup-image" alt="profileView" onClick={handleFileClick}/><input {...register("fullName",{
                 required:"Name is required",
                 minLength:{
                     value:5,
@@ -105,16 +106,16 @@ if(userData){
                     value:/^[A-Za-z]+(?: [A-Za-z]+)?$/,
                     message:"Invalid Name",
                 }
-            })} type="text" placeholder="Name" id="name" /><br/>
+            })} type="text" placeholder="Name" id="name" />
             {errors.fullName&&<div>{errors.fullName.message}</div>}
-            </> ):""}
-          {formType==="updateProfile"?"": <><input {...register("email",{
+            </> ): <h1 className="form-heading">Login</h1> }
+          {formType==="updateProfile"?"":<input {...register("email",{
                 required:"Email is required",
                 pattern:{
                     value:/^[A-Za-z]+[1-9]*@gmail\.com$/,
                     message:"Invalid Email",
                 }
-            })} type="text" placeholder="Email" id="email" /> <br /></>}
+            })} type="text" placeholder="Email" id="email" />}
             {errors.email&&<div>{errors.email.message}</div>}
             <input {...register("password",{
                 required:"Password is required",
@@ -122,14 +123,15 @@ if(userData){
                     value:5,
                     message:"Password must be at least 5 characters"
                 }
-            })} type="password" placeholder="Password" id="password" /> <br />
+            })} type="password" placeholder="Password" id="password" />
             {errors.password&&<div>{errors.password.message}</div>}
-            {formType=="login"?"":(<><label>Gender:</label><input {...register("gender",{
+            {formType=="login"?"":(<><div className="gender"><label>Gender:</label><input {...register("gender",{
                 required:"Choose your gender",
             })} id="male" type="radio" name="gender" value={"male"}/><label htmlFor="male">Male</label>
-            <input {...register("gender")} id="female" type="radio" name="gender" value={"female"}/><label htmlFor="female">Female</label><br />
+            <input {...register("gender")} id="female" type="radio" name="gender" value={"female"}/><label htmlFor="female">Female</label></div>
             {errors.gender&&<div>{errors.gender.message}</div>}</>)}
-            <button disabled={isSubmitting} type="submit">{isSubmitting?"Submitting...":formType==="signup"?"Signup":formType=="updateProfile"?"Update":"Login"}</button>
+</div>
+            <button disabled={isSubmitting} type="submit" className="btn submit-btn">{isSubmitting?"Submitting...":formType==="signup"?"Signup":formType=="updateProfile"?"Update":"Login"}</button>
         </form>
     </div>
   )

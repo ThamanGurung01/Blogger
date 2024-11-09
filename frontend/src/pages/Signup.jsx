@@ -7,10 +7,9 @@ import { authContext } from "../context/authContext";
 const Signup = () => {
   const {isHamBurger}=useContext(authContext);
   return (
-    <div  className={`${isHamBurger?"hidden sm:block":""}`}>
+    <div  className={`form-page post ${isHamBurger?"hidden sm:block":""}`}>
         <Form formType={"signup"}/>
-    <p>{"Already have an account ?"}</p><Link to="/login">Login</Link>
-
+    <div className="login-link"><p>{"Already have an account ? "} <Link className="form-signupLogin-links" to="/login">Login</Link></p></div>
     </div>
   )
 }

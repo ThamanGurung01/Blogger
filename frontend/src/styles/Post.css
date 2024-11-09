@@ -19,9 +19,6 @@
 .blogDescription{
     @apply py-1 px-2;
 }
-.post{
-    @apply bg-white my-2 rounded-md;
-}
 .upload{
     @apply flex justify-end w-full my-2;
 }
