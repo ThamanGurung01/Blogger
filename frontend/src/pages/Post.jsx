@@ -46,7 +46,7 @@ const getUserData=async()=>{
   return (
     <div className={`container-post ${isHamBurger?"hidden sm:block":""}`}>
       <h1 className="heading2">{postType==="userBlog"?"My Posts":"Posts"}</h1>
-      <div className='upload'>{loggedIn&&<Link className='upload-link' to="/addBlog">Upload</Link>}</div>
+      <div className='upload'>{loggedIn&&<Link className='upload-link btn' to="/addBlog">Upload</Link>}</div>
         {blogs && blogs.length > 0 ?blogs?.map((blog,index)=>(
           <div key={index} className='post'>
             {postType!=="userBlog"&&blog?.createdBy?.profileImageURL&&<Link to={blog?.createdBy?._id===userId?"/profile":"/profile/"+blog?.createdBy?._id} className='creator'><img src={backendUrl+blog?.createdBy?.profileImageURL} className="inline profileImage" width={"30px"} alt="profile picture"/> <p className="inline posterName" >{blog?.createdBy?.fullName}</p></Link>}

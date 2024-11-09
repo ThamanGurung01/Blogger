@@ -64,7 +64,7 @@ setTotalComments(totalComments.data);
       <img src={backendUrl+users.profileImageURL} alt="profile" className="userImage"/>
 <span className="userName">Name: {users.fullName}</span>
 <span className="userEmail">Email: {users.email}</span>
-<div className="update-container">{profileType==="userProfile"?<Link className="border-2 update-btn" to={"/updateProfile/"+users?._id}>update</Link>:""}</div>
+<div className="update-container">{profileType==="userProfile"?<Link className="update-btn btn" to={"/updateProfile/"+users?._id}>update</Link>:""}</div>
       </div>}
       <div className="userStatistic">
       <h1 className="profileHeading">Statistics</h1>

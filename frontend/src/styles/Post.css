@@ -26,5 +26,5 @@
     @apply flex justify-end w-full my-2;
 }
 .upload-link{
-    @apply mr-10 bg-black text-white rounded-md py-0.5 px-1
+    @apply mr-10 py-0.5 px-1
 }
