@@ -106,7 +106,7 @@ if(userData){
                     value:/^[A-Za-z]+(?: [A-Za-z]+)?$/,
                     message:"Invalid Name",
                 }
-            })} type="text" placeholder="Name" id="name" />
+            })} type="text" className="form-input" placeholder="Name" id="name" />
             {errors.fullName&&<div>{errors.fullName.message}</div>}
             </> ): <h1 className="form-heading">Login</h1> }
           {formType==="updateProfile"?"":<input {...register("email",{
@@ -115,7 +115,7 @@ if(userData){
                     value:/^[A-Za-z]+[1-9]*@gmail\.com$/,
                     message:"Invalid Email",
                 }
-            })} type="text" placeholder="Email" id="email" />}
+            })} type="text" className="form-input" placeholder="Email" id="email" />}
             {errors.email&&<div>{errors.email.message}</div>}
             <input {...register("password",{
                 required:"Password is required",
@@ -123,12 +123,12 @@ if(userData){
                     value:5,
                     message:"Password must be at least 5 characters"
                 }
-            })} type="password" placeholder="Password" id="password" />
+            })} type="password" className="form-input" placeholder="Password" id="password" />
             {errors.password&&<div>{errors.password.message}</div>}
-            {formType=="login"?"":(<><div className="gender"><label>Gender:</label><input {...register("gender",{
+            {formType=="login"?"":(<><div className="gender"><label>Gender:</label><input className="form-input" {...register("gender",{
                 required:"Choose your gender",
             })} id="male" type="radio" name="gender" value={"male"}/><label htmlFor="male">Male</label>
-            <input {...register("gender")} id="female" type="radio" name="gender" value={"female"}/><label htmlFor="female">Female</label></div>
+            <input className="form-input" {...register("gender")} id="female" type="radio" name="gender" value={"female"}/><label htmlFor="female">Female</label></div>
             {errors.gender&&<div>{errors.gender.message}</div>}</>)}
 </div>
             <button disabled={isSubmitting} type="submit" className="btn submit-btn">{isSubmitting?"Submitting...":formType==="signup"?"Signup":formType=="updateProfile"?"Update":"Login"}</button>

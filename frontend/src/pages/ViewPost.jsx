@@ -89,8 +89,8 @@ if(id){
               <form className='comment-form' onSubmit={(e)=>submitComment(e)}>
                 <div className='center'><label htmlFor="description" className='comment-title'>Comment</label></div>
               <div className='input-btn'>
-              <input type="text" className="comment-input" name="description" id="description" onChange={handleDescription} value={description}/><br />
-              <button className="btn" type="submit" disabled={submitted}>comment</button>
+              <input type="text" className="comment-input" name="description" id="description" onChange={handleDescription} value={description}/>
+              <button className="btn comment-btn" type="submit" disabled={submitted}>comment</button>
               </div>
                 </form>
               </div>

@@ -10,7 +10,7 @@
 .form-signupLogin-links{
     @apply ml-2 text-green-800 font-semibold hover:text-green-400 !important;
 }
-input{
+.form-input{
     @apply bg-gray-100 px-2 rounded-md mb-5 py-1 text-lg mx-2 !important;
 }
 .input-container{

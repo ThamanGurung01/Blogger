@@ -10,7 +10,7 @@ const Login = () => {
   return (
     <div  className={`form-page post ${isHamBurger?"hidden sm:block":""}`}>
     <Form formType={"login"}/>
-    <div className='signup-link'><p>{"Don't have an account ? "}<Link className='form-links' to="/signup">SignUp</Link></p></div>
+    <div className='signup-link'><p>{"Don't have an account ? "}<Link className='form-signupLogin-links' to="/signup">SignUp</Link></p></div>
     </div>
   )
 }
