@@ -6,7 +6,6 @@ const UpdateBlog = () => {
   return (
     <div>
         <BlogForm formType="update" blogId={id}/>
-        <div>hello</div>
     </div>
   )
 }
