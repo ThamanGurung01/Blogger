@@ -1,9 +1,6 @@
 .form-loginSignup{
     @apply flex flex-col;
 }
-.form-page{
-    @apply p-3 m-7;
-}
 .signup-link,.login-link{
     @apply flex justify-between mt-3 mb-1 px-3;
 }

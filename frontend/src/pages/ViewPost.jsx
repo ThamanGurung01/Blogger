@@ -80,7 +80,7 @@ if(id){
             {blog?.coverImage&&<img src={backendUrl+blog?.coverImage} className='coverImage' alt="Blog coverImage" />}
             <div className='quillContainer blogDescription' dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog?.description) }} />
             <div className='center postUpdate'>            
-  {loggedIn&&isUsersBlog&&<Link to={"/updateBlog/"+blog._id} className='btn'>Update</Link>}
+  {loggedIn&&isUsersBlog&&<Link to={"/updateBlog/"+blog._id} className='btn update-btn'>Update</Link>}
   </div>
             </div>
             <div className="comment">

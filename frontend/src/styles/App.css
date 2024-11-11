@@ -4,6 +4,9 @@
 .heading2{
     @apply text-2xl text-center font-bold;
 }
+.form-page{
+    @apply p-3 m-7;
+}
 .post{
     @apply bg-white my-2 rounded-md;
 }
