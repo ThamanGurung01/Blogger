@@ -1,0 +1,15 @@
+.blogForm-heading{
+    @apply mb-5 mt-1;
+}
+.blog-input{
+    @apply bg-gray-100 px-2 rounded-md mb-4 py-1 text-lg mx-5 mt-1 w-60 border-2;
+}
+.blogForm-btn{
+    @apply pt-1 px-2;
+}
+.btn-container{
+    @apply w-full py-2 flex justify-center mt-3;
+}
+.blogFormImage{
+    @apply w-52 h-52 mx-auto border-4 mb-3;
+}

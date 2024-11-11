@@ -95,7 +95,7 @@ if(userData){
     <div>
         <form action="" onSubmit={handleSubmit(onSubmit)} className="form-loginSignup" >
 <div className="input-container">
-{formType==="signup"||formType==="updateProfile"?( <><h1 className="form-heading">SignUp</h1><label htmlFor="profile" className="profileLabel">Profile Picture:</label><input type="file" id="profile" style={{display:"none"}} onChange={(e)=>handleFileChange(e)} />
+{formType==="signup"||formType==="updateProfile"?( <>{formType==="signup"?<h1 className="form-heading">SignUp</h1>:<h1 className="form-heading">Profile Update</h1>}<label htmlFor="profile" className="profileLabel">Profile Picture:</label><input type="file" id="profile" style={{display:"none"}} onChange={(e)=>handleFileChange(e)} />
             <img src={imageUrl} className="signup-image" alt="profileView" onClick={handleFileClick}/><input {...register("fullName",{
                 required:"Name is required",
                 minLength:{

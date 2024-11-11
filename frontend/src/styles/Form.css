@@ -23,7 +23,7 @@
     @apply w-56 h-56 mx-auto border-4 mb-4 p-1;
 }
 .profileLabel{
-    @apply px-4 mb-4;
+    @apply px-7 mt-1 mb-2;
 }
 .gender{
     @apply px-4;

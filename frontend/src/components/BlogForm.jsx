@@ -7,7 +7,7 @@ import 'react-quill/dist/quill.snow.css';
 import { postReq } from '../services/Api/postReq';
 import { getReq } from '../services/Api/getReq';
 import { patchReq } from '../services/Api/patchReq';
-
+import "../styles/BlogForm.css"
 
 const BlogForm = ({formType,blogId}) => {
   const [blogData,setBlogData]=useState({});
@@ -86,22 +86,22 @@ try{
 }
   }
   return (
-    <div>
-      <h1>Posts</h1>
+    <div className='post form-page'>
+      <h1 className='heading2 blogForm-heading'>Posts</h1>
     <form action="" onSubmit={handleSubmit(onSubmit)} >
   <input type="file" id="cover" style={{display:"none"}} onChange={(e)=>handleFileChange(e)} />
-        <img src={imageUrl} width={"200px"} alt="coverView" onClick={handleFileClick}/>
-        <input {...register("title",{
+        <img src={imageUrl} className='blogFormImage' alt="coverView" onClick={handleFileClick}/>
+        <input className='blog-input' {...register("title",{
             required:"Title is required",
             minLength:{
                 value:4,
                 message:"Title must be at least 4 characters",
             }
-        })} type="text" placeholder="Title" /><br/>
+        })} type="text" placeholder="Title" />
         {errors.title&&<div>{errors.title.message}</div>}
        {/* quill */}
-       <ReactQuill theme="snow" value={content} onChange={setContent} modules={modules} />
-        <button disabled={isSubmitting} type="submit">{isSubmitting?"Submitting...":formType==="add"?"Upload":"Update"}</button><br />
+       <div className='quill-container'><ReactQuill theme="snow" value={content} onChange={setContent} modules={modules} /></div>
+       <div className="btn-container"><button className='btn blogForm-btn' disabled={isSubmitting} type="submit">{isSubmitting?"Submitting...":formType==="add"?"Upload":"Update"}</button></div>
         {response&&<span>{response?.status ?? response?.error ?? ""}</span>}
     </form>
 </div>

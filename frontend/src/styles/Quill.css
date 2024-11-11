@@ -17,4 +17,21 @@
   .quillContainer li {
     @apply my-1;
   }
-  
+.ql-editor {
+  min-height: 200px;
+  font-size: 16px;
+  color: #333;
+  background-color: #f8f9fa;
+}
+
+.ql-toolbar {
+  background-color: #e9ecef;
+}
+
+.ql-container {
+  border: 1px solid #ccc;
+  margin: 0 30px;
+}
+.quill-container{
+  @apply mx-5;
+}

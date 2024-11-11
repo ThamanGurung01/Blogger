@@ -6,7 +6,7 @@ import "../styles/Profile.css"
 const UpdateProfile = () => {
   const {isHamBurger}=useContext(authContext);
   return (
-    <div  className={`form-page post ${isHamBurger?"hidden sm:block":""}`}>
+    <div className={`form-page post ${isHamBurger?"hidden sm:block":""}`}>
         <Form formType={"updateProfile"}/>
     </div>
   )
