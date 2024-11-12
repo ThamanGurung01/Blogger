@@ -16,6 +16,7 @@ const Form = ({formType}) => {
     const navigate=useNavigate();
     const [imageUrl,setImageUrl]=useState(fallBackImage);
     const [response,setResponse]=useState(null);
+    const [message,setMessage]=useState(null);
     const [userData,setUserData]=useState(null);
     const backendUrl=import.meta.env.VITE_BackendUrl;
     const handleFileClick=()=>{
@@ -47,15 +48,18 @@ try{
     const Picture = document.getElementById("profile").files[0];
     if(formType=="signup"){
         const reqResponse=await postReq(data,"user",Picture);
-    console.log(reqResponse);
+        reqResponse?.data?.status?setMessage("Successfully Created"):setMessage(reqResponse?.response?.data?.error);
 }else{
         const reqResponse=await patchReq(data,"user",Picture,userData._id);
-        console.log(reqResponse);
+        reqResponse?.data?.status&&setMessage("Successfully Updated");
 }
 }else if(formType=="login"){
    const response= await login(data);
 setResponse(response);
 }
+    setTimeout(()=>{
+        setMessage(null)
+    },2000);
     reset();
     setImageUrl(fallBackImage);
     await fetchUserData();
@@ -107,7 +111,7 @@ if(userData){
                     message:"Invalid Name",
                 }
             })} type="text" className="form-input" placeholder="Name" id="name" />
-            {errors.fullName&&<div>{errors.fullName.message}</div>}
+            {errors.fullName&&<div className="error">{errors.fullName.message} *</div>}
             </> ): <h1 className="form-heading">Login</h1> }
           {formType==="updateProfile"?"":<input {...register("email",{
                 required:"Email is required",
@@ -116,7 +120,7 @@ if(userData){
                     message:"Invalid Email",
                 }
             })} type="text" className="form-input" placeholder="Email" id="email" />}
-            {errors.email&&<div>{errors.email.message}</div>}
+            {errors.email&&<div className="error">{errors.email.message} *</div>}
             <input {...register("password",{
                 required:"Password is required",
                 minLength:{
@@ -124,14 +128,16 @@ if(userData){
                     message:"Password must be at least 5 characters"
                 }
             })} type="password" className="form-input" placeholder="Password" id="password" />
-            {errors.password&&<div>{errors.password.message}</div>}
+            {errors.password&&<div className="error">{errors.password.message} *</div>}
             {formType=="login"?"":(<><div className="gender"><label>Gender:</label><input className="form-input" {...register("gender",{
                 required:"Choose your gender",
             })} id="male" type="radio" name="gender" value={"male"}/><label htmlFor="male">Male</label>
             <input className="form-input" {...register("gender")} id="female" type="radio" name="gender" value={"female"}/><label htmlFor="female">Female</label></div>
-            {errors.gender&&<div>{errors.gender.message}</div>}</>)}
+            {errors.gender&&<div className="error">{errors.gender.message} *</div>}</>)}
 </div>
             <button disabled={isSubmitting} type="submit" className="btn submit-btn">{isSubmitting?"Submitting...":formType==="signup"?"Signup":formType=="updateProfile"?"Update":"Login"}</button>
+            {message!=="Email already Exists"&&<div className="success">{message}</div>}
+            {message==="Email already Exists"&&<div className="error">{message}!</div>}
         </form>
     </div>
   )

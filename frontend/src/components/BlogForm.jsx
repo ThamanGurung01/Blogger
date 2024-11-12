@@ -98,11 +98,11 @@ try{
                 message:"Title must be at least 4 characters",
             }
         })} type="text" placeholder="Title" />
-        {errors.title&&<div>{errors.title.message}</div>}
+        {errors.title&&<div className='error blogError'>{errors.title.message}*</div>}
        {/* quill */}
        <div className='quill-container'><ReactQuill theme="snow" value={content} onChange={setContent} modules={modules} /></div>
+       {response&&<span className={` blogResponse ${response?.status?"success":"error"}`}>{response?.status ?? response?.error ?? ""}</span>}
        <div className="btn-container"><button className='btn blogForm-btn' disabled={isSubmitting} type="submit">{isSubmitting?"Submitting...":formType==="add"?"Upload":"Update"}</button></div>
-        {response&&<span>{response?.status ?? response?.error ?? ""}</span>}
     </form>
 </div>
   )

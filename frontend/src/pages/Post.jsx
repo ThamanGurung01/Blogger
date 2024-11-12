@@ -56,7 +56,7 @@ const getUserData=async()=>{
             </Link>
           </div>
           )
-         ): <p>No blogs</p> }
+         ): <p className='NoBlogs'>No blogs!</p> }
     </div>
   )
 }

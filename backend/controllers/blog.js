@@ -50,7 +50,7 @@ async function blogCreation(req,res){
     }
     if(req.file) newBlog.coverImage=`blogImages/${req.file.filename}`;
         await Blog.create(newBlog);
-        return res.status(201).json({status:"success created"});
+        return res.status(201).json({status:"Blog successfully created"});
       }catch (err){
         console.log("Error creating user:",err);
         return res.status(500).json({error:"Server Error Occured"})
@@ -72,7 +72,7 @@ async function blogUpdation(req,res){
         deleteOldImage(oldImage);
         newBlog.coverImage=`blogImages/${req.file.filename}`}
         await Blog.updateOne({_id:id},newBlog);
-        return res.status(201).json({status:"successfully updated"});
+        return res.status(201).json({status:"Blog successfully updated"});
       }catch (err){
         console.log("Error updating blog:",err);
         return res.status(500).json({error:"Server Error Occured"})

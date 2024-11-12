@@ -26,7 +26,6 @@ const ViewPost = () => {
   }
   const submitComment=async(e)=>{
     e.preventDefault();
-  console.log("otud");
   setSubmitted(true);
 if(description&&id){
   const response=await blogComment(id,description);

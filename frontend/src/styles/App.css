@@ -16,3 +16,9 @@
 .center{
     @apply w-full flex justify-center;
 }
+.error{
+    @apply mb-2 px-4 text-red-700 font-semibold;
+}
+.success{
+    @apply px-4 text-green-500 font-semibold mb-2;
+}

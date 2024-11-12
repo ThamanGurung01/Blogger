@@ -33,5 +33,5 @@
   margin: 0 30px;
 }
 .quill-container{
-  @apply mx-5;
+  @apply mx-5 mb-2;
 }

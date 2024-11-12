@@ -11,7 +11,7 @@
     @apply w-full bg-white px-2 pb-6 rounded-lg mt-2;
 }
 .comment-input{
-    @apply bg-gray-200 w-40 rounded-lg;
+    @apply bg-gray-200 w-40 rounded-lg px-2;
 }
 .comment-btn{
     @apply ml-2;
