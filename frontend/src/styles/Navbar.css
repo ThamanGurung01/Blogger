@@ -5,11 +5,11 @@
     @apply flex justify-between
 }
 .heading1{
-    @apply p-4  inline-block
+    @apply p-4 inline-block
 }
 .hamburger-exit{
-    @apply m-5 text-red-500 text-2xl font-extrabold inline-block cursor-pointer;
+    @apply m-5 text-red-500 text-2xl font-extrabold inline-block cursor-pointer lg:hidden;
 }
 .list-container{
-    @apply mt-6 pt-5 min-h-72 text-2xl font-semibold flex flex-col items-center justify-between;
+    @apply w-full bg-red-300 mt-6 pt-5 min-h-72 text-2xl font-semibold flex flex-col items-center justify-between lg:flex-row lg:min-h-20 lg:justify-around lg:pt-2 !important;
 }

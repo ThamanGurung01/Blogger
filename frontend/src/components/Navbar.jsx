@@ -31,12 +31,12 @@ const Navbar = () => {
   },[loggedIn,isLoggedIn,loading])
 
   return (
-    <div className={`navbar ${isHamBurger?"min-h-screen":""}`}>
+    <div className={`navbar ${isHamBurger?"min-h-screen lg:min-h-fit":""}`}>
          <div className="top-navbar">
          <Link to="/" onClick={()=>{isHamBurger?setIsHamBurger(false):""}}><h1 className='heading1'>Blogger</h1></Link>
          <span className="hamburger-exit" onClick={toggleHamburger}>{isHamBurger?"X":"M"}</span>
          </div>
-         <ul className={`list-container ${isHamBurger?"":"hidden"} ${loggedIn?"":"min-h-36"}`}>
+         <ul className={`list-container ${isHamBurger?"":"hidden lg:block"} ${loggedIn?"":"min-h-36"}`}>
           <li><Link to="/" onClick={toggleHamburger}>Blogs</Link></li>
           {loggedIn&&<><li><Link to="/myPosts" onClick={toggleHamburger}>My Posts</Link></li><li><Link to="/profile" onClick={toggleHamburger}>Profile</Link></li></>}
           {!loggedIn&&<>
