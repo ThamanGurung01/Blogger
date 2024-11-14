@@ -28,3 +28,6 @@
 .NoBlogs{
     @apply text-xl bg-white rounded-md font-semibold text-red-600 text-center mt-5 px-28 py-5;
 }
+.loading{
+    @apply text-xl bg-white rounded-md font-semibold text-yellow-600 text-center mt-5 px-28 py-5;
+}

@@ -2,14 +2,14 @@
 @apply bg-white w-full;
 }
 .top-navbar{
-    @apply flex justify-between
+    @apply flex justify-between lg:hidden;
 }
 .heading1{
-    @apply p-4 inline-block
+    @apply px-4 pt-4 inline-block;
 }
 .hamburger-exit{
     @apply m-5 text-red-500 text-2xl font-extrabold inline-block cursor-pointer lg:hidden;
 }
 .list-container{
-    @apply w-full bg-red-300 mt-6 pt-5 min-h-72 text-2xl font-semibold flex flex-col items-center justify-between lg:flex-row lg:min-h-20 lg:justify-around lg:pt-2 !important;
+    @apply w-full mt-6 pt-5 min-h-72 text-2xl font-semibold flex flex-col items-center justify-between lg:flex-row lg:justify-around lg:mb-8 ;
 }

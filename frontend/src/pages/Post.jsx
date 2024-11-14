@@ -14,7 +14,10 @@ const [blogs,setBlogs]=React.useState([]);
 const [user,setUser]=React.useState(null);
 const {loggedIn,loading,isHamBurger}=useContext(authContext);
 const [userId,setUserId]=useState(null);
+const [displayLoading,setDisplayLoading]=useState(true);
   const fetchBlogData=async()=>{
+    setDisplayLoading(true);
+    setTimeout(()=>{ setDisplayLoading(false);},500);
     setBlogs(null);
     if(userId&&postType==="userBlog"){
       await getAllReq("blog",userId).then((data)=>{
@@ -44,10 +47,10 @@ const getUserData=async()=>{
     fetchBlogData(); 
   }, [postType, userId,loading]);
   return (
-    <div className={`container-post ${isHamBurger?"hidden sm:block":""}`}>
+    <div className={`container-post ${isHamBurger?"hidden lg:flex":""}`}>
       <h1 className="heading2">{postType==="userBlog"?"My Posts":"Posts"}</h1>
       <div className='upload'>{loggedIn&&<Link className='upload-link btn' to="/addBlog">Upload</Link>}</div>
-        {blogs && blogs.length > 0 ?blogs?.map((blog,index)=>(
+        {blogs && blogs.length > 0 ?displayLoading?<p className="loading">Loading...</p>:blogs?.map((blog,index)=>(
           <div key={index} className='post'>
             {postType!=="userBlog"&&blog?.createdBy?.profileImageURL&&<Link to={blog?.createdBy?._id===userId?"/profile":"/profile/"+blog?.createdBy?._id} className='creator'><img src={backendUrl+blog?.createdBy?.profileImageURL} className="inline profileImage" width={"30px"} alt="profile picture"/> <p className="inline posterName" >{blog?.createdBy?.fullName}</p></Link>}
          <Link to={"/viewBlog/"+blog._id}>
@@ -56,7 +59,7 @@ const getUserData=async()=>{
             </Link>
           </div>
           )
-         ): <p className='NoBlogs'>No blogs!</p> }
+         ): displayLoading?<p className="loading">Loading...</p>:<p className="NoBlogs">No blogs!</p> }
     </div>
   )
 }
