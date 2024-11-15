@@ -11,5 +11,5 @@
     @apply m-5 text-red-500 text-2xl font-extrabold inline-block cursor-pointer lg:hidden;
 }
 .list-container{
-    @apply w-full mt-6 pt-5 min-h-72 text-2xl font-semibold flex flex-col items-center justify-between lg:flex-row lg:justify-around lg:mb-8 ;
+    @apply w-full mt-6 pt-5 min-h-72 text-2xl font-semibold flex flex-col items-center justify-between lg:flex-row lg:justify-around lg:my-5 lg:pt-1;
 }

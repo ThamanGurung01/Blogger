@@ -11,7 +11,7 @@
     @apply bg-gray-100 px-2 rounded-md mb-2 py-1 text-lg mx-2 !important;
 }
 .input-container{
-    @apply flex flex-col;
+    @apply flex flex-col gap-1.5;
 }
 .submit-btn{
     @apply px-2 py-1 mx-2 mb-2 mt-1;
@@ -27,4 +27,7 @@
 }
 .gender{
     @apply px-4;
+}
+.formLoading{
+    @apply text-xl bg-white rounded-md font-semibold text-yellow-600 text-center py-2;
 }

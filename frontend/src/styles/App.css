@@ -5,10 +5,10 @@
     @apply text-2xl text-center font-bold;
 }
 .form-page{
-    @apply p-3 m-7;
+    @apply p-3 m-7 lg:w-80 lg:mx-auto;
 }
 .post{
-    @apply bg-white my-2 rounded-md;
+    @apply bg-white mt-9 rounded-md;
 }
 .btn{
     @apply bg-black text-white rounded-md py-0.5 px-1.5 font-semibold text-lg;

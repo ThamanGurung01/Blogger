@@ -12,15 +12,21 @@ const Profile = ({profileType}) => {
   const [totalBlogs,setTotalBlogs]=useState(0);
   const [totalClicks,setTotalClicks]=useState(0);
   const [totalComments,setTotalComments]=useState(0);
+  const [displayLoading,setDisplayLoading]=useState(true);
   const {isHamBurger}=useContext(authContext);
   const {id}=useParams();
+  // console.log(displayLoading);
   const getUserDatas=async()=>{
+    setDisplayLoading(true);
+    setTimeout(()=>{ setDisplayLoading(false);},500);
     const user=await authCheck();
     if(user&&user.length!=0){
       setUser(user.data);
     }
   }
   const getOtherUser=async(id)=>{
+    setDisplayLoading(true);
+    setTimeout(()=>{ setDisplayLoading(false);},500);
     const user=await getUserData(id);
     if(user&&user.length!=0){
       setUser(user.data);
@@ -57,13 +63,14 @@ setTotalComments(totalComments.data);
     };
   },[users,id,profileType])
   return (
-    <div className={`profile ${isHamBurger?"hidden sm:block":""}`}>
+   <>
+{    displayLoading?<p className="profileLoading">Loading...</p>:<div className={`profile ${isHamBurger?"hidden sm:block":""}`}>
       {users&&
       <div className="userDetail">
       <h1 className="profileHeading">Profile</h1>
-      <img src={backendUrl+users.profileImageURL} alt="profile" className="userImage"/>
-<span className="userName">Name: {users.fullName}</span>
-<span className="userEmail">Email: {users.email}</span>
+      <img src={backendUrl+users?.profileImageURL} alt="profile" className="userImage"/>
+<span className="userName">Name: {users?.fullName}</span>
+<span className="userEmail">Email: {users?.email}</span>
 <div className="update-container">{profileType==="userProfile"?<Link className="update-btn btn" to={"/updateProfile/"+users?._id}>update</Link>:""}</div>
       </div>}
       <div className="userStatistic">
@@ -72,7 +79,8 @@ setTotalComments(totalComments.data);
         <p className="statistics">Clicks: {totalClicks}</p>
         <p className="statistics">Comments: {totalComments}</p>
         </div>
-    </div>
+    </div>}
+    </>
   )
 }
 Profile.propTypes={
