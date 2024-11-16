@@ -20,10 +20,10 @@
     @apply py-1 px-2;
 }
 .upload{
-    @apply flex justify-end w-full my-2;
+    @apply flex justify-end w-full mt-2 lg:justify-center lg:my-0;
 }
 .upload-link{
-    @apply mr-10 py-0.5 px-2
+    @apply mr-10 py-0.5 px-2 lg:ml-60 lg:mt-5;
 }
 .NoBlogs{
     @apply text-xl bg-white rounded-md font-semibold text-red-600 text-center mt-5 px-28 py-5;

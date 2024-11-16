@@ -19,3 +19,6 @@
 .blogError{
     @apply ml-2 mb-2;
 }
+.blogFormLoading{
+    @apply text-xl bg-white rounded-md font-semibold text-yellow-600 text-center mt-24 px-10 py-5 w-80 mx-auto;
+}

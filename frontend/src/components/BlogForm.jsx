@@ -14,7 +14,7 @@ const BlogForm = ({formType,blogId}) => {
   const [imageUrl,setImageUrl]=useState(fallBackImage||blogData.coverImage);
   const [content, setContent] = useState("");
   const [response,setResponse]=useState();
-  
+  const [displayLoading,setDisplayLoading]=useState(true);
   const modules = {
     toolbar: [
       [{ 'header': [2, 3, false] }],
@@ -30,6 +30,8 @@ const backendUrl=import.meta.env.VITE_BackendUrl;
   async function fetchBlogData(){
 try{
   if(formType==="update"&&blogId){
+    setDisplayLoading(true);
+    setTimeout(()=>{ setDisplayLoading(false);},500);
     const data=await getReq("blog",blogId);
     setBlogData(data.data);
     setContent(data.data.description);
@@ -86,7 +88,8 @@ try{
 }
   }
   return (
-    <div className='post form-page'>
+  <>
+  { formType==="update"&&displayLoading?<p className="blogFormLoading">Loading...</p>: <div className='post form-page'>
       <h1 className='heading2 blogForm-heading'>Posts</h1>
     <form action="" onSubmit={handleSubmit(onSubmit)} >
   <input type="file" id="cover" style={{display:"none"}} onChange={(e)=>handleFileChange(e)} />
@@ -104,7 +107,8 @@ try{
        {response&&<span className={` blogResponse ${response?.status?"success":"error"}`}>{response?.status ?? response?.error ?? ""}</span>}
        <div className="btn-container"><button className='btn blogForm-btn' disabled={isSubmitting} type="submit">{isSubmitting?"Submitting...":formType==="add"?"Upload":"Update"}</button></div>
     </form>
-</div>
+</div>}
+</>
   )
 }
 BlogForm.propTypes={

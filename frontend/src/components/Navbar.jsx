@@ -14,6 +14,8 @@ const Navbar = () => {
   const toggleHamburger=()=>{
     if(width<1024){
     setIsHamBurger(c=>!c);
+  }else{
+    setIsHamBurger(false);
   }
   }
   const handleLogOut=async()=>{
