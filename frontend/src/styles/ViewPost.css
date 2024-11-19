@@ -25,3 +25,9 @@
 .comment-description{
     @apply pt-1 pb-3 px-2 ml-1;
 }
+.updateDelete-Container{
+    @apply w-60 flex justify-around;
+}
+.delete-btn{
+    @apply text-white rounded-md py-0.5 px-1.5 font-semibold text-lg bg-red-600;
+}

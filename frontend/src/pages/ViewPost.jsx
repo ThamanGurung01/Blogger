@@ -24,6 +24,9 @@ const ViewPost = () => {
   const handleDescription=(e)=>{
     setDescription(e.target.value);
   }
+  const handleDeleteBlog=()=>{
+    console.log("handleDeleteBlog");
+  }
   const submitComment=async(e)=>{
     e.preventDefault();
   setSubmitted(true);
@@ -79,7 +82,7 @@ if(id){
             {blog?.coverImage&&<img src={backendUrl+blog?.coverImage} className='coverImage' alt="Blog coverImage" />}
             <div className='quillContainer blogDescription' dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog?.description) }} />
             <div className='center postUpdate'>            
-  {loggedIn&&isUsersBlog&&<Link to={"/updateBlog/"+blog._id} className='btn update-btn'>Update</Link>}
+  {loggedIn&&isUsersBlog&&<div className='updateDelete-Container'><Link to={"/updateBlog/"+blog._id} className='btn update-btn'>Update</Link> <button className='delete-btn' onClick={handleDeleteBlog}>Delete</button> </div>}
   </div>
             </div>
             <div className="comment">
