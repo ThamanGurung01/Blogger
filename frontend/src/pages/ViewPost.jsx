@@ -8,6 +8,7 @@ import { authContext } from "../context/authContext";
 import { authCheck } from "../services/auth/authenticationCheck";
 import { blogClick } from "../services/Api/blogClick";
 import { blogComment } from "../services/Api/blogComment";
+import DeletePopup from '../components/DeletePopup';
 
 const ViewPost = () => {
   const backendUrl=import.meta.env.VITE_BackendUrl;
@@ -23,9 +24,6 @@ const ViewPost = () => {
   const [submitted,setSubmitted]=useState(false);
   const handleDescription=(e)=>{
     setDescription(e.target.value);
-  }
-  const handleDeleteBlog=()=>{
-    console.log("handleDeleteBlog");
   }
   const submitComment=async(e)=>{
     e.preventDefault();
@@ -82,7 +80,7 @@ if(id){
             {blog?.coverImage&&<img src={backendUrl+blog?.coverImage} className='coverImage' alt="Blog coverImage" />}
             <div className='quillContainer blogDescription' dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog?.description) }} />
             <div className='center postUpdate'>            
-  {loggedIn&&isUsersBlog&&<div className='updateDelete-Container'><Link to={"/updateBlog/"+blog._id} className='btn update-btn'>Update</Link> <button className='delete-btn' onClick={handleDeleteBlog}>Delete</button> </div>}
+  {loggedIn&&isUsersBlog&&<div className='updateDelete-Container'><Link to={"/updateBlog/"+blog._id} className='btn update-btn'>Update</Link> <DeletePopup/> </div>}
   </div>
             </div>
             <div className="comment">

@@ -9,6 +9,7 @@ const AuthenticationContext = ({children}) => {
   const [loggedIn,isLoggedIn]=useState(false);
   const [loading,isLoading]=useState(true);
   const [isHamBurger,setIsHamBurger]=useState(false);
+  const [showPopup,setShowPopup]=useState(false);
   const getUserData=async()=>{
     const user=await authCheck();
     isLoading(false);
@@ -25,7 +26,7 @@ const AuthenticationContext = ({children}) => {
     if(cookie==="true"){isLoggedIn(true)}else{isLoggedIn(false)};
   },[loggedIn]);
   return (
-    <authContext.Provider value={{user,loggedIn,loading,isLoggedIn,setUser,isHamBurger,setIsHamBurger}}>
+    <authContext.Provider value={{user,loggedIn,loading,isLoggedIn,setUser,isHamBurger,setIsHamBurger,showPopup,setShowPopup}}>
       {children}
     </authContext.Provider>
   )

@@ -2,7 +2,7 @@
     @apply mt-5 flex flex-col items-center;
 }
 .coverImage{
-    @apply w-72 h-72 object-cover;
+    @apply w-72 h-72 object-cover mx-auto;
 }
 .profileImage{
     @apply w-8 h-8 rounded-full my-2;

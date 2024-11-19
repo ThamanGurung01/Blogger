@@ -16,7 +16,7 @@ import { authContext } from './context/authContext'
 import UpdateProfile from './pages/UpdateProfile'
 
 function App() {
-const {loggedIn,isLoggedIn}=useContext(authContext);
+const {loggedIn,isLoggedIn,showPopup}=useContext(authContext);
 const [isCookieLoggedIn,setCookie]=useState("false");
 useEffect(()=>{
   setCookie(getCookie("isLoggedIn"));
@@ -27,7 +27,7 @@ if(isCookieLoggedIn==="true"){
 }
 },[isCookieLoggedIn,loggedIn]);
   return (
-    <div className=''>
+    <div className={`${showPopup?"":""}`}>
      <Navbar loggedIn={loggedIn}/>
       <Routes>
       <Route path='*' element={<Post postType="blogs"/>}/>

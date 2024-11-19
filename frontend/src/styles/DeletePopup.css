@@ -1,0 +1,10 @@
+.popup-container{
+    @apply fixed inset-0 w-screen min-h-screen lg:text-lg;
+    background-color: rgba(107, 114, 128, 0.5);
+}
+.popup{
+    @apply bg-white w-72 p-4 rounded-md mt-72 min-h-36 mx-auto lg:w-80 lg:mt-80 flex flex-col;
+}
+.popup-btn{
+    @apply text-white rounded-md py-0.5 px-2 font-semibold bg-red-500 lg:w-20 mb-2 lg:px-0.5 ;
+}
