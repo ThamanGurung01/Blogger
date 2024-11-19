@@ -14,7 +14,7 @@ const authentication =require("./middlewares/authentication");
 const {getTotalBlog,getTotalBlogClick,getTotalBlogComment}=require("./controllers/user")
 //env
 const PORT=process.env.PORT||8001;
-const mongoDbURL=process.env.MongoDb_URL||"mongodb://127.0.0.1:27017/blogger";
+const mongoDbURL=process.env.MongoDb_URL;
 
 //db connection
 (async()=>{
