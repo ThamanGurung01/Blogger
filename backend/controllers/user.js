@@ -1,3 +1,4 @@
+require("dotenv").config();
 const Blog = require("../models/blog");
 const User=require("../models/user");
 const deleteOldImage = require("../services/deleteOldImage");
@@ -7,6 +8,8 @@ const mongoose=require("mongoose");
 const Comment=require("../models/comment");
 const Click=require("../models/click");
 const updatePassword = require("../services/updatePassword");
+const isProduction = process.env.NODE_ENV === "production"
+
 async function handleGetAllUsers(req,res){
 try{
   const allUsers=await User.find({}).sort({ createdAt: -1 });
@@ -103,7 +106,7 @@ try{
   const isPasswordValid=await checkPassword(user.password,password);
   if(!isPasswordValid) return res.status(401).json("Incorrect Password!");
   const token= jwtSign(user);
-  res.cookie('token', token, {httpOnly: true,secure: false,sameSite: 'Lax',});
+  res.cookie('token', token, {httpOnly: true,secure: isProduction,sameSite: isProduction?"None":"Lax"});
   return res.status(200).json({status:"Successfully LoggedIn"});
 }catch(err){
   console.log(err.message);

@@ -60,9 +60,10 @@ app.get("/authentication",authentication,(req,res)=>{
     if(!data) return res.status(401).json({error:"Login needed"});
 return res.json(data);
 })
+const isProduction = process.env.NODE_ENV === "production"
 app.get("/logout",(req, res) => {
 try{
-    res.clearCookie('token', {httpOnly: true,secure: false,sameSite: 'Lax'});
+    res.clearCookie('token', {httpOnly: true,secure: isProduction,sameSite: isProduction?"None":"Lax"});
     console.log(res.cookie);
     return res.status(200).json({status:"Successfully loggedOut"});
 }catch(err){
