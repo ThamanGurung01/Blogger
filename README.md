@@ -2,7 +2,6 @@ Blog Application
 
 A feature-rich blog application for creating, reading, updating, and deleting blog posts, complete with a comment section and user authentication.
 Features
-
     User Authentication: Secure login and signup functionality.
     Create and Manage Posts: Add, edit, and delete your blog posts.
     Comments Section: Add and view comments on blog posts.
@@ -12,13 +11,11 @@ Features
 
 Tech Stack
 Frontend
-
     React (with Vite for build tooling)
     Tailwind CSS for styling
     React Hook Form for form management
 
 Backend
-
     Express.js for API and server logic
     Node.js runtime environment
     MySQL database
@@ -26,6 +23,5 @@ Backend
     CORS for secure cross-origin requests
 
 Hosting
-
     Frontend: Vercel
     Backend: Render
