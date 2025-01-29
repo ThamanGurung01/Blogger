@@ -8,15 +8,7 @@ const authentication=require("../middlewares/authentication");
 const {handleGetAllUsers,handleGetUser,handleCreateUser,handleUpdateUser,handleDeleteUser,blogCommentCreation,blogClick,getComments} =require("../controllers/user");
 
 //multer
-const storage=multer.diskStorage({
-destination:function (req,file,cb){
-    cb(null,path.resolve("./public/images/"));
-},
-filename:function (req,file,cb){
-    const fileName=`${Date.now()}-${file.originalname}`;
-    cb(null,fileName);
-}
-});
+const storage=multer.memoryStorage();
 const upload=multer({storage});
 
 //route

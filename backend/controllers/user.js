@@ -9,7 +9,7 @@ const Comment=require("../models/comment");
 const Click=require("../models/click");
 const updatePassword = require("../services/updatePassword");
 const isProduction = process.env.NODE_ENV === "production"
-
+const insertImage=require("../services/insertImage");
 async function handleGetAllUsers(req,res){
 try{
   const allUsers=await User.find({}).sort({ createdAt: -1 });
@@ -43,7 +43,11 @@ async function handleCreateUser(req,res){
 const newUser={
   fullName,email,password,gender,
 }
-if(req.file) newUser.profileImageURL=`images/${req.file.filename}`;
+if(req.file) {
+  const result=insertImage(req.file,"images");
+  const imageUrl=result.secure_url;
+  newUser.profileImageURL=imageUrl;
+};
     const data=await User.create(newUser);
     return res.status(201).json({status:"success created"});
   }catch (err){
@@ -65,8 +69,10 @@ async function handleUpdateUser(req,res){
       fullName,gender
     }
 if(req.file) {
-    deleteOldImage(oldImage);
-    newUser.profileImageURL=`images/${req.file.filename}`;}
+   await deleteOldImage(oldImage,"images");
+   const result=insertImage(req.file,"images");
+   const imageUrl=result.secure_url;
+    newUser.profileImageURL=imageUrl;}
     await updatePassword(id,password);
     const updatedUser = await User.findByIdAndUpdate(id, newUser, { new: true });
 if (!updatedUser) {
@@ -87,8 +93,9 @@ async function handleDeleteUser(req,res){
     if(!userId||!mongoose.isValidObjectId(userId)) return res.status(400).json({error:"No id given or invalid id"});
     const user=await User.findByIdAndDelete(userId);
     if(!user) return res.status(404).json({error:"No user found"});
+    await deleteOldImage(user.profileImageURL,"images");
     const blogs = await Blog.find({ createdBy: userId });
-    await Promise.all(blogs.map(blog => deleteOldImage(blog.coverImage)));
+    await Promise.all(blogs.map(async(blog) => await deleteOldImage(blog.coverImage,"blogImages")));
     await Blog.deleteMany({ createdBy: userId });
       return res.status(200).json({status:"Successfully deleted"});
   }catch(err){
