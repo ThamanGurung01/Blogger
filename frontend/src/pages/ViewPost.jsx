@@ -86,7 +86,7 @@ if(id){
             }} alt="Blog coverImage" />}
             <div className='quillContainer blogDescription' dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog?.description) }} />
             <div className='center postUpdate'>            
-  {loggedIn&&isUsersBlog&&<div className='updateDelete-Container'><Link to={"/updateBlog/"+blog._id} className='btn update-btn'>Update</Link> <DeletePopup/> </div>}
+  {loggedIn&&isUsersBlog&&<div className='updateDelete-Container'><Link to={"/updateBlog/"+blog._id} className='btn update-btn'>Update</Link> <DeletePopup blogId={id}/> </div>}
   </div>
             </div>
             <div className="comment">
@@ -106,7 +106,10 @@ if(id){
               {comments.length > 0 ? (
               comments.map((comment, index) => (
 <div key={index} className='comments'>
-<Link to={comment?.commentedBy?._id===userId?"/profile":"/profile/"+comment?.commentedBy?._id} className='creator'><img src={comment?.commentedBy?.profileImageURL} className="inline profileImage" alt="profile picture"/> <p className="inline posterName" >{comment?.commentedBy?.fullName}</p></Link>
+<Link to={comment?.commentedBy?._id===userId?"/profile":"/profile/"+comment?.commentedBy?._id} className='creator'><img src={comment?.commentedBy?.profileImageURL} className="inline profileImage" onError={(e)=>{
+              e.target.onerror=null;
+              e.target.src="/avatar.png";
+            }} alt="profile picture"/> <p className="inline posterName" >{comment?.commentedBy?.fullName}</p></Link>
 <p className='comment-description'>{comment.description}</p>
 </div>
               ))

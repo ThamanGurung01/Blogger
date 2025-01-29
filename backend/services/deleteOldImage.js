@@ -3,6 +3,7 @@
   async function deleteOldImage(oldImageUrl,folderName){
 try{
     const ImageName=imagePublicId(oldImageUrl,folderName);
+    if(!ImageName) return;
     const oldImage=folderName+"/"+ImageName;
     await cloudinary.uploader.destroy(oldImage);
 }catch(error){

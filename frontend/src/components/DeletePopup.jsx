@@ -1,20 +1,35 @@
 import { useContext } from 'react'
+import { useParams,useNavigate } from 'react-router-dom';
+import { useEffect,useState } from 'react';
 import "../styles/DeletePopup.css"
 import { authContext } from '../context/authContext';
+import {deleteBlogReq} from '../services/Api/deleteBlogReq';
 const DeletePopup = () => {
   const {showPopup,setShowPopup}=useContext(authContext);
+  const navigate=useNavigate();
+    const {id}=useParams();
+    if(!id) console.log("error no id view Post");
+  const [blogId,setBlogId]=useState();
     const openPopup=()=>{
         setShowPopup(true);
-        console.log("showPopup");
     }
     const closePopup=()=>{
         setShowPopup(false);
-        console.log("closePopup");
     }
-    const deleteBlog=()=>{
-        console.log("deleted");
+    const deleteBlog=async()=>{
+      if(blogId){
+    await deleteBlogReq("blog",id);
+        navigate("/");
+      }else{
+        console.log("no blog id ",blogId);
+      }
         closePopup();
     }
+ useEffect(()=>{
+if(id){
+  setBlogId(id);
+}
+    },[id])
   return (
     <div className=''>
         <button className='delete-btn' onClick={openPopup}>Delete</button>

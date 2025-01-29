@@ -19,7 +19,7 @@ const Form = ({formType}) => {
     const [message,setMessage]=useState(null);
     const [userData,setUserData]=useState(null);
     const [displayLoading,setDisplayLoading]=useState(true);
-    const backendUrl=import.meta.env.VITE_BackendUrl;
+    // const backendUrl=import.meta.env.VITE_BackendUrl;
     const handleFileClick=()=>{
         document.getElementById("profile").click();
     }
@@ -71,7 +71,7 @@ setResponse(response);
     const fetchUserData=async()=>{
         const userData=await authCheck();
 if(userData){
-    const imageUrl=backendUrl+userData.data.profileImageURL;
+    const imageUrl=userData.data.profileImageURL;
     setUserData(userData.data);
     setImageUrl(imageUrl);
 }
@@ -104,7 +104,10 @@ if(userData){
     <form action="" onSubmit={handleSubmit(onSubmit)} className="form-loginSignup" >
 <div className="input-container">
 {formType==="signup"||formType==="updateProfile"?( <>{formType==="signup"?<h1 className="form-heading">SignUp</h1>:<h1 className="form-heading">Profile Update</h1>}<label htmlFor="profile" className="profileLabel">Profile Picture:</label><input type="file" id="profile" style={{display:"none"}} onChange={(e)=>handleFileChange(e)} />
-        <img src={imageUrl} className="signup-image" alt="profileView" onClick={handleFileClick}/><input {...register("fullName",{
+        <img src={imageUrl} className="signup-image" alt="profileView" onError={(e)=>{
+              e.target.onerror=null;
+              e.target.src="/avatar.png";
+            }} onClick={handleFileClick}/><input {...register("fullName",{
             required:"Name is required",
             minLength:{
                 value:5,

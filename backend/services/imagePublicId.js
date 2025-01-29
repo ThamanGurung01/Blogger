@@ -3,7 +3,7 @@ function imagePublicId(url,folderName){
 try{
     const folderIndex = url.indexOf(folderName);
     if (folderIndex === -1) {
-      throw new Error("Folder not found in the URL.");
+      return;
     }
     let filename = url.slice(folderIndex + folderName.length + 1);
     const publicImageId=fileName(filename);

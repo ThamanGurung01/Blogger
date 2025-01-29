@@ -68,10 +68,10 @@ setTotalComments(totalComments.data);
       {users&&
       <div className="userDetail">
       <h1 className="profileHeading">Profile</h1>
-      <img src="avatar.png" alt="profile" onError={(e)=>{
-          e.target.src="/avatar.png";
-          e.target.onError=null;
-
+      <img src={users?.profileImageURL} alt="profile" onError={(e)=>{
+          console.log(e.target.src);
+          e.target.onerror=null;
+          e.target.src="avatar.png";
       }} className="userImage"/>
 <span className="userName">Name: {users?.fullName}</span>
 <span className="userEmail">Email: {users?.email}</span>

@@ -44,11 +44,11 @@ const newUser={
   fullName,email,password,gender,
 }
 if(req.file) {
-  const result=insertImage(req.file,"images");
+  const result=await insertImage(req.file,"images");
   const imageUrl=result.secure_url;
   newUser.profileImageURL=imageUrl;
 };
-    const data=await User.create(newUser);
+    await User.create(newUser);
     return res.status(201).json({status:"success created"});
   }catch (err){
     console.log("Error creating user:",err);
@@ -70,9 +70,10 @@ async function handleUpdateUser(req,res){
     }
 if(req.file) {
    await deleteOldImage(oldImage,"images");
-   const result=insertImage(req.file,"images");
+   const result=await insertImage(req.file,"images");
    const imageUrl=result.secure_url;
-    newUser.profileImageURL=imageUrl;}
+    newUser.profileImageURL=imageUrl;
+  }
     await updatePassword(id,password);
     const updatedUser = await User.findByIdAndUpdate(id, newUser, { new: true });
 if (!updatedUser) {
