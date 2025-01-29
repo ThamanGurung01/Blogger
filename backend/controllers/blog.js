@@ -1,8 +1,8 @@
 const Blog=require("../models/blog")
 const deleteOldImage = require("../services/deleteOldImage");
 const mongoose=require("mongoose");
-
-
+const cloudinary=require("../services/cloudinary.js");
+const insertImage=require("../services/insertImage.js");
 async function getAllBlog(req,res){
     try{
        const blogs= await Blog.find({}).populate("createdBy").sort({ createdAt: -1 });
@@ -48,7 +48,13 @@ async function blogCreation(req,res){
     const newBlog={
         title,description,createdBy:data._id,
     }
-    if(req.file) newBlog.coverImage=`blogImages/${req.file.filename}`;
+    if(req.file){
+  const result =await insertImage(req.file,"blogImages");
+  imageUrl=result.secure_url;
+  newBlog.coverImage=imageUrl;
+    }else{
+      console.log("no file");
+    }
         await Blog.create(newBlog);
         return res.status(201).json({status:"Blog successfully created"});
       }catch (err){
@@ -69,8 +75,11 @@ async function blogUpdation(req,res){
         title,description
     }
     if(req.file) {
-        deleteOldImage(oldImage);
-        newBlog.coverImage=`blogImages/${req.file.filename}`}
+      await deleteOldImage(oldImage,"blogImages");
+      const result= await insertImage(req.file,"blogImages");
+      const imageUrl=result.secure_url;
+        newBlog.coverImage=imageUrl;
+      }
         await Blog.updateOne({_id:id},newBlog);
         return res.status(201).json({status:"Blog successfully updated"});
       }catch (err){
@@ -84,7 +93,7 @@ async function blogDeletion(req,res){
         if(!blogId||!mongoose.isValidObjectId(blogId)) return res.status(400).json({error:"No id given or invalid id"});
         const blog=await Blog.findByIdAndDelete(blogId);
         if(blog){
-            deleteOldImage(blog.coverImage);
+            deleteOldImage(blog.coverImage,"blogImages");
         }else{
             return res.status(404).json({error:"No blogs found"});
         }
