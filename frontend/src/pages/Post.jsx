@@ -9,7 +9,7 @@ import { authContext } from '../context/authContext';
 import { authCheck } from "../services/auth/authenticationCheck";
 
 const Post = ({postType}) => {
-  const backendUrl=import.meta.env.VITE_BackendUrl;
+  // const backendUrl=import.meta.env.VITE_BackendUrl;
 const [blogs,setBlogs]=React.useState([]);
 const [user,setUser]=React.useState(null);
 const {loggedIn,loading,isHamBurger}=useContext(authContext);
@@ -52,10 +52,20 @@ const getUserData=async()=>{
       <div className='upload'>{loggedIn&&<Link className='upload-link btn' to="/addBlog">Upload</Link>}</div>
         {blogs && blogs.length > 0 ?displayLoading?<p className="loading">Loading...</p>:blogs?.map((blog,index)=>(
           <div key={index} className='post'>
-            {postType!=="userBlog"&&blog?.createdBy?.profileImageURL&&<Link to={blog?.createdBy?._id===userId?"/profile":"/profile/"+blog?.createdBy?._id} className='creator'><img src={backendUrl+blog?.createdBy?.profileImageURL} className="inline profileImage" width={"30px"} alt="profile picture"/> <p className="inline posterName" >{blog?.createdBy?.fullName}</p></Link>}
+            {postType!=="userBlog"&&blog?.createdBy?.profileImageURL&&<Link to={blog?.createdBy?._id===userId?"/profile":"/profile/"+blog?.createdBy?._id} className='creator'><img src={blog?.createdBy?.profileImageURL} className="inline profileImage" width={"30px"} onError={
+              (e)=>{
+                e.target.onerror=null;
+                e.target.src="/avatar.png";
+              }
+            } alt="profile picture"/> <p className="inline posterName" >{blog?.createdBy?.fullName}</p></Link>}
          <Link to={"/viewBlog/"+blog._id}>
           <h1 className='blogTitle'>{blog?.title}</h1>
-            {blog.coverImage&&<img src={blog.coverImage} className='inline coverImage  rounded-b-md' alt="Blog CoverImage" />}
+            {blog.coverImage&&<img src={blog.coverImage} className='inline coverImage  rounded-b-md' onError={
+              (e)=>{
+                e.target.onerror=null;
+                e.target.src="/uploadBlogPhoto.png";
+              }
+            } alt="Blog CoverImage" />}
             </Link>
           </div>
           )

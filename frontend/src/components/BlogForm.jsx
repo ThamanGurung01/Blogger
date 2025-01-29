@@ -25,7 +25,7 @@ const BlogForm = ({formType,blogId}) => {
     ],
   };
 
-const backendUrl=import.meta.env.VITE_BackendUrl;
+// const backendUrl=import.meta.env.VITE_BackendUrl;
 
   async function fetchBlogData(){
 try{
@@ -36,7 +36,7 @@ try{
     setBlogData(data.data);
     setContent(data.data.description);
     reset({ title: data.data.title });
-    setImageUrl(backendUrl+data.data.coverImage || fallBackImage);
+    setImageUrl(data.data.coverImage || fallBackImage);
   }
 }catch(Err){
   console.log(Err);
@@ -93,7 +93,10 @@ try{
       <h1 className='heading2 blogForm-heading'>Posts</h1>
     <form action="" onSubmit={handleSubmit(onSubmit)} >
   <input type="file" id="cover" style={{display:"none"}} onChange={(e)=>handleFileChange(e)} />
-        <img src={imageUrl} className='blogFormImage' alt="coverView" onClick={handleFileClick}/>
+        <img src={imageUrl} className='blogFormImage' onError={(e)=>{
+              e.target.onerror=null;
+              e.target.src="/uploadBlogPhoto.png";
+            }} alt="coverView" onClick={handleFileClick}/>
         <input className='blog-input' {...register("title",{
             required:"Title is required",
             minLength:{

@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import {getUserData} from "../services/Api/getUserData";
 import "../styles/Profile.css"
 const Profile = ({profileType}) => {
-  const backendUrl=import.meta.env.VITE_BackendUrl;
+  // const backendUrl=import.meta.env.VITE_BackendUrl;
   const [users,setUser]=useState(null);
   const [totalBlogs,setTotalBlogs]=useState(0);
   const [totalClicks,setTotalClicks]=useState(0);
@@ -57,7 +57,7 @@ setTotalComments(totalComments.data);
   }
   useEffect(()=>{
     if(users&&id&&profileType==="otherProfile") {
-      fetchTotalId(id)
+      fetchTotalId(id);
     }else if(users&&profileType==="userProfile"){
       fetchTotal();
     };
@@ -68,7 +68,11 @@ setTotalComments(totalComments.data);
       {users&&
       <div className="userDetail">
       <h1 className="profileHeading">Profile</h1>
-      <img src={backendUrl+users?.profileImageURL} alt="profile" className="userImage"/>
+      <img src="avatar.png" alt="profile" onError={(e)=>{
+          e.target.src="/avatar.png";
+          e.target.onError=null;
+
+      }} className="userImage"/>
 <span className="userName">Name: {users?.fullName}</span>
 <span className="userEmail">Email: {users?.email}</span>
 <div className="update-container">{profileType==="userProfile"?<Link className="update-btn btn" to={"/updateProfile/"+users?._id}>update</Link>:""}</div>

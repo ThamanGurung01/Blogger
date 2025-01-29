@@ -11,7 +11,7 @@ import { blogComment } from "../services/Api/blogComment";
 import DeletePopup from '../components/DeletePopup';
 
 const ViewPost = () => {
-  const backendUrl=import.meta.env.VITE_BackendUrl;
+  // const backendUrl=import.meta.env.VITE_BackendUrl;
   const {id}=useParams();
   if(!id) console.log("error no id view Post");
   const [blog,setBlog]=React.useState({});
@@ -75,9 +75,15 @@ if(id){
         <h1 className="heading2">Posts</h1>
         <div>
             <div className='post'>
-            <Link to={blog?.createdBy?._id===userId?"/profile":"/profile/"+blog?.createdBy?._id} className='creator'>{blog?.createdBy?.profileImageURL&&<img src={backendUrl+blog?.createdBy?.profileImageURL} className="inline profileImage" alt="profile picture"/>} <p className="inline posterName" >{blog?.createdBy?.fullName}</p></Link>
+            <Link to={blog?.createdBy?._id===userId?"/profile":"/profile/"+blog?.createdBy?._id} className='creator'>{blog?.createdBy?.profileImageURL&&<img src={blog?.createdBy?.profileImageURL} className="inline profileImage" onError={(e)=>{
+              e.target.onerror=null;
+              e.target.src="/avatar.png";
+            }} alt="profile picture"/>} <p className="inline posterName" >{blog?.createdBy?.fullName}</p></Link>
             <h1 className='blogTitle'>{blog?.title}</h1>
-            {blog?.coverImage&&<img src={backendUrl+blog?.coverImage} className='coverImage' alt="Blog coverImage" />}
+            {blog?.coverImage&&<img src={blog?.coverImage} className='coverImage' onError={(e)=>{
+              e.target.onerror=null;
+              e.target.src="/uploadBlogPhoto.png";
+            }} alt="Blog coverImage" />}
             <div className='quillContainer blogDescription' dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog?.description) }} />
             <div className='center postUpdate'>            
   {loggedIn&&isUsersBlog&&<div className='updateDelete-Container'><Link to={"/updateBlog/"+blog._id} className='btn update-btn'>Update</Link> <DeletePopup/> </div>}
@@ -100,7 +106,7 @@ if(id){
               {comments.length > 0 ? (
               comments.map((comment, index) => (
 <div key={index} className='comments'>
-<Link to={comment?.commentedBy?._id===userId?"/profile":"/profile/"+comment?.commentedBy?._id} className='creator'><img src={backendUrl+comment?.commentedBy?.profileImageURL} className="inline profileImage" alt="profile picture"/> <p className="inline posterName" >{comment?.commentedBy?.fullName}</p></Link>
+<Link to={comment?.commentedBy?._id===userId?"/profile":"/profile/"+comment?.commentedBy?._id} className='creator'><img src={comment?.commentedBy?.profileImageURL} className="inline profileImage" alt="profile picture"/> <p className="inline posterName" >{comment?.commentedBy?.fullName}</p></Link>
 <p className='comment-description'>{comment.description}</p>
 </div>
               ))
