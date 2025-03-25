@@ -16,8 +16,10 @@ const {loggedIn,loading,isHamBurger}=useContext(authContext);
 const [userId,setUserId]=useState(null);
 const [displayLoading,setDisplayLoading]=useState(true);
   const fetchBlogData=async()=>{
-    setDisplayLoading(true);
-    setTimeout(()=>{ setDisplayLoading(false);},500);
+  setDisplayLoading(true);
+
+    try {
+      setTimeout(()=>{ setDisplayLoading(false);},500);
     setBlogs(null);
     if(userId&&postType==="userBlog"){
       await getAllReq("blog",userId).then((data)=>{
@@ -28,6 +30,14 @@ const [displayLoading,setDisplayLoading]=useState(true);
       setBlogs(data);
     });
   }
+    } catch (error) {
+   console.log(error)   
+    }finally{
+  setDisplayLoading(false);
+      
+    }
+
+
 }
 
 const getUserData=async()=>{
