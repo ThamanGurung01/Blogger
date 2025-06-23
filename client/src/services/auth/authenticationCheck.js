@@ -10,9 +10,9 @@ export const authCheck=async()=>{
         return data;
     }catch(error){
         if (error.name === "AxiosError") {
-            console.log("AxiosError:", error.message);
+            // console.log("AxiosError:", error.message);
           } else {
-            console.log("Some other error:", error);
+            // console.log("Some other error:", error);
           }
 
     return null;

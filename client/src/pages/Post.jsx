@@ -15,30 +15,59 @@ const [user,setUser]=React.useState(null);
 const {loggedIn,loading,isHamBurger}=useContext(authContext);
 const [userId,setUserId]=useState(null);
 const [displayLoading,setDisplayLoading]=useState(true);
-  const fetchBlogData=async()=>{
-  setDisplayLoading(true);
+const [fetchedOnce, setFetchedOnce] = useState(false);
 
-    try {
-      setTimeout(()=>{ setDisplayLoading(false);},500);
+const fetchBlogData = async (retryCount = 0) => {
+  if (fetchedOnce) return;
+
+  if (retryCount === 0) {
+    setDisplayLoading(true);
     setBlogs(null);
-    if(userId&&postType==="userBlog"){
-      await getAllReq("blog",userId).then((data)=>{
-      setBlogs(data);
-      });
-  }else if(postType==="blogs") {
-    await getAllReq("blog").then((data)=>{
-      setBlogs(data);
-    });
   }
-    } catch (error) {
-   console.log(error)   
-    }finally{
-  setDisplayLoading(false);
-      
+
+  const maxRetries = 6;
+  const retryDelay = 5000;
+
+  let urlType;
+  if (postType === "userBlog" && userId) {
+    urlType = ["blog", userId];
+  } else if (postType === "blogs") {
+    urlType = ["blog"];
+  } else {
+    console.warn("Missing or invalid parameters");
+    setDisplayLoading(false);
+    return;
+  }
+  try {
+    const data = await getAllReq(...urlType);
+
+    if (data === null) {
+      if (retryCount < maxRetries) {
+        setTimeout(() => fetchBlogData(retryCount + 1), retryDelay);
+      } else {
+        setBlogs([]);
+        setDisplayLoading(false);
+      }
+      return;
     }
+    setBlogs(data);
+    setFetchedOnce(true);
+  } catch (err) {
+    console.error("Error fetching blogs:", err);
+    if (retryCount < maxRetries) {
+      setTimeout(() => fetchBlogData(retryCount + 1), retryDelay);
+    } else {
+      setBlogs([]);
+      setDisplayLoading(false);
+    }
+  } finally {
+    if (retryCount === 0 || retryCount === maxRetries) {
+      setDisplayLoading(false);
+    }
+  }
+};
 
 
-}
 
 const getUserData=async()=>{
     const user=await authCheck();
@@ -54,13 +83,20 @@ const getUserData=async()=>{
   }, [loggedIn, user,loading]);
 
   React.useEffect(() => {
-    fetchBlogData(); 
-  }, [postType, userId,loading]);
+    setFetchedOnce(false);
+  }, [postType, userId]);
+
+  React.useEffect(() => {
+    if ((postType === "blogs") || (postType === "userBlog" && userId)) {
+      fetchBlogData();
+    }
+  }, [postType, userId]);
+  
   return (
     <div className={`container-post ${isHamBurger?"hidden lg:flex":""}`}>
       <h1 className="heading2">{postType==="userBlog"?"My Posts":"Posts"}</h1>
       <div className='upload'>{loggedIn&&<Link className='upload-link btn' to="/addBlog">Upload</Link>}</div>
-        {blogs && blogs.length > 0 ?displayLoading?<p className="loading">Loading...</p>:blogs?.map((blog,index)=>(
+        {displayLoading|| blogs === null?<p className="loading">Loading...</p>:blogs.length > 0 ?blogs?.map((blog,index)=>(
           <div key={index} className='post'>
             {postType!=="userBlog"&&blog?.createdBy?.profileImageURL&&<Link to={blog?.createdBy?._id===userId?"/profile":"/profile/"+blog?.createdBy?._id} className='creator'><img src={blog?.createdBy?.profileImageURL} className="inline profileImage" width={"30px"} onError={
               (e)=>{
