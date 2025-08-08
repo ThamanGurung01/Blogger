@@ -101,51 +101,130 @@ if(userData){
   return (
     <>
    {formType==="updateProfile"&&displayLoading?<p className="formLoading">Loading...</p>: <div>
-    <form action="" onSubmit={handleSubmit(onSubmit)} className="form-loginSignup" >
-<div className="input-container">
-{formType==="signup"||formType==="updateProfile"?( <>{formType==="signup"?<h1 className="form-heading">SignUp</h1>:<h1 className="form-heading">Profile Update</h1>}<label htmlFor="profile" className="profileLabel">Profile Picture:</label><input type="file" id="profile" style={{display:"none"}} onChange={(e)=>handleFileChange(e)} />
-        <img src={imageUrl} className="signup-image" alt="profileView" onError={(e)=>{
-              e.target.onerror=null;
-              e.target.src="/avatar.png";
-            }} onClick={handleFileClick}/><input {...register("fullName",{
-            required:"Name is required",
-            minLength:{
-                value:5,
-                message:"Name must be at least 5 characters",
-            },
-            pattern:{
-                value:/^[A-Za-z]+(?: [A-Za-z]+)?$/,
-                message:"Invalid Name",
-            }
-        })} type="text" className="form-input" placeholder="Name" id="name" />
-        {errors.fullName&&<div className="error">{errors.fullName.message} *</div>}
-        </> ): <h1 className="form-heading">Login</h1> }
-      {formType==="updateProfile"?"":<input {...register("email",{
-            required:"Email is required",
-            pattern:{
-                value:/^[A-Za-z]+[1-9]*@gmail\.com$/,
-                message:"Invalid Email",
-            }
-        })} type="text" className="form-input" placeholder="Email" id="email" />}
-        {errors.email&&<div className="error">{errors.email.message} *</div>}
-        <input {...register("password",{
-            required:"Password is required",
-            minLength:{
-                value:5,
-                message:"Password must be at least 5 characters"
-            }
-        })} type="password" className="form-input" placeholder="Password" id="password" />
-        {errors.password&&<div className="error">{errors.password.message} *</div>}
-        {formType=="login"?"":(<><div className="gender"><label>Gender:</label><input className="form-input" {...register("gender",{
-            required:"Choose your gender",
-        })} id="male" type="radio" name="gender" value={"male"}/><label htmlFor="male">Male</label>
-        <input className="form-input" {...register("gender")} id="female" type="radio" name="gender" value={"female"}/><label htmlFor="female">Female</label></div>
-        {errors.gender&&<div className="error">{errors.gender.message} *</div>}</>)}
-</div>
-        <button disabled={isSubmitting} type="submit" className="btn submit-btn">{isSubmitting?"Submitting...":formType==="signup"?"Signup":formType=="updateProfile"?"Update":"Login"}</button>
-        {message!=="Email already Exists"&&<div className="success">{message}</div>}
-        {message==="Email already Exists"&&<div className="error">{message}!</div>}
-    </form>
+    <form
+  action=""
+  onSubmit={handleSubmit(onSubmit)}
+  className="max-w-md mx-auto bg-white shadow-lg rounded-lg px-6 py-10 space-y-5 border border-gray-200"
+>
+  <div className="flex flex-col items-center space-y-4">
+    {formType === "signup" || formType === "updateProfile" ? (
+      <>
+        <h1 className="text-2xl font-bold text-gray-800">
+          {formType === "signup" ? "Sign Up" : "Update Profile"}
+        </h1>
+        <label
+          htmlFor="profile"
+          className="text-gray-600 font-medium cursor-pointer"
+        >
+          Profile Picture:
+        </label>
+        <input
+          type="file"
+          id="profile"
+          style={{ display: "none" }}
+          onChange={(e) => handleFileChange(e)}
+        />
+        <img
+          src={imageUrl}
+          className="w-24 h-24 rounded-full object-cover border-2 border-gray-300 cursor-pointer hover:opacity-80 transition"
+          alt="profileView"
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = "/avatar.png";
+          }}
+          onClick={handleFileClick}
+        />
+        <input
+          {...register("fullName", {
+            required: "Name is required",
+            minLength: { value: 5, message: "Name must be at least 5 characters" },
+            pattern: { value: /^[A-Za-z]+(?: [A-Za-z]+)?$/, message: "Invalid Name" }
+          })}
+          type="text"
+          className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          placeholder="Name"
+          id="name"
+        />
+        {errors.fullName && <div className="text-red-500 text-sm">{errors.fullName.message} *</div>}
+      </>
+    ) : (
+      <h1 className="text-2xl font-bold text-gray-800">Login</h1>
+    )}
+
+    {formType === "updateProfile" ? null : (
+      <>
+        <input
+          {...register("email", {
+            required: "Email is required",
+            pattern: { value: /^[A-Za-z]+[1-9]*@gmail\.com$/, message: "Invalid Email" }
+          })}
+          type="text"
+          className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          placeholder="Email"
+          id="email"
+        />
+        {errors.email && <div className="text-red-500 text-sm">{errors.email.message} *</div>}
+      </>
+    )}
+
+    <input
+      {...register("password", {
+        required: "Password is required",
+        minLength: { value: 5, message: "Password must be at least 5 characters" }
+      })}
+      type="password"
+      className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+      placeholder="Password"
+      id="password"
+    />
+    {errors.password && <div className="text-red-500 text-sm">{errors.password.message} *</div>}
+
+    {formType === "login" ? null : (
+      <>
+        <div className="flex items-center space-x-4">
+          <label className="font-medium text-gray-700">Gender:</label>
+          <label htmlFor="male" className="flex items-center space-x-1">
+            <input
+              className="form-input"
+              {...register("gender", { required: "Choose your gender" })}
+              id="male"
+              type="radio"
+              name="gender"
+              value={"male"}
+            />
+            <span>Male</span>
+          </label>
+          <label htmlFor="female" className="flex items-center space-x-1">
+            <input
+              className="form-input"
+              {...register("gender")}
+              id="female"
+              type="radio"
+              name="gender"
+              value={"female"}
+            />
+            <span>Female</span>
+          </label>
+        </div>
+        {errors.gender && <div className="text-red-500 text-sm">{errors.gender.message} *</div>}
+      </>
+    )}
+  </div>
+
+  <button
+    disabled={isSubmitting}
+    type="submit"
+    className="w-full bg-blue-500 text-white font-semibold py-2 rounded-lg shadow-md hover:bg-blue-600 transition"
+  >
+    {isSubmitting ? "Submitting..." : formType === "signup" ? "Signup" : formType === "updateProfile" ? "Update" : "Login"}
+  </button>
+
+  {message && (
+    <div className={`text-center mt-3 ${message === "Email already Exists" ? "text-red-500" : "text-green-500"}`}>
+      {message}
+    </div>
+  )}
+</form>
 </div>}
 </>
   )

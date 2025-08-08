@@ -1,5 +1,5 @@
 .navbar {
-  @apply fixed top-0 left-0 w-full bg-white p-4 drop-shadow-md rounded-md z-50;
+  @apply fixed top-0 left-0 w-full bg-white p-4 drop-shadow-md rounded-md z-50 flex flex-col justify-between;
 }
 
 @media (min-width: 1024px) {
@@ -17,5 +17,5 @@
     @apply my-2 text-red-500 text-2xl font-extrabold inline-block cursor-pointer lg:hidden;
 }
 .list-container{
-    @apply  lg:pt-5 lg:min-h-screen flex lg:flex-col lg:items-center lg:justify-between flex-row justify-around px-5 my-2 gap-5 pt-1 lg:hidden;
+    @apply  lg:pt-5 lg:min-h-screen flex lg:flex-col lg:items-center lg:justify-between flex-row justify-around px-5 my-2 gap-5 pt-1 lg:hidden lg:gap-10 lg:mt-10;
 }

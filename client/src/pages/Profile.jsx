@@ -63,30 +63,69 @@ setTotalComments(totalComments.data);
     };
   },[users,id,profileType])
 
-  return (
-   <>
-{    displayLoading?<p className="profileLoading initialPage">Loading...</p>:<div className={`profile initialPage ${isHamBurger?"hidden sm:block":""}`}>
-      {users&&
-      <div className="userDetail">
-      <h1 className="profileHeading">Profile</h1>
-      <img src={users?.profileImageURL} alt="profile" onError={(e)=>{
-          console.log(e.target.src);
-          e.target.onerror=null;
-          e.target.src="avatar.png";
-      }} className="userImage"/>
-<span className="userName">Name: {users?.fullName}</span>
-<span className="userEmail">Email: {users?.email}</span>
-<div className="update-container">{profileType==="userProfile"?<Link className="update-btn btn" to={"/updateProfile/"+users?._id}>update</Link>:""}</div>
-      </div>}
-      <div className="userStatistic">
-      <h1 className="profileHeading">Statistics</h1>
-        <p className="statistics">Posts: {totalBlogs}</p>
-        <p className="statistics">Clicks: {totalClicks}</p>
-        <p className="statistics">Comments: {totalComments}</p>
+return (
+    <>
+      {displayLoading ? (
+        <p className="flex justify-center items-center min-h-[50vh] text-lg font-medium text-gray-600">
+          Loading...
+        </p>
+      ) : (
+        <div
+          className={`flex flex-col sm:flex-row gap-6 p-6 max-w-5xl mx-auto ${
+            isHamBurger ? "hidden sm:flex" : ""
+          }`}
+        >
+          {users && (
+            <div className="flex flex-col items-center bg-white shadow-lg rounded-2xl p-6 w-full sm:w-1/3">
+              <h1 className="text-2xl font-bold mb-4 text-gray-800">Profile</h1>
+              <img
+                src={users?.profileImageURL}
+                alt="profile"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = "/avatar.png";
+                }}
+                className="w-28 h-28 object-cover rounded-full border border-gray-300"
+              />
+              <div className="mt-4 text-center">
+                <p className="text-lg font-semibold text-gray-800">
+                  {users?.fullName}
+                </p>
+                <p className="text-sm text-gray-500">{users?.email}</p>
+              </div>
+              {profileType === "userProfile" && (
+                <Link
+                  to={`/updateProfile/${users?._id}`}
+                  className="mt-4 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition"
+                >
+                  Update Profile
+                </Link>
+              )}
+            </div>
+          )}
+
+          <div className="bg-white shadow-lg rounded-2xl p-6 w-full sm:w-2/3">
+            <h1 className="text-2xl font-bold mb-6 text-gray-800">Statistics</h1>
+            <div className="grid grid-cols-3 gap-4 text-center">
+              <div className="bg-blue-50 rounded-lg p-4">
+                <p className="text-2xl font-bold text-blue-600">{totalBlogs}</p>
+                <p className="text-gray-600 text-sm">Posts</p>
+              </div>
+              <div className="bg-green-50 rounded-lg p-4">
+                <p className="text-2xl font-bold text-green-600">{totalClicks}</p>
+                <p className="text-gray-600 text-sm">Clicks</p>
+              </div>
+              <div className="bg-purple-50 rounded-lg p-4">
+                <p className="text-2xl font-bold text-purple-600">{totalComments}</p>
+                <p className="text-gray-600 text-sm">Comments</p>
+              </div>
+            </div>
+          </div>
         </div>
-    </div>}
+      )}
     </>
-  )
+  );
+
 }
 Profile.propTypes={
   profileType:PropTypes.string,

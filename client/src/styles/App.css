@@ -8,8 +8,8 @@
     @apply text-2xl text-center font-bold;
 }
 .form-page{
-    @apply p-3 mx-7
-    bg-white rounded-md lg:w-80 lg:mx-auto;
+    @apply p-3 mx-7 lg:mt-40
+    bg-white rounded-md lg:w-full lg:mx-auto;
 }
 .post{
     @apply bg-white mt-5 rounded-xl w-full lg:w-1/2 shadow-sm 
