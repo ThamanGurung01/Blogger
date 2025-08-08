@@ -14,7 +14,7 @@ const [blogs,setBlogs]=React.useState([]);
 const [user,setUser]=React.useState(null);
 const {loggedIn,loading,isHamBurger}=useContext(authContext);
 const [userId,setUserId]=useState(null);
-const [displayLoading,setDisplayLoading]=useState(true);
+const [displayLoading,setDisplayLoading]=useState(false);
 const [fetchedOnce, setFetchedOnce] = useState(false);
 
 const fetchBlogData = async (retryCount = 0) => {
@@ -92,11 +92,14 @@ const getUserData=async()=>{
     }
   }, [postType, userId]);
   
-  return (
-    <div className={`container-post initialPage ${isHamBurger?"":""}`}>
+  return ((displayLoading || blogs === null) ?(
+    <div className="w-full min-h-screen flex justify-center items-center">
+      <div className="w-20 h-20 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+    </div>
+  ):(<div className={`container-post initialPage ${isHamBurger?"":""}`}>
       <h1 className="heading2">{postType==="userBlog"?"My Posts":"Posts"}</h1>
       <div className='upload'>{loggedIn&&<Link className='upload-link btn' to="/addBlog">Upload</Link>}</div>
-        {displayLoading|| blogs === null?<p className="loading">Loading...</p>:blogs.length > 0 ?blogs?.map((blog,index)=>(
+        {!displayLoading && blogs && blogs.length > 0 ? blogs?.map((blog,index)=>(
           <div key={index} className='post'>
             {postType!=="userBlog"&&blog?.createdBy?.profileImageURL&&<div><Link to={blog?.createdBy?._id===userId?"/profile":"/profile/"+blog?.createdBy?._id} className='creator'><img src={blog?.createdBy?.profileImageURL} className="inline profileImage" width={"30px"} onError={
               (e)=>{
@@ -116,7 +119,7 @@ const getUserData=async()=>{
           </div>
           )
          ): displayLoading?<p className="loading">Loading...</p>:<p className="NoBlogs">No blogs!</p> }
-    </div>
+    </div>)
   )
 }
 Post.propTypes={
