@@ -36,12 +36,15 @@ const Navbar = () => {
   },[loggedIn,isLoggedIn,loading])
 
   return (
-    <div className={`navbar ${isHamBurger?"min-h-screen lg:min-h-fit":""}`}>
+    <div className={`navbar`}>
+        <Link className="lg:flex items-center gap-3 px-4 py-2 shadow-xl rounded-xl bg-gradient-to-l from-cyan-300 via-blue-300 to-purple-300 hidden" to="/" onClick={()=>{isHamBurger?setIsHamBurger(false):""}}>
+        <div className="bg-blue-500 text-white w-10 h-10 flex items-center justify-center text-2xl font-bold rounded-lg shadow-lg">B</div>
+        <span className="text-xl font-semibold">Blogger</span></Link>
          <div className="top-navbar">
          <Link to="/" onClick={()=>{isHamBurger?setIsHamBurger(false):""}}><h1 className='heading1'>Blogger</h1></Link>
          <span className="hamburger-exit" onClick={toggleHamburger}>{isHamBurger?"X":"M"}</span>
          </div>
-         <ul className={`list-container lg:inline-flex lg:min-h-12 ${isHamBurger?"":"hidden"} ${loggedIn?"":"min-h-36"}`}>
+         <ul className={`list-container min-h-10 flex flex-col lg:inline-flex lg:min-h-12 ${isHamBurger?"":"hidden"}`}>
           <li><Link to="/" onClick={toggleHamburger}>Blogs</Link></li>
           {loggedIn&&<><li><Link to="/myPosts" onClick={toggleHamburger}>My Posts</Link></li><li><Link to="/profile" onClick={toggleHamburger}>Profile</Link></li></>}
           {!loggedIn&&<>

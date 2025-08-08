@@ -1,15 +1,21 @@
-.navbar{
-@apply bg-white w-full;
+.navbar {
+  @apply fixed top-0 left-0 w-full bg-white p-4 drop-shadow-md rounded-md z-50;
+}
+
+@media (min-width: 1024px) {
+  .navbar {
+    @apply fixed left-0 top-0 w-64 shadow-2xl min-h-screen flex flex-col p-4 z-50;
+  }
 }
 .top-navbar{
-    @apply flex justify-between lg:hidden;
+    @apply flex justify-between items-center lg:hidden;
 }
 .heading1{
-    @apply px-4 pt-4 inline-block;
+    @apply px-4 inline-block text-2xl;
 }
 .hamburger-exit{
-    @apply m-5 text-red-500 text-2xl font-extrabold inline-block cursor-pointer lg:hidden;
+    @apply my-2 text-red-500 text-2xl font-extrabold inline-block cursor-pointer lg:hidden;
 }
 .list-container{
-    @apply w-full mt-6 pt-5 min-h-72 text-2xl font-semibold flex flex-col items-center justify-between lg:flex-row lg:justify-around lg:my-5 lg:pt-1;
+    @apply mt-6 lg:pt-5 lg:min-h-screen flex lg:flex-col lg:items-center lg:justify-between flex-row justify-around my-5 pt-1 lg:hidden;
 }

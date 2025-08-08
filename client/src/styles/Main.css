@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 html{
-    @apply font-sans  bg-gray-300;
+    @apply font-sans;
 }
 img {
     user-select: none;    
