@@ -26,5 +26,5 @@
     @apply pl-5;
 }
 .profileLoading{
-    @apply text-xl bg-white rounded-md font-semibold text-yellow-600 text-center mt-9 py-5 w-80 mx-auto;
+    @apply text-xl bg-white rounded-md font-semibold text-yellow-600 text-center py-5 w-80 mx-auto;
 }

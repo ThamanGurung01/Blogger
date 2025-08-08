@@ -1,3 +1,6 @@
+.initialPage{
+    @apply mt-24 lg:mt-10 z-0;
+}
 .heading1{
     @apply text-4xl text-center font-bold;
 }
@@ -5,10 +8,11 @@
     @apply text-2xl text-center font-bold;
 }
 .form-page{
-    @apply p-3 m-7 lg:w-80 lg:mx-auto;
+    @apply p-3 mx-7
+    bg-white rounded-md lg:w-80 lg:mx-auto;
 }
 .post{
-    @apply bg-white mt-9 rounded-md;
+    @apply bg-white mt-5 rounded-md;
 }
 .btn{
     @apply bg-black text-white rounded-md py-0.5 px-1.5 font-semibold text-lg;

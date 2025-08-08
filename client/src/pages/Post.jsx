@@ -93,7 +93,7 @@ const getUserData=async()=>{
   }, [postType, userId]);
   
   return (
-    <div className={`container-post ${isHamBurger?"":""}`}>
+    <div className={`container-post initialPage ${isHamBurger?"":""}`}>
       <h1 className="heading2">{postType==="userBlog"?"My Posts":"Posts"}</h1>
       <div className='upload'>{loggedIn&&<Link className='upload-link btn' to="/addBlog">Upload</Link>}</div>
         {displayLoading|| blogs === null?<p className="loading">Loading...</p>:blogs.length > 0 ?blogs?.map((blog,index)=>(

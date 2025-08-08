@@ -17,5 +17,5 @@
     @apply my-2 text-red-500 text-2xl font-extrabold inline-block cursor-pointer lg:hidden;
 }
 .list-container{
-    @apply mt-6 lg:pt-5 lg:min-h-screen flex lg:flex-col lg:items-center lg:justify-between flex-row justify-around my-5 pt-1 lg:hidden;
+    @apply  lg:pt-5 lg:min-h-screen flex lg:flex-col lg:items-center lg:justify-between flex-row justify-around px-5 my-2 gap-5 pt-1 lg:hidden;
 }

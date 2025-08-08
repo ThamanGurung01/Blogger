@@ -71,7 +71,7 @@ if(id){
       }
     },[blog,userId]);
   return (
-    <div className="container-post">
+    <div className="container-post initialPage">
         <h1 className="heading2">Posts</h1>
         <div>
             <div className='post'>

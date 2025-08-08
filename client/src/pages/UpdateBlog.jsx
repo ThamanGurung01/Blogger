@@ -4,7 +4,7 @@ import BlogForm from "../components/BlogForm"
 const UpdateBlog = () => {
   const {id}=useParams();
   return (
-    <div>
+    <div className="initialPage">
         <BlogForm formType="update" blogId={id}/>
     </div>
   )

@@ -89,9 +89,11 @@ try{
   }
   return (
   <>
-  { formType==="update"&&displayLoading?<p className="blogFormLoading">Loading...</p>: <div className='post form-page'>
+  { formType==="update"&&displayLoading?<p className="blogFormLoading initialPage">Loading...</p>: <div className='form-page initialPage'>
       <h1 className='heading2 blogForm-heading'>Posts</h1>
-    <form action="" onSubmit={handleSubmit(onSubmit)} >
+    <form
+    className='flex flex-col items-center'
+    action="" onSubmit={handleSubmit(onSubmit)} >
   <input type="file" id="cover" style={{display:"none"}} onChange={(e)=>handleFileChange(e)} />
         <img src={imageUrl} className='blogFormImage' onError={(e)=>{
               e.target.onerror=null;

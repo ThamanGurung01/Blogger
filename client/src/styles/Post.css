@@ -1,5 +1,5 @@
 .container-post{
-    @apply min-h-screen mt-28 flex flex-col items-center z-0;
+    @apply flex flex-col items-center;
 }
 .coverImage{
     @apply w-72 h-72 object-cover mx-auto;

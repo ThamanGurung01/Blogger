@@ -62,9 +62,10 @@ setTotalComments(totalComments.data);
       fetchTotal();
     };
   },[users,id,profileType])
+
   return (
    <>
-{    displayLoading?<p className="profileLoading">Loading...</p>:<div className={`profile ${isHamBurger?"hidden sm:block":""}`}>
+{    displayLoading?<p className="profileLoading initialPage">Loading...</p>:<div className={`profile initialPage ${isHamBurger?"hidden sm:block":""}`}>
       {users&&
       <div className="userDetail">
       <h1 className="profileHeading">Profile</h1>

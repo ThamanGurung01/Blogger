@@ -3,7 +3,7 @@ import BlogForm from "../components/BlogForm"
 
 const AddBlog = () => {
   return (
-    <div>
+    <div className="initialPage">
         <BlogForm formType="add"/>
     </div>
   )
