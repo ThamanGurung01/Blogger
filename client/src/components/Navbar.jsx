@@ -49,10 +49,9 @@ const Navbar = () => {
           <li>
             <Link
               to="/"
-              className={`px-4 py-2 rounded-md transition-colors duration-200 
+              className={`px-4 py-2 transition-colors duration-200 rounded-lg lg:px-[5.5rem] lg:py-3
               ${location.pathname === "/" ? "lg:bg-blue-500 lg:text-white" : "lg:hover:bg-gray-200"}`}
-              onClick={toggleHamburger}
-            >
+              onClick={toggleHamburger}>
               Blogs
             </Link>
           </li>
@@ -62,7 +61,7 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/myPosts"
-                  className={`px-4 py-2 rounded-md transition-colors duration-200 
+                  className={`px-4 py-2 rounded-lg lg:px-14 lg:py-3 transition-colors duration-200 
                   ${location.pathname === "/myPosts" ? "lg:bg-blue-500 lg:text-white" : "lg:hover:bg-gray-200"}`}
                   onClick={toggleHamburger}>
                   My Posts
@@ -72,7 +71,7 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/profile"
-                  className={`px-4 py-2 rounded-md transition-colors duration-200
+                  className={`px-4 py-2 rounded-lg lg:px-[5.5rem] lg:py-3 transition-colors duration-200
                   ${location.pathname === "/profile" ? "lg:bg-blue-500 lg:text-white" : "lg:hover:bg-gray-200"}`}
                   onClick={toggleHamburger}
                 >
@@ -86,7 +85,7 @@ const Navbar = () => {
             <li>
               <Link
                 to="/login"
-                className={`px-4 py-2 rounded-md transition-colors duration-200 
+                className={`px-4 py-2 rounded-lg lg:px-8 lg:py-3 transition-colors duration-200 
                 ${location.pathname === "/login" ? "lg:bg-blue-500 lg:text-white" : "lg:hover:bg-gray-200"}`}
                 onClick={toggleHamburger}>
                 Login / Register
@@ -98,7 +97,7 @@ const Navbar = () => {
             <li className="lg:hidden">
               <button
                 onClick={handleLogOut}
-                className="px-4 py-2 rounded-md transition-colors duration-200 lg:hover:bg-red-500 lg:hover:text-white">
+                className="px-4 py-2 rounded-lg lg:px-[5.5rem] lg:py-3 transition-colors duration-200 lg:hover:bg-red-500 lg:hover:text-white">
                 Sign Out
               </button>
             </li>
@@ -106,7 +105,7 @@ const Navbar = () => {
         </ul>
 
         </div>
-          {loggedIn&&<button className="hidden lg:block bg-red-500 text-white shadow-xl px-4 py-2 rounded-md transition-colors duration-200 hover:bg-red-700 hover:text-white" onClick={handleLogOut}>SignOut</button>}
+          {loggedIn&&<button className="hidden lg:block bg-red-500 text-white shadow-xl px-4 py-2 rounded-lg transition-colors duration-200 hover:bg-red-700 hover:text-white" onClick={handleLogOut}>SignOut</button>}
     </div>
   )
 }

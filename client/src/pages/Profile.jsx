@@ -70,8 +70,7 @@ return (
           Loading...
         </p>
       ) : (
-        <div
-          className={`flex flex-col sm:flex-row gap-6 p-6 max-w-5xl mx-auto ${
+        <div className={`flex flex-col sm:flex-row gap-6 p-6 max-w-5xl mx-auto mt-20 lg:mt-5${
             isHamBurger ? "hidden sm:flex" : ""
           }`}
         >
