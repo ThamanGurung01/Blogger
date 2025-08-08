@@ -99,7 +99,7 @@ const getUserData=async()=>{
   ):(<div className={`container-post initialPage ${isHamBurger?"":""}`}>
       <h1 className="heading2">{postType==="userBlog"?"My Posts":"Posts"}</h1>
       <div className='upload'>{loggedIn&&<Link className='upload-link btn' to="/addBlog">Upload</Link>}</div>
-        {!displayLoading && blogs && blogs.length > 0 ? blogs?.map((blog,index)=>(
+        {!displayLoading && blogs && blogs.length > 0 && blogs?.map((blog,index)=>(
           <div key={index} className='post'>
             {postType!=="userBlog"&&blog?.createdBy?.profileImageURL&&<div><Link to={blog?.createdBy?._id===userId?"/profile":"/profile/"+blog?.createdBy?._id} className='creator'><img src={blog?.createdBy?.profileImageURL} className="inline profileImage" width={"30px"} onError={
               (e)=>{
@@ -118,7 +118,10 @@ const getUserData=async()=>{
             </Link>
           </div>
           )
-         ): displayLoading?<p className="loading">Loading...</p>:<p className="NoBlogs">No blogs!</p> }
+         )}
+        {!displayLoading && blogs && blogs.length === 0 && (
+         <p className="NoBlogs">No blogs!</p>
+        )}
     </div>)
   )
 }
