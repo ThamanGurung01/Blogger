@@ -3,6 +3,7 @@ import {getReq} from '../services/Api/getReq';
 import  DOMPurify from "dompurify";
 import "../styles/Quill.css";
 import "../styles/ViewPost.css";
+import "../styles/Post.css";
 import {Link,useParams} from "react-router-dom";
 import { authContext } from "../context/authContext";
 import { authCheck } from "../services/auth/authenticationCheck";
@@ -74,20 +75,20 @@ if(id){
     <div className="container-post initialPage">
         <h1 className="heading2">Posts</h1>
         <div>
-            <div className='post'>
+            <div className='shadow-md rounded-xl'>
             <Link to={blog?.createdBy?._id===userId?"/profile":"/profile/"+blog?.createdBy?._id} className='creator'>{blog?.createdBy?.profileImageURL&&<img src={blog?.createdBy?.profileImageURL} className="inline profileImage" onError={(e)=>{
               e.target.onerror=null;
               e.target.src="/avatar.png";
             }} alt="profile picture"/>} <p className="inline posterName" >{blog?.createdBy?.fullName}</p></Link>
             <h1 className='blogTitle'>{blog?.title}</h1>
-            {blog?.coverImage&&<img src={blog?.coverImage} className='coverImage' onError={(e)=>{
+            {blog?.coverImage&&<img src={blog?.coverImage} className='coverImageView' onError={(e)=>{
               e.target.onerror=null;
               e.target.src="/uploadBlogPhoto.png";
             }} alt="Blog coverImage" />}
             <div className='quillContainer blogDescription' dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog?.description) }} />
             <div className='center postUpdate'>            
-  {loggedIn&&isUsersBlog&&<div className='updateDelete-Container'><Link to={"/updateBlog/"+blog._id} className='btn update-btn'>Update</Link> <DeletePopup blogId={id}/> </div>}
-  </div>
+          {loggedIn&&isUsersBlog&&<div className='updateDelete-Container'><Link to={"/updateBlog/"+blog._id} className='btn update-btn'>Edit</Link> <DeletePopup blogId={id}/> </div>}
+          </div>
             </div>
             <div className="comment">
               {loggedIn&&
@@ -101,7 +102,7 @@ if(id){
                 </form>
               </div>
               }
-              <div className="comment-show post">
+              <div className="comment-show">
                 <h1 className='comment-title'>----Comments----</h1>
               {comments.length > 0 ? (
               comments.map((comment, index) => (
@@ -114,11 +115,11 @@ if(id){
 </div>
               ))
             ) : (
-              <p>No comments yet.</p>
+              <p className='text-center'>No comments yet.</p>
             )}
               </div>
             </div>
-            {response && <p>{response.status ? response.status : response.error}</p>}
+            {response && <p className='text-center text-green-500'>{response.status ? response.status : response.error}</p>}
         </div>
     </div>
   )

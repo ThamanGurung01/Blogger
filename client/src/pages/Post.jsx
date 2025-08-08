@@ -98,15 +98,15 @@ const getUserData=async()=>{
       <div className='upload'>{loggedIn&&<Link className='upload-link btn' to="/addBlog">Upload</Link>}</div>
         {displayLoading|| blogs === null?<p className="loading">Loading...</p>:blogs.length > 0 ?blogs?.map((blog,index)=>(
           <div key={index} className='post'>
-            {postType!=="userBlog"&&blog?.createdBy?.profileImageURL&&<Link to={blog?.createdBy?._id===userId?"/profile":"/profile/"+blog?.createdBy?._id} className='creator'><img src={blog?.createdBy?.profileImageURL} className="inline profileImage" width={"30px"} onError={
+            {postType!=="userBlog"&&blog?.createdBy?.profileImageURL&&<div><Link to={blog?.createdBy?._id===userId?"/profile":"/profile/"+blog?.createdBy?._id} className='creator'><img src={blog?.createdBy?.profileImageURL} className="inline profileImage" width={"30px"} onError={
               (e)=>{
                 e.target.onerror=null;
                 e.target.src="/avatar.png";
               }
-            } alt="profile picture"/> <p className="inline posterName" >{blog?.createdBy?.fullName}</p></Link>}
+            } alt="profile picture"/> <p className="inline posterName" >{blog?.createdBy?.fullName}</p></Link></div>}
          <Link to={"/viewBlog/"+blog._id}>
           <h1 className='blogTitle'>{blog?.title}</h1>
-            {blog.coverImage&&<img src={blog.coverImage} className='inline coverImage  rounded-b-md' onError={
+            {blog.coverImage&&<img src={blog.coverImage} className='inline coverImage rounded-b-md' onError={
               (e)=>{
                 e.target.onerror=null;
                 e.target.src="/uploadBlogPhoto.png";

@@ -1,8 +1,8 @@
 .container-post{
-    @apply flex flex-col items-center;
+    @apply w-3/4 sm:w-1/2 mx-auto flex flex-col items-center gap-5 mt-24 lg:mt-7;
 }
 .coverImage{
-    @apply w-72 h-72 object-cover mx-auto;
+    @apply w-full h-72 md:h-[35rem] object-cover rounded-b-xl rounded-t-sm ;
 }
 .profileImage{
     @apply w-8 h-8 rounded-full my-2;
@@ -14,13 +14,13 @@
     @apply pl-2
 }
 .blogTitle{
-    @apply my-1 px-2 text-lg;
+    @apply my-2 px-2 mx-2 text-lg;
 }
 .blogDescription{
     @apply py-1 px-2;
 }
 .upload{
-    @apply flex justify-end w-full mt-2 lg:justify-center lg:my-0;
+    @apply flex justify-end w-1/2 mt-2 lg:justify-end lg:my-0;
 }
 .upload-link{
     @apply mr-10 py-0.5 px-2 lg:ml-60 lg:mt-5;

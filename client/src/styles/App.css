@@ -12,7 +12,8 @@
     bg-white rounded-md lg:w-80 lg:mx-auto;
 }
 .post{
-    @apply bg-white mt-5 rounded-md;
+    @apply bg-white mt-5 rounded-xl w-full lg:w-1/2 shadow-sm 
+    flex-col items-center border-gray-100 border;
 }
 .btn{
     @apply bg-black text-white rounded-md py-0.5 px-1.5 font-semibold text-lg;

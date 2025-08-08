@@ -1,3 +1,6 @@
+.coverImageView{
+    @apply w-full h-72 md:h-[35rem] object-cover;
+}
 .comment-title{
     @apply text-center py-3;
 }
@@ -11,13 +14,13 @@
     @apply w-full bg-white px-2 pb-6 rounded-lg mt-2;
 }
 .comment-input{
-    @apply bg-gray-200 w-40 rounded-lg px-2;
+    @apply w-3/4 border border-black rounded-lg px-2;
 }
 .comment-btn{
     @apply ml-2;
 }
 .comment-show{
-    @apply px-5 pb-3;
+    @apply px-5 pb-3 border border-gray-100 rounded-xl mb-5 shadow-xl;
 }
 .comments{
     @apply bg-gray-100 mb-2 rounded-lg;
